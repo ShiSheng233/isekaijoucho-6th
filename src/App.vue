@@ -41,6 +41,8 @@ const previewState = ref({
 let touchStartY = 0;
 let isSwiping = false;
 let currentPage = ref("");
+let touchStartX = 0;
+let isCanvasTouch = false; // 标记是否在 canvas 上触摸
 
 // 处理子组件传来的滚动状态
 const handleChildScrollState = (state) => {
@@ -98,8 +100,13 @@ const handleWheel = (event) => {
 
 const handleTouchStart = (event) => {
   touchStartY = event.touches[0].clientY;
+  touchStartX = event.touches[0].clientX;
   isSwiping = false;
   currentPage = router.currentRoute.value.path;
+  
+  // 检查是否触摸在 canvas 元素上
+  const target = event.target;
+  isCanvasTouch = target.tagName === 'CANVAS' || target.closest('canvas') !== null;
   
   // 防止浏览器默认下拉刷新
   if (currentPage === "/images") {
@@ -109,11 +116,29 @@ const handleTouchStart = (event) => {
 
 const handleTouchMove = (event) => {
   const touchCurrentY = event.touches[0].clientY;
-  const diff = touchStartY - touchCurrentY;
+  const touchCurrentX = event.touches[0].clientX;
+  const diffY = touchStartY - touchCurrentY;
+  const diffX = touchStartX - touchCurrentX;
 
   // 如果图片预览打开，阻止所有跳转
   if (previewState.value.isPreviewOpen) {
     event.preventDefault();
+    return;
+  }
+  
+  // 如果是在 canvas 上触摸（拖动球体），不触发页面切换
+  // 只有当垂直滑动明显大于水平滑动且不在 canvas 上时，才考虑页面切换
+  if (isCanvasTouch) {
+    // 在 canvas 上，只阻止默认行为，不触发页面切换
+    event.preventDefault();
+    return;
+  }
+  
+  // 检查是否为垂直滑动（垂直滑动距离明显大于水平滑动）
+  const isVerticalSwipe = Math.abs(diffY) > Math.abs(diffX) * 1.5;
+  
+  // 如果不是垂直滑动，不处理页面切换
+  if (!isVerticalSwipe && Math.abs(diffY) > 10) {
     return;
   }
 
@@ -126,7 +151,8 @@ const handleTouchMove = (event) => {
   if (
     currentPage === "/images" &&
     childScrollState.value.isAtTop &&
-    diff < -20
+    diffY < -20 &&
+    isVerticalSwipe
   ) {
     event.preventDefault();
     isSwiping = true;
@@ -144,7 +170,7 @@ const handleTouchMove = (event) => {
   if (
     currentPage === "/images" &&
     childScrollState.value.isAtTop &&
-    diff > 20
+    diffY > 20
   ) {
     event.preventDefault();
   }
@@ -152,27 +178,39 @@ const handleTouchMove = (event) => {
 
 const handleTouchEnd = (event) => {
   const touchEndY = event.changedTouches[0].clientY;
-  const diff = touchStartY - touchEndY;
+  const touchEndX = event.changedTouches[0].clientX;
+  const diffY = touchStartY - touchEndY;
+  const diffX = touchStartX - touchEndX;
 
   // 如果图片预览打开，阻止所有跳转
   if (previewState.value.isPreviewOpen) {
+    isCanvasTouch = false;
     return;
   }
+  
+  // 如果是在 canvas 上触摸（拖动球体），不触发页面切换
+  if (isCanvasTouch) {
+    isCanvasTouch = false;
+    return;
+  }
+
+  // 检查是否为垂直滑动（垂直滑动距离明显大于水平滑动）
+  const isVerticalSwipe = Math.abs(diffY) > Math.abs(diffX) * 1.5;
 
   // 如果在 B 页面且不在顶部，不处理切换
   if (currentPage === "/images" && !childScrollState.value.isAtTop) {
     return;
   }
 
-  // 滑动距离阈值
-  if (Math.abs(diff) > 50) {
-    if (currentPage === "/" && diff > 0) {
+  // 滑动距离阈值，且必须是垂直滑动
+  if (Math.abs(diffY) > 50 && isVerticalSwipe) {
+    if (currentPage === "/" && diffY > 0) {
       // A → B：向下滑动
       transitionName.value = "slide-up";
       router.push("/images");
     } else if (
       currentPage === "/images" &&
-      diff < 0 &&
+      diffY < 0 &&
       childScrollState.value.isAtTop
     ) {
       // B → A：向上滑动（仅在顶部时）
@@ -182,6 +220,7 @@ const handleTouchEnd = (event) => {
   }
 
   isSwiping = false;
+  isCanvasTouch = false;
 };
 
 // 监听路由变化
