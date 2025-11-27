@@ -82,18 +82,19 @@
                     : {}
                 "
               >
-                <!-- 加载中状态 -->
+                <!-- 加载中状态 - 图片还不应该加载或正在加载中时显示 -->
                 <div
-                  v-if="image.smallUrl && image.isLoading"
+                  v-if="image.smallUrl && (!shouldLoadImage(item.days, i_index) || !isImageReady(image.smallUrl))"
                   class="image-loading-placeholder"
                 >
                   <div class="loading-spinner"></div>
                   <span class="loading-text">LOADING</span>
                 </div>
-                <!-- 正常图片 -->
+                <!-- 隐藏的img用于实际加载图片 -->
                 <img
-                  v-else-if="image.smallUrl && !image.loadError"
+                  v-if="image.smallUrl && shouldLoadImage(item.days, i_index)"
                   class="right-content_item-image"
+                  :class="{ 'image-hidden': !isImageReady(image.smallUrl) }"
                   alt="图像"
                   draggable="true"
                   :src="image.smallUrl"
@@ -103,13 +104,13 @@
                 />
                 <!-- 加载失败状态 -->
                 <div
-                  v-else-if="image.smallUrl && image.loadError"
+                  v-if="image.smallUrl && image.loadError"
                   class="image-error-placeholder"
                 >
                   <span class="error-text">ERROR</span>
                 </div>
                 <!-- 无URL状态 -->
-                <div v-else class="image-error-placeholder">
+                <div v-if="!image.smallUrl" class="image-error-placeholder">
                   <span class="none-text">?</span>
                 </div>
                 <div
@@ -274,6 +275,7 @@
 import { ref, onMounted, onUnmounted, watch, computed, nextTick } from "vue";
 import { IMAGES } from "../utils/default";
 import ImagesPreview from "../components/imagesPreview.vue";
+import { preloadImages, isImageLoaded, markImageAsLoaded, getLoadedImages } from "../utils/imageLoader";
 
 const scrollContainer = ref(null);
 const isAtTop = ref(true);
@@ -283,6 +285,11 @@ const currentImageIndex = ref(0);
 const currentDays = ref(null);
 
 const image_list = IMAGES;
+
+// 懒加载相关
+const PRELOAD_COUNT = 3; // 预加载前后各3张图片
+const INITIAL_LOAD_COUNT = 5; // 初始加载前5张图片
+const loadedImagesSet = getLoadedImages(); // 响应式的已加载图片集合
 
 // 将所有图片扁平化为数组，方便预览
 const allImages = ref([]);
@@ -384,6 +391,9 @@ const handleImageLoad = (event) => {
   const img = event.target;
   // 找到对应的图片数据并设置加载完成状态
   const imgSrc = img.src;
+
+  // 标记图片已加载到共享管理器
+  markImageAsLoaded(imgSrc);
 
   // 遍历图片数据找到对应的图片
   image_list.forEach((item) => {
@@ -631,6 +641,64 @@ const linkOpen = (url) => {
   }
 };
 
+// 判断图片是否应该加载（懒加载逻辑）
+const shouldLoadImage = (days, imageIndex) => {
+  const key = `${days}-${imageIndex}`;
+  const globalIndex = imageMap.value.get(key);
+  
+  if (globalIndex === undefined) return false;
+  
+  // 检查图片URL是否已加载
+  const image = allImages.value[globalIndex];
+  if (image && image.smallUrl && loadedImagesSet.has(image.smallUrl)) {
+    return true;
+  }
+  
+  // 检查是否在初始加载范围内
+  if (globalIndex < INITIAL_LOAD_COUNT) {
+    return true;
+  }
+  
+  // 检查是否在当前可见区域附近（当前激活图片的前后PRELOAD_COUNT张）
+  const currentIndex = currentBehindSection.value;
+  if (currentIndex !== null && currentIndex !== undefined) {
+    const startIndex = Math.max(0, currentIndex - PRELOAD_COUNT);
+    const endIndex = Math.min(allImages.value.length - 1, currentIndex + PRELOAD_COUNT);
+    if (globalIndex >= startIndex && globalIndex <= endIndex) {
+      return true;
+    }
+  }
+  
+  return false;
+};
+
+// 判断图片是否已经加载完成（用于显示loading状态）
+const isImageReady = (url) => {
+  if (!url) return false;
+  return loadedImagesSet.has(url);
+};
+
+// 预加载周围的图片
+const preloadNearbyImages = async () => {
+  const currentIndex = currentBehindSection.value;
+  if (currentIndex === null) return;
+  
+  const startIndex = Math.max(0, currentIndex - PRELOAD_COUNT);
+  const endIndex = Math.min(allImages.value.length - 1, currentIndex + PRELOAD_COUNT);
+  
+  const urlsToPreload = [];
+  for (let i = startIndex; i <= endIndex; i++) {
+    const image = allImages.value[i];
+    if (image && image.smallUrl && !isImageLoaded(image.smallUrl)) {
+      urlsToPreload.push(image.smallUrl);
+    }
+  }
+  
+  if (urlsToPreload.length > 0) {
+    await preloadImages(urlsToPreload);
+  }
+};
+
 // 监听currentBehindContent变化，更新动画状态
 watch(
   () => currentBehindContent.value,
@@ -670,6 +738,9 @@ watch(
 
     // 更新上一次的countIndex
     previousCountIndex.value = newCountIndex;
+    
+    // 预加载附近的图片
+    preloadNearbyImages();
   },
   { deep: true }
 );
@@ -722,6 +793,13 @@ onMounted(() => {
     // 初始化时更新位置
     currentBehindSection.value = 0;
     currentBehindContent.value = allImages.value[0];
+    
+    // 预加载初始图片（前INITIAL_LOAD_COUNT张 + 周围的图片）
+    const initialUrls = allImages.value
+      .slice(0, INITIAL_LOAD_COUNT + PRELOAD_COUNT)
+      .filter(img => img.smallUrl)
+      .map(img => img.smallUrl);
+    preloadImages(initialUrls);
   });
 });
 
@@ -833,6 +911,14 @@ onUnmounted(() => {
             display: block;
             position: relative;
             z-index: 2;
+            
+            &.image-hidden {
+              position: absolute;
+              width: 1px;
+              height: 1px;
+              opacity: 0;
+              pointer-events: none;
+            }
           }
 
           .image-error-placeholder {

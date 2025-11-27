@@ -23,6 +23,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { IMAGES } from "../utils/default.ts";
+import { preloadImages, markImageAsLoaded } from "../utils/imageLoader";
 
 const randomPhotos = ref([]);
 
@@ -129,6 +130,9 @@ const handleImageLoad = (event) => {
     img.style.height = `${Math.min(maxSize, height)}px`;
     img.style.width = 'auto';
   }
+  
+  // 标记图片已加载到共享管理器
+  markImageAsLoaded(img.src);
 };
 
 onMounted(() => {
@@ -138,6 +142,12 @@ onMounted(() => {
     height: window.innerHeight
   };
   selectRandomPhotos();
+  
+  // 预加载选中的图片（这些图片也会在images.vue中使用）
+  const urlsToPreload = randomPhotos.value
+    .filter(photo => photo.smallUrl)
+    .map(photo => photo.smallUrl);
+  preloadImages(urlsToPreload);
 });
 
 onUnmounted(() => {});
