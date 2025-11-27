@@ -28,7 +28,7 @@ const emit = defineEmits(['scroll-state'])
 // 随机页面组件列表
 const randomComponents = [
   IndexByInstant,
-  IndexByGeometry
+  //IndexByGeometry
   // 未来可以在这里添加更多组件
 ]
 
