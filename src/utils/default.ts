@@ -4,9 +4,9 @@ export const IMAGES = [
     time: "2025.11.9",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5TKnw6acAAXe77?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5TKnw6acAAXe77?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 缩略图URL
         name: "WALluka", // 作者姓名
         name_X: "WALluka", // 推特名称
         account_X: "nishino_WALluka", // 推特账号
@@ -27,9 +27,9 @@ export const IMAGES = [
     time: "2025.11.10",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5YcvHEbYAASQ_S?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/29.%E9%9B%B6%E7%82%B9.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5YcvHEbYAASQ_S?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/29.%E9%9B%B6%E7%82%B9.webp", // 缩略图URL
         name: "零点", // 作者姓名
         name_X: "零点", // 推特名称
         account_X: "zeropoint2084", // 推特账号
@@ -50,9 +50,9 @@ export const IMAGES = [
     time: "2025.11.11",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5dkzSGbcAcZfVA?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/28.ansu.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5dkzSGbcAcZfVA?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/28.ansu.webp", // 缩略图URL
         name: "Ansu", // 作者姓名
         name_X: "Ansu", // 推特名称
         account_X: "Ansu3227620262", // 推特账号
@@ -73,9 +73,9 @@ export const IMAGES = [
     time: "2025.11.12",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5ivm1lasAATcL9?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/27.%E8%A1%BF%E9%9D%9E.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5ivm1lasAATcL9?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/27.%E8%A1%BF%E9%9D%9E.webp", // 缩略图URL
         name: "衿非", // 作者姓名
         name_X: "衿非", // 推特名称
         account_X: "XIBItaheyo", // 推特账号
@@ -96,9 +96,9 @@ export const IMAGES = [
     time: "2025.11.13",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5n6Q8WbcAA-7ub?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/26.%E5%AD%9D%E5%A6%8D.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5n6Q8WbcAA-7ub?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/26.%E5%AD%9D%E5%A6%8D.webp", // 缩略图URL
         name: "孝妍", // 作者姓名
         name_X: "孝妍🐈🎄", // 推特名称
         account_X: "xiazouhuacha1", // 推特账号
@@ -119,9 +119,9 @@ export const IMAGES = [
     time: "2025.11.14",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5uUY7maYAAXCy9?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5uUY7maYAAXCy9?format=jpg&name=medium", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 缩略图URL
         name: "跳蒜米", // 作者姓名
         name_X: "树雀植物园", // 推特名称
         account_X: "_paridae_", // 推特账号
@@ -142,9 +142,9 @@ export const IMAGES = [
     time: "2025.11.15",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G5yNG7yXYAApyiW?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/24.%E7%85%8E%E9%A5%BCnoa.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G5yNG7yXYAApyiW?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/24.%E7%85%8E%E9%A5%BCnoa.webp", // 缩略图URL
         name: "煎饼", // 作者姓名
         name_X: "🥞", // 推特名称
         account_X: "pancakenoa", // 推特账号
@@ -165,9 +165,9 @@ export const IMAGES = [
     time: "2025.11.16",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G53Tql3b0AAKNyH?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G53Tql3b0AAKNyH?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 缩略图URL
         name: "瓷小鱼", // 作者姓名
         name_X: "瓷小鱼", // 推特名称
         account_X: "cixiaoyu_", // 推特账号
@@ -188,9 +188,9 @@ export const IMAGES = [
     time: "2025.11.17",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G58g1PBW8AA8FuL?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/22.%E7%9C%A0%E8%88%9F.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G58g1PBW8AA8FuL?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/22.%E7%9C%A0%E8%88%9F.webp", // 缩略图URL
         name: "眠舟", // 作者姓名
         name_X: "眠舟就这样咕咕咕咕咕", // 推特名称
         account_X: "sleepboatabc", // 推特账号
@@ -211,9 +211,9 @@ export const IMAGES = [
     time: "2025.11.18",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G59LtMXaEAAxlyo?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/21.%E9%BB%84%E6%B2%B9.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G59LtMXaEAAxlyo?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/21.%E9%BB%84%E6%B2%B9.webp", // 缩略图URL
         name: "黄油", // 作者姓名
         name_X: "butter_fly", // 推特名称
         account_X: "Butter_0_0", // 推特账号
@@ -234,9 +234,9 @@ export const IMAGES = [
     time: "2025.11.19",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6GuR_6WYAAUFPq?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/20.AIRCeeco.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6GuR_6WYAAUFPq?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/20.AIRCeeco.webp", // 缩略图URL
         name: "AIRCeeco", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -257,9 +257,9 @@ export const IMAGES = [
     time: "2025.11.20",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6LtG5ZacAEVoAs?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6LtG5ZacAEVoAs?format=jpg&name=medium", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 缩略图URL
         name: "埋鱼井", // 作者姓名
         name_X: "🥝", // 推特名称
         account_X: "auuuie", // 推特账号
@@ -280,9 +280,9 @@ export const IMAGES = [
     time: "2025.11.21",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6RF2l2bwAAeDpP?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/18.%E5%88%83.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6RF2l2bwAAeDpP?format=jpg&name=medium", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/18.%E5%88%83.webp", // 缩略图URL
         name: "刃", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -303,9 +303,9 @@ export const IMAGES = [
     time: "2025.11.22",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6WPdkFaAAACnmM?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/17.%E7%BE%BD%E8%80%BD.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6WPdkFaAAACnmM?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/17.%E7%BE%BD%E8%80%BD.webp", // 缩略图URL
         name: "Plume_羽耽", // 作者姓名
         name_X: "Plume_羽耽", // 推特名称
         account_X: "plumeyudan", // 推特账号
@@ -326,9 +326,9 @@ export const IMAGES = [
     time: "2025.11.23",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6bZAzNa8AAqYrM?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6bZAzNa8AAqYrM?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 缩略图URL
         name: "-Muserin-_暮色林.", // 作者姓名
         name_X: "夕暮れ林_-Mulserin-.", // 推特名称
         account_X: "Muserin_", // 推特账号
@@ -349,9 +349,9 @@ export const IMAGES = [
     time: "2025.11.24",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6geSLta4AAU3Do?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/15.xixiii.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6geSLta4AAU3Do?format=jpg&name=900x900", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/15.xixiii.webp", // 缩略图URL
         name: "xixiii", // 作者姓名
         name_X: "xixiiii", // 推特名称
         account_X: "bx6318", // 推特账号
@@ -372,9 +372,9 @@ export const IMAGES = [
     time: "2025.11.25",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6kVn10bwAUpGbG?format=jpg&name=large", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 图片URL
         smallUrl:
-          "https://pbs.twimg.com/media/G6kVn10bwAUpGbG?format=jpg&name=medium", // 缩略图URL
+          "https://6th-assets.isekaijoucho.moe/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 缩略图URL
         name: "长颈鹿忍人", // 作者姓名
         name_X: "长颈鹿忍人🦒", // 推特名称
         account_X: "refhi_kirin", // 推特账号
@@ -395,8 +395,8 @@ export const IMAGES = [
     time: "2025.11.26",
     children: [
       {
-        url: "https://pbs.twimg.com/media/G6q100aa8AA5yQx?format=jpg&name=large", // 图片URL
-        smallUrl: "https://pbs.twimg.com/media/G6q100aa8AA5yQx?format=jpg&name=medium", // 缩略图URL
+        url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
+        smallUrl: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 缩略图URL
         name: "谛云roly", // 作者姓名
         name_X: "谛云roly", // 推特名称
         account_X: "diyunroly0418", // 推特账号
@@ -411,8 +411,8 @@ export const IMAGES = [
         link_lof: "", // Lofter链接
       },
       {
-        url: "https://pbs.twimg.com/media/G6q100iawAA2-wg?format=jpg&name=large", // 图片URL
-        smallUrl: "https://pbs.twimg.com/media/G6q100iawAA2-wg?format=jpg&name=medium", // 缩略图URL
+        url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
+        smallUrl: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 缩略图URL
         name: "谛云roly", // 作者姓名
         name_X: "谛云roly", // 推特名称
         account_X: "diyunroly0418", // 推特账号
@@ -433,8 +433,8 @@ export const IMAGES = [
     time: "2025.11.27",
     children: [
       {
-        url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
+        url: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 图片URL
+        smallUrl: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -455,8 +455,8 @@ export const IMAGES = [
     time: "2025.11.28",
     children: [
       {
-        url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
+        url: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 图片URL
+        smallUrl: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
