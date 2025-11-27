@@ -1026,15 +1026,15 @@ onUnmounted(() => {
               letter-spacing: 2px;
               // -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
               // text-stroke: 1px rgba(255, 255, 255, 0.8);
-              transform: translateX(-5vw);
-              transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+              opacity: 0;
+              transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
 
             &.active {
               opacity: 1;
 
               .overlay-text {
-                transform: translateX(0);
+                opacity: 1;
               }
             }
 
@@ -1043,8 +1043,8 @@ onUnmounted(() => {
               transition-duration: 0.4s;
 
               .overlay-text {
-                transform: translateX(10vw);
-                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                opacity: 0;
+                transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
               }
             }
           }
