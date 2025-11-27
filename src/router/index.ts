@@ -5,10 +5,6 @@ import type { RouteRecordRaw } from 'vue-router'
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/index",
-  },
-  {
-    path: "/index",
     name: "index",
     component: () => import("../views/index.vue"),
   },
@@ -34,7 +30,7 @@ const router = createRouter({
 
 // 全局前置守卫
 router.beforeEach((_to: any, _from: any, next: any) => {
-  document.title = _to.meta.title || "ヰ世界情緒6thCountdown";
+  document.title = _to.meta.title || "ヰ世界情緒 6th Countdown";
   next();
 });
 

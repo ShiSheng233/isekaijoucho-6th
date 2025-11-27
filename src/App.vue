@@ -75,12 +75,12 @@ const handleWheel = (event) => {
   ) {
     event.preventDefault();
     transitionName.value = "slide-down";
-    router.push("/index");
+    router.push("/");
     return;
   }
 
   // 如果在 A 页面且向下滚动，切换到 B
-  if (currentPage === "/index" && event.deltaY > 50) {
+  if (currentPage === "/" && event.deltaY > 50) {
     event.preventDefault();
     transitionName.value = "slide-up";
     router.push("/images");
@@ -89,7 +89,7 @@ const handleWheel = (event) => {
 
   // 其他情况阻止默认行为，避免页面滚动
   if (
-    currentPage === "/index" ||
+    currentPage === "/" ||
     (currentPage === "/images" && childScrollState.value.isAtTop)
   ) {
     event.preventDefault();
@@ -134,7 +134,7 @@ const handleTouchMove = (event) => {
 
   // 在 A 页面或 B 页面顶部时，阻止默认滚动
   if (
-    currentPage === "/index" ||
+    currentPage === "/" ||
     (currentPage === "/images" && childScrollState.value.isAtTop)
   ) {
     event.preventDefault();
@@ -166,7 +166,7 @@ const handleTouchEnd = (event) => {
 
   // 滑动距离阈值
   if (Math.abs(diff) > 50) {
-    if (currentPage === "/index" && diff > 0) {
+    if (currentPage === "/" && diff > 0) {
       // A → B：向下滑动
       transitionName.value = "slide-up";
       router.push("/images");
@@ -177,7 +177,7 @@ const handleTouchEnd = (event) => {
     ) {
       // B → A：向上滑动（仅在顶部时）
       transitionName.value = "slide-down";
-      router.push("/index");
+      router.push("/");
     }
   }
 
