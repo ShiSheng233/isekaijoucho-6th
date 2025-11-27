@@ -18,16 +18,16 @@ import { IMAGES } from '../utils/default'
 const router = useRouter()
 
 // 将 IMAGES 数据转换为 InfiniteMenu 需要的格式
-// title: DAYxxx, description: name, image: smallUrl
+// title: DAYxxx, description: name, image: url
 const menuItems = computed(() => {
   const items = []
   
   IMAGES.forEach((dayData) => {
     // 只添加有图片的项目
     dayData.children.forEach((child) => {
-      if (child.smallUrl) {
+      if (child.url) {
         items.push({
-          image: child.smallUrl,
+          image: child.url,
           link: `/images?day=${dayData.days}`,
           title: `DAY${dayData.days}`,
           description: child.name,

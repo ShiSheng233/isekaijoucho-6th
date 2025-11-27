@@ -77,14 +77,14 @@
               <div
                 class="image-container"
                 :style="
-                  image.loadError || !image.smallUrl || image.isLoading
+                  image.loadError || !image.url || image.isLoading
                     ? { width: '100%' }
                     : {}
                 "
               >
                 <!-- 加载中状态 - 图片还不应该加载或正在加载中时显示 -->
                 <div
-                  v-if="image.smallUrl && (!shouldLoadImage(item.days, i_index) || !isImageReady(image.smallUrl))"
+                  v-if="image.url && (!shouldLoadImage(item.days, i_index) || !isImageReady(image.url))"
                   class="image-loading-placeholder"
                 >
                   <div class="loading-spinner"></div>
@@ -92,25 +92,25 @@
                 </div>
                 <!-- 隐藏的img用于实际加载图片 -->
                 <img
-                  v-if="image.smallUrl && shouldLoadImage(item.days, i_index)"
+                  v-if="image.url && shouldLoadImage(item.days, i_index)"
                   class="right-content_item-image"
-                  :class="{ 'image-hidden': !isImageReady(image.smallUrl) }"
+                  :class="{ 'image-hidden': !isImageReady(image.url) }"
                   alt="图像"
                   draggable="true"
-                  :src="image.smallUrl"
+                  :src="image.url"
                   @click="showImages(item.days, i_index)"
                   @load="handleImageLoad"
                   @error="handleImageError"
                 />
                 <!-- 加载失败状态 -->
                 <div
-                  v-if="image.smallUrl && image.loadError"
+                  v-if="image.url && image.loadError"
                   class="image-error-placeholder"
                 >
                   <span class="error-text">ERROR</span>
                 </div>
                 <!-- 无URL状态 -->
-                <div v-if="!image.smallUrl" class="image-error-placeholder">
+                <div v-if="!image.url" class="image-error-placeholder">
                   <span class="none-text">?</span>
                 </div>
                 <div
@@ -398,7 +398,7 @@ const handleImageLoad = (event) => {
   // 遍历图片数据找到对应的图片
   image_list.forEach((item) => {
     item.children.forEach((image) => {
-      if (image.smallUrl && imgSrc.includes(image.smallUrl.split("/").pop())) {
+      if (image.url && imgSrc.includes(image.url.split("/").pop())) {
         image.isLoading = false;
         image.loadError = false;
       }
@@ -415,7 +415,7 @@ const handleImageError = (event) => {
   // 遍历图片数据找到对应的图片
   image_list.forEach((item) => {
     item.children.forEach((image) => {
-      if (image.smallUrl && imgSrc.includes(image.smallUrl.split("/").pop())) {
+      if (image.url && imgSrc.includes(image.url.split("/").pop())) {
         image.isLoading = false;
         image.loadError = true;
       }
@@ -650,7 +650,7 @@ const shouldLoadImage = (days, imageIndex) => {
   
   // 检查图片URL是否已加载
   const image = allImages.value[globalIndex];
-  if (image && image.smallUrl && loadedImagesSet.has(image.smallUrl)) {
+  if (image && image.url && loadedImagesSet.has(image.url)) {
     return true;
   }
   
@@ -689,8 +689,8 @@ const preloadNearbyImages = async () => {
   const urlsToPreload = [];
   for (let i = startIndex; i <= endIndex; i++) {
     const image = allImages.value[i];
-    if (image && image.smallUrl && !isImageLoaded(image.smallUrl)) {
-      urlsToPreload.push(image.smallUrl);
+    if (image && image.url && !isImageLoaded(image.url)) {
+      urlsToPreload.push(image.url);
     }
   }
   
@@ -797,8 +797,8 @@ onMounted(() => {
     // 预加载初始图片（前INITIAL_LOAD_COUNT张 + 周围的图片）
     const initialUrls = allImages.value
       .slice(0, INITIAL_LOAD_COUNT + PRELOAD_COUNT)
-      .filter(img => img.smallUrl)
-      .map(img => img.smallUrl);
+      .filter(img => img.url)
+      .map(img => img.url);
     preloadImages(initialUrls);
   });
 });
