@@ -225,7 +225,7 @@
           </div>
         </div>
         <div class="footer-item">
-          <div class="footer-item_title">DESIGNER/DEVELOPER</div>
+          <div class="footer-item_title">DESIGNER / DEVELOPER</div>
           <div class="footer-item_names">
             <div
               class="footer-item_name"

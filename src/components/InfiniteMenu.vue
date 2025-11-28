@@ -621,6 +621,10 @@ class ArcballControl {
       }
     });
 
+    canvas.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
     canvas.style.touchAction = "none";
   }
 

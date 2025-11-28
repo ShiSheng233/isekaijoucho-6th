@@ -6,15 +6,18 @@
     @touchmove="handleTouchMove"
     @touchend="handleTouchEnd"
   >
-    <router-view v-slot="{ Component }">
+    <router-view v-slot="{ Component, route }">
       <transition :name="transitionName">
-        <component
-          :is="Component"
-          :state="childScrollState"
-          :loading-complete="loadingComplete"
-          @scroll-state="handleChildScrollState"
-          @preview-state="handlePreviewState"
-        />
+        <keep-alive :include="cachedViews">
+          <component
+            :is="Component"
+            :key="route.path"
+            :state="childScrollState"
+            :loading-complete="loadingComplete"
+            @scroll-state="handleChildScrollState"
+            @preview-state="handlePreviewState"
+          />
+        </keep-alive>
       </transition>
     </router-view>
 
@@ -26,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import Loading from "./views/loading.vue";
 
@@ -34,6 +37,9 @@ const router = useRouter();
 const transitionName = ref("slide-down");
 const showLoading = ref(true);
 const loadingComplete = ref(false);
+
+// 缓存的视图列表 - 只在首页时缓存首页
+const cachedViews = ref([]);
 
 // 子组件的滚动状态
 const childScrollState = ref({
@@ -275,8 +281,12 @@ router.afterEach((to, from) => {
   // 设置页面切换动画
   if (from.path === "/" && to.path === "/images") {
     transitionName.value = "slide-up";
+    // 切换到 /images 时，移除首页缓存，释放资源
+    cachedViews.value = [];
   } else if (from.path === "/images" && to.path === "/") {
     transitionName.value = "slide-down";
+    // 切换回首页时，可以选择是否缓存
+    // cachedViews.value = ['index'];
   }
 });
 </script>

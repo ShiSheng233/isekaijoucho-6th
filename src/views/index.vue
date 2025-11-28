@@ -11,10 +11,15 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import InfiniteMenu from "../components/InfiniteMenu.vue";
 import { IMAGES } from "../utils/default";
+
+// 定义组件名称，用于 keep-alive
+defineOptions({
+  name: 'index'
+});
 
 const props = defineProps({
   loadingComplete: {
