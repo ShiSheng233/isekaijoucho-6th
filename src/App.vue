@@ -269,8 +269,15 @@ const handleTouchEnd = (event) => {
 };
 
 // 监听路由变化
-router.afterEach((to) => {
+router.afterEach((to, from) => {
   currentPage = to.path;
+  
+  // 设置页面切换动画
+  if (from.path === "/" && to.path === "/images") {
+    transitionName.value = "slide-up";
+  } else if (from.path === "/images" && to.path === "/") {
+    transitionName.value = "slide-down";
+  }
 });
 </script>
 
