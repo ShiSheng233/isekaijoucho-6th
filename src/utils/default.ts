@@ -677,4 +677,26 @@ export const IMAGES = [
       },
     ],
   },
+  {
+    days: 0, // 倒计时天数
+    time: "2025.12.09",
+    children: [
+      {
+        url: "", // 图片URL
+        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "???", // 作者姓名
+        name_X: "", // 推特名称
+        account_X: "", // 推特账号
+        link_X: "", // 推特链接
+        name_bili: "", // B站名称
+        link_bili: "", // B站链接
+        name_weibo: "", // 微博名称
+        link_weibo: "", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+    ],
+  },
 ];
