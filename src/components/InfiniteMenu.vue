@@ -1,5 +1,7 @@
 <template>
   <div class="infinite-menu-container">
+    <div class="center-line-vertical" style="left: 5vw; right: auto"></div>
+    <div class="center-line-vertical" style="left: auto; right: 5vw"></div>
     <div
       class="center-line-vertical"
       :style="verticalLineStyle"
@@ -9,6 +11,8 @@
         <span>DAY {{ activeItem?.days }}</span>
       </div>
     </div>
+    <div class="center-line-horizontal" style="top: 5vw; bottom: auto"></div>
+    <div class="center-line-horizontal" style="top: auto; bottom: 5vw"></div>
     <div
       class="center-line-horizontal"
       :style="horizontalLineStyle"
@@ -1442,6 +1446,7 @@ watch(
     border: 1px solid #505050;
     border-width: 1px 0 0 0;
     pointer-events: none; // 确保不影响鼠标事件
+    width: 100vw;
     &.mobile-fixed {
       top: 50vh !important; // 移动端强制固定在中心
     }
@@ -1454,6 +1459,7 @@ watch(
       font-weight: bold;
       color: #fff;
       text-align: right;
+      padding-right: 0.3vw;
     }
   }
 }
@@ -1638,7 +1644,6 @@ watch(
 }
 
 @media (max-width: 1500px) {
-  
   .center-line-horizontal {
     .center-line-horizontal-days {
       right: 0vw;
