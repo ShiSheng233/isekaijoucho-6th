@@ -1423,6 +1423,7 @@ watch(
       position: absolute;
       right: 0;
       top: 10vh;
+      padding-right: 0.3vw;
       transform: translate(0, -50%);
       font-size: min(3vw, 15px);
       font-weight: bold;
