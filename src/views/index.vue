@@ -43,6 +43,7 @@ const menuItems = computed(() => {
           description: child.name,
           days: dayData.days,
           name: child.name,
+          offset: child.offset || { x: 0, y: 0 }, // 传递offset配置
         });
       }
     });

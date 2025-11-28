@@ -946,7 +946,7 @@ class InfiniteGridMenu {
     const gl = this.gl;
     this.tex = createAndSetupTexture(
       gl,
-      gl.LINEAR,
+      gl.LINEAR_MIPMAP_LINEAR,
       gl.LINEAR,
       gl.CLAMP_TO_EDGE,
       gl.CLAMP_TO_EDGE
@@ -954,13 +954,8 @@ class InfiniteGridMenu {
 
     const itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const cellSize = 512;
 
-    canvas.width = this.atlasSize * cellSize;
-    canvas.height = this.atlasSize * cellSize;
-
+    // 先加载所有图片以获取最大尺寸
     Promise.all(
       this.items.map(
         (item) =>
@@ -973,10 +968,31 @@ class InfiniteGridMenu {
           })
       )
     ).then((images) => {
+      // 计算所有图片中的最大尺寸，使用该尺寸作为cellSize
+      let maxSize = 512; // 最小值
+      images.forEach((img) => {
+        if (img) {
+          maxSize = Math.max(maxSize, img.width, img.height);
+        }
+      });
+      
+      // 限制最大cellSize以避免内存问题，同时保持高质量
+      const cellSize = Math.min(maxSize, 2048);
+      
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = this.atlasSize * cellSize;
+      canvas.height = this.atlasSize * cellSize;
+
       images.forEach((img, i) => {
         if (img) {
           const x = (i % this.atlasSize) * cellSize;
           const y = Math.floor(i / this.atlasSize) * cellSize;
+
+          // 获取图片的offset配置，默认为0
+          const item = this.items[i];
+          const offsetX = item?.offset?.x || 0; // 范围 -1 到 1
+          const offsetY = item?.offset?.y || 0; // 范围 -1 到 1
 
           // 居中裁剪（cover效果）：保持宽高比，裁剪多余部分
           const imgWidth = img.width;
@@ -990,14 +1006,22 @@ class InfiniteGridMenu {
             // 图片更宽，裁剪左右
             sHeight = imgHeight;
             sWidth = imgHeight * cellAspect;
-            sx = (imgWidth - sWidth) / 2;
+            // 基础居中 + offset偏移
+            const maxOffsetX = (imgWidth - sWidth) / 2;
+            sx = (imgWidth - sWidth) / 2 + offsetX * maxOffsetX;
+            // 确保sx在有效范围内
+            sx = Math.max(0, Math.min(imgWidth - sWidth, sx));
             sy = 0;
           } else {
             // 图片更高，裁剪上下
             sWidth = imgWidth;
             sHeight = imgWidth / cellAspect;
             sx = 0;
-            sy = (imgHeight - sHeight) / 2;
+            // 基础居中 + offset偏移
+            const maxOffsetY = (imgHeight - sHeight) / 2;
+            sy = (imgHeight - sHeight) / 2 + offsetY * maxOffsetY;
+            // 确保sy在有效范围内
+            sy = Math.max(0, Math.min(imgHeight - sHeight, sy));
           }
 
           // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
