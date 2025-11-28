@@ -67,18 +67,22 @@ export const preloadImagesWithProgress = async (
   const validUrls = urls.filter((url) => url && !loadedImages.has(url));
   const total = validUrls.length;
   let loaded = 0;
+  let failedCount = 0;
+  const failedUrls: string[] = [];
 
   if (total === 0) {
     onProgress?.(0, 0, 100);
     return;
   }
 
-  // 使用Promise.allSettled来确保即使某些图片加载失败也能继续
+  // 使用Promise.allSettled来确保所有图片都尝试加载
   const promises = validUrls.map(async (url) => {
     try {
       await loadImage(url);
     } catch (error) {
       console.warn(`Failed to load image: ${url}`, error);
+      failedCount++;
+      failedUrls.push(url);
     } finally {
       loaded++;
       const percentage = (loaded / total) * 100;
@@ -87,6 +91,11 @@ export const preloadImagesWithProgress = async (
   });
 
   await Promise.allSettled(promises);
+
+  // 如果有图片加载失败，抛出错误
+  if (failedCount > 0) {
+    throw new Error(`Failed to load ${failedCount} image(s): ${failedUrls.slice(0, 3).join(', ')}${failedCount > 3 ? '...' : ''}`);
+  }
 };
 
 // 检查图片是否已加载
