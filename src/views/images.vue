@@ -84,7 +84,12 @@
               >
                 <!-- 加载中状态 - 图片还不应该加载或正在加载中时显示 -->
                 <div
-                  v-if="image.url && (!shouldLoadImage(item.days, i_index) || !isImageReady(image.url))"
+                  v-if="
+                    image.url &&
+                    !image.loadError &&
+                    (!shouldLoadImage(image, item.days, i_index) ||
+                      !isImageReady(image.url))
+                  "
                   class="image-loading-placeholder"
                 >
                   <div class="loading-spinner"></div>
@@ -92,7 +97,7 @@
                 </div>
                 <!-- 隐藏的img用于实际加载图片 -->
                 <img
-                  v-if="image.url && shouldLoadImage(item.days, i_index)"
+                  v-if="image.url && shouldLoadImage(image, item.days, i_index)"
                   class="right-content_item-image"
                   :class="{ 'image-hidden': !isImageReady(image.url) }"
                   alt="图像"
@@ -275,7 +280,12 @@
 import { ref, onMounted, onUnmounted, watch, computed, nextTick } from "vue";
 import { IMAGES } from "../utils/default";
 import ImagesPreview from "../components/imagesPreview.vue";
-import { preloadImages, isImageLoaded, markImageAsLoaded, getLoadedImages } from "../utils/imageLoader";
+import {
+  preloadImages,
+  isImageLoaded,
+  markImageAsLoaded,
+  getLoadedImages,
+} from "../utils/imageLoader";
 
 const scrollContainer = ref(null);
 const isAtTop = ref(true);
@@ -443,6 +453,7 @@ const initializeImages = () => {
         loadError: false, // 初始化错误状态
         isLoading: true, // 初始化加载状态
       };
+      image.loadError = false; // 初始化错误状态
       image.isLoading = true; // 进入加载状态
       images.push(imageInfo);
       if (!nameList.value.find((o) => o.name === imageInfo.name)) {
@@ -642,33 +653,35 @@ const linkOpen = (url) => {
 };
 
 // 判断图片是否应该加载（懒加载逻辑）
-const shouldLoadImage = (days, imageIndex) => {
+const shouldLoadImage = (image, days, imageIndex) => {
   const key = `${days}-${imageIndex}`;
   const globalIndex = imageMap.value.get(key);
-  
+
   if (globalIndex === undefined) return false;
-  
+
   // 检查图片URL是否已加载
-  const image = allImages.value[globalIndex];
   if (image && image.url && loadedImagesSet.has(image.url)) {
     return true;
   }
-  
+
   // 检查是否在初始加载范围内
   if (globalIndex < INITIAL_LOAD_COUNT) {
     return true;
   }
-  
+
   // 检查是否在当前可见区域附近（当前激活图片的前后PRELOAD_COUNT张）
   const currentIndex = currentBehindSection.value;
   if (currentIndex !== null && currentIndex !== undefined) {
     const startIndex = Math.max(0, currentIndex - PRELOAD_COUNT);
-    const endIndex = Math.min(allImages.value.length - 1, currentIndex + PRELOAD_COUNT);
+    const endIndex = Math.min(
+      allImages.value.length - 1,
+      currentIndex + PRELOAD_COUNT
+    );
     if (globalIndex >= startIndex && globalIndex <= endIndex) {
       return true;
     }
   }
-  
+
   return false;
 };
 
@@ -682,10 +695,13 @@ const isImageReady = (url) => {
 const preloadNearbyImages = async () => {
   const currentIndex = currentBehindSection.value;
   if (currentIndex === null) return;
-  
+
   const startIndex = Math.max(0, currentIndex - PRELOAD_COUNT);
-  const endIndex = Math.min(allImages.value.length - 1, currentIndex + PRELOAD_COUNT);
-  
+  const endIndex = Math.min(
+    allImages.value.length - 1,
+    currentIndex + PRELOAD_COUNT
+  );
+
   const urlsToPreload = [];
   for (let i = startIndex; i <= endIndex; i++) {
     const image = allImages.value[i];
@@ -693,7 +709,7 @@ const preloadNearbyImages = async () => {
       urlsToPreload.push(image.url);
     }
   }
-  
+
   if (urlsToPreload.length > 0) {
     await preloadImages(urlsToPreload);
   }
@@ -738,7 +754,7 @@ watch(
 
     // 更新上一次的countIndex
     previousCountIndex.value = newCountIndex;
-    
+
     // 预加载附近的图片
     preloadNearbyImages();
   },
@@ -793,12 +809,12 @@ onMounted(() => {
     // 初始化时更新位置
     currentBehindSection.value = 0;
     currentBehindContent.value = allImages.value[0];
-    
+
     // 预加载初始图片（前INITIAL_LOAD_COUNT张 + 周围的图片）
     const initialUrls = allImages.value
       .slice(0, INITIAL_LOAD_COUNT + PRELOAD_COUNT)
-      .filter(img => img.url)
-      .map(img => img.url);
+      .filter((img) => img.url)
+      .map((img) => img.url);
     preloadImages(initialUrls);
   });
 });
@@ -911,7 +927,7 @@ onUnmounted(() => {
             display: block;
             position: relative;
             z-index: 2;
-            
+
             &.image-hidden {
               position: absolute;
               width: 1px;

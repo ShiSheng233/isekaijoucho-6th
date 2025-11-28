@@ -5,8 +5,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 缩略图URL
         name: "WALluka", // 作者姓名
         name_X: "WALluka", // 推特名称
         account_X: "nishino_WALluka", // 推特账号
@@ -28,8 +26,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/29.%E9%9B%B6%E7%82%B9.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/29.%E9%9B%B6%E7%82%B9.webp", // 缩略图URL
         name: "零点", // 作者姓名
         name_X: "零点", // 推特名称
         account_X: "zeropoint2084", // 推特账号
@@ -51,8 +47,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/28.ansu.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/28.ansu.webp", // 缩略图URL
         name: "Ansu", // 作者姓名
         name_X: "Ansu", // 推特名称
         account_X: "Ansu3227620262", // 推特账号
@@ -74,8 +68,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/27.%E8%A1%BF%E9%9D%9E.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/27.%E8%A1%BF%E9%9D%9E.webp", // 缩略图URL
         name: "衿非", // 作者姓名
         name_X: "衿非", // 推特名称
         account_X: "XIBItaheyo", // 推特账号
@@ -97,8 +89,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/26.%E5%AD%9D%E5%A6%8D.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/26.%E5%AD%9D%E5%A6%8D.webp", // 缩略图URL
         name: "孝妍", // 作者姓名
         name_X: "孝妍🐈🎄", // 推特名称
         account_X: "xiazouhuacha1", // 推特账号
@@ -120,8 +110,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 缩略图URL
         name: "跳蒜米", // 作者姓名
         name_X: "树雀植物园", // 推特名称
         account_X: "_paridae_", // 推特账号
@@ -143,8 +131,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/24.%E7%85%8E%E9%A5%BCnoa.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/24.%E7%85%8E%E9%A5%BCnoa.webp", // 缩略图URL
         name: "煎饼", // 作者姓名
         name_X: "🥞", // 推特名称
         account_X: "pancakenoa", // 推特账号
@@ -166,8 +152,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 缩略图URL
         name: "瓷小鱼", // 作者姓名
         name_X: "瓷小鱼", // 推特名称
         account_X: "cixiaoyu_", // 推特账号
@@ -177,7 +161,8 @@ export const IMAGES = [
         name_weibo: "瓷小鱼", // 微博名称
         link_weibo: "https://weibo.com/3947489862/Qe7t0iFmu", // 微博链接
         name_red: "瓷小鱼", // 小红书名称
-        link_red: "https://www.xiaohongshu.com/explore/69199277000000000703b4d2?xsec_token=ABEMEmJ0RJhIi8SIE9nv4oVD69NnBGctQSW1sxLJHxU5s=", // 小红书链接
+        link_red:
+          "https://www.xiaohongshu.com/explore/69199277000000000703b4d2?xsec_token=ABEMEmJ0RJhIi8SIE9nv4oVD69NnBGctQSW1sxLJHxU5s=", // 小红书链接
         name_lof: "", // Lofter名称
         link_lof: "", // Lofter链接
       },
@@ -189,8 +174,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/22.%E7%9C%A0%E8%88%9F.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/22.%E7%9C%A0%E8%88%9F.webp", // 缩略图URL
         name: "眠舟", // 作者姓名
         name_X: "眠舟就这样咕咕咕咕咕", // 推特名称
         account_X: "sleepboatabc", // 推特账号
@@ -212,8 +195,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/21.%E9%BB%84%E6%B2%B9.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/21.%E9%BB%84%E6%B2%B9.webp", // 缩略图URL
         name: "黄油", // 作者姓名
         name_X: "butter_fly", // 推特名称
         account_X: "Butter_0_0", // 推特账号
@@ -235,8 +216,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/20.AIRCeeco.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/20.AIRCeeco.webp", // 缩略图URL
         name: "AIRCeeco", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -258,8 +237,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 缩略图URL
         name: "埋鱼井", // 作者姓名
         name_X: "🥝", // 推特名称
         account_X: "auuuie", // 推特账号
@@ -281,8 +258,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/18.%E5%88%83.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/18.%E5%88%83.webp", // 缩略图URL
         name: "刃", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -304,8 +279,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/17.%E7%BE%BD%E8%80%BD.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/17.%E7%BE%BD%E8%80%BD.webp", // 缩略图URL
         name: "Plume_羽耽", // 作者姓名
         name_X: "Plume_羽耽", // 推特名称
         account_X: "plumeyudan", // 推特账号
@@ -327,8 +300,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 缩略图URL
         name: "-Muserin-_暮色林.", // 作者姓名
         name_X: "夕暮れ林_-Mulserin-.", // 推特名称
         account_X: "Muserin_", // 推特账号
@@ -350,8 +321,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/15.xixiii.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/15.xixiii.webp", // 缩略图URL
         name: "xixiii", // 作者姓名
         name_X: "xixiiii", // 推特名称
         account_X: "bx6318", // 推特账号
@@ -373,8 +342,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 图片URL
-        smallUrl:
-          "https://6th-assets.isekaijoucho.moe/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 缩略图URL
         name: "长颈鹿忍人", // 作者姓名
         name_X: "长颈鹿忍人🦒", // 推特名称
         account_X: "refhi_kirin", // 推特账号
@@ -396,7 +363,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
-        smallUrl: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 缩略图URL
         name: "谛云roly", // 作者姓名
         name_X: "谛云roly", // 推特名称
         account_X: "diyunroly0418", // 推特账号
@@ -410,22 +376,21 @@ export const IMAGES = [
         name_lof: "", // Lofter名称
         link_lof: "", // Lofter链接
       },
-      {
-        url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
-        smallUrl: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 缩略图URL
-        name: "谛云roly", // 作者姓名
-        name_X: "谛云roly", // 推特名称
-        account_X: "diyunroly0418", // 推特账号
-        link_X: "https://x.com/diyunroly0418/status/1993605711004393828", // 推特链接
-        name_bili: "谛云roly", // B站名称
-        link_bili: "https://www.bilibili.com/opus/1139494408252555271", // B站链接
-        name_weibo: "谛云roly", // 微博名称
-        link_weibo: "https://weibo.com/5657956693/QfDKmqKto", // 微博链接
-        name_red: "", // 小红书名称
-        link_red: "", // 小红书链接
-        name_lof: "", // Lofter名称
-        link_lof: "", // Lofter链接
-      },
+      // {
+      //   url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
+      //   name: "谛云roly", // 作者姓名
+      //   name_X: "谛云roly", // 推特名称
+      //   account_X: "diyunroly0418", // 推特账号
+      //   link_X: "https://x.com/diyunroly0418/status/1993605711004393828", // 推特链接
+      //   name_bili: "谛云roly", // B站名称
+      //   link_bili: "https://www.bilibili.com/opus/1139494408252555271", // B站链接
+      //   name_weibo: "谛云roly", // 微博名称
+      //   link_weibo: "https://weibo.com/5657956693/QfDKmqKto", // 微博链接
+      //   name_red: "", // 小红书名称
+      //   link_red: "", // 小红书链接
+      //   name_lof: "", // Lofter名称
+      //   link_lof: "", // Lofter链接
+      // },
     ],
   },
   {
@@ -434,7 +399,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 图片URL
-        smallUrl: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -456,7 +420,6 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 图片URL
-        smallUrl: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -478,7 +441,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -500,7 +462,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -522,7 +483,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -544,7 +504,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -566,7 +525,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -588,7 +546,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -610,7 +567,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -632,7 +588,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -654,7 +609,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
@@ -676,7 +630,6 @@ export const IMAGES = [
     children: [
       {
         url: "", // 图片URL
-        smallUrl: "", // 缩略图URL
         name: "???", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号

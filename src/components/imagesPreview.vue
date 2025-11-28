@@ -60,7 +60,7 @@
           :class="{ active: index === currentIndex }"
           @click.stop="goToImage(index)"
         >
-          <img :src="image.smallUrl || image.url" :alt="`DAYS ${image.days}`" />
+          <img :src="image.url" :alt="`DAYS ${image.days}`" />
         </div>
       </div>
     </div>
@@ -104,11 +104,13 @@ const lastTranslateX = ref(0);
 const lastTranslateY = ref(0);
 
 const filterImage = computed(() => props.images.filter((o) => !!o.url));
-console.log('filterImage', filterImage.value)
+console.log("filterImage", filterImage.value);
 const currentImage = computed(() => filterImage.value[currentIndex.value]);
 const totalImages = computed(() => filterImage.value.length);
 const canGoPrev = computed(() => currentIndex.value > 0);
-const canGoNext = computed(() => currentIndex.value < filterImage.value.length - 1);
+const canGoNext = computed(
+  () => currentIndex.value < filterImage.value.length - 1
+);
 
 const imageStyle = computed(() => ({
   transform: `rotate(${rotation.value}deg) scale(${scale.value}) translate(${translateX.value}px, ${translateY.value}px)`,
@@ -206,10 +208,10 @@ const handleImageError = () => {
 const handleThumbnailWheel = (event) => {
   event.preventDefault();
   event.stopPropagation();
-  
+
   const container = event.currentTarget;
   const scrollAmount = event.deltaY > 0 ? 100 : -100;
-  
+
   container.scrollLeft += scrollAmount;
 };
 
@@ -584,16 +586,16 @@ button:focus-visible {
     gap: 12px;
     cursor: grab;
   }
-  
+
   .thumbnails-container:active {
     cursor: grabbing;
   }
-  
+
   .thumbnail {
     width: 60px;
     height: 60px;
   }
-  
+
   .thumbnail:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease;

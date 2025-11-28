@@ -103,11 +103,12 @@ const handleTouchStart = (event) => {
   touchStartX = event.touches[0].clientX;
   isSwiping = false;
   currentPage = router.currentRoute.value.path;
-  
+
   // 检查是否触摸在 canvas 元素上
   const target = event.target;
-  isCanvasTouch = target.tagName === 'CANVAS' || target.closest('canvas') !== null;
-  
+  isCanvasTouch =
+    target.tagName === "CANVAS" || target.closest("canvas") !== null;
+
   // 防止浏览器默认下拉刷新
   if (currentPage === "/images") {
     event.preventDefault();
@@ -125,7 +126,7 @@ const handleTouchMove = (event) => {
     event.preventDefault();
     return;
   }
-  
+
   // 如果是在 canvas 上触摸（拖动球体），不触发页面切换
   // 只有当垂直滑动明显大于水平滑动且不在 canvas 上时，才考虑页面切换
   if (isCanvasTouch) {
@@ -133,10 +134,10 @@ const handleTouchMove = (event) => {
     event.preventDefault();
     return;
   }
-  
+
   // 检查是否为垂直滑动（垂直滑动距离明显大于水平滑动）
   const isVerticalSwipe = Math.abs(diffY) > Math.abs(diffX) * 1.5;
-  
+
   // 如果不是垂直滑动，不处理页面切换
   if (!isVerticalSwipe && Math.abs(diffY) > 10) {
     return;
@@ -165,7 +166,7 @@ const handleTouchMove = (event) => {
   ) {
     event.preventDefault();
   }
-  
+
   // 特别处理：在 images 页面顶部向下滑动时，阻止浏览器下拉刷新
   if (
     currentPage === "/images" &&
@@ -187,7 +188,7 @@ const handleTouchEnd = (event) => {
     isCanvasTouch = false;
     return;
   }
-  
+
   // 如果是在 canvas 上触摸（拖动球体），不触发页面切换
   if (isCanvasTouch) {
     isCanvasTouch = false;

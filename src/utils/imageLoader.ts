@@ -1,5 +1,5 @@
 // 图片懒加载管理器
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
 // 已加载图片的URL集合
 const loadedImages = reactive(new Set<string>());
@@ -44,8 +44,8 @@ export const loadImage = (url: string): Promise<void> => {
 
 // 批量预加载图片
 export const preloadImages = async (urls: string[]): Promise<void> => {
-  const validUrls = urls.filter(url => url && !loadedImages.has(url));
-  await Promise.all(validUrls.map(url => loadImage(url).catch(() => {})));
+  const validUrls = urls.filter((url) => url && !loadedImages.has(url));
+  await Promise.all(validUrls.map((url) => loadImage(url).catch(() => {})));
 };
 
 // 检查图片是否已加载
