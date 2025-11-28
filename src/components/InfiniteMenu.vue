@@ -1500,7 +1500,7 @@ watch(
   // transform: translate(0, -50%);
   left: 50%;
   right: auto;
-  top: calc(70% + 140px);
+  top: calc(80% + 140px);
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
@@ -1529,7 +1529,7 @@ watch(
   user-select: none;
   position: absolute;
   left: 50%;
-  top: 70%;
+  top: 80%;
   transform: translate(-50%, 100%);
   width: 60px;
   height: 60px;
@@ -1653,7 +1653,7 @@ watch(
   .face-description {
     left: 50%;
     right: auto;
-    top: calc(75% + 70px);
+    top: calc(85% + 70px);
     transform: translate(-50%, -50%);
     text-align: center;
   }
@@ -1667,7 +1667,7 @@ watch(
   }
 
   .navigate-button {
-    top: 75%;
+    top: 85%;
     width: 50px;
     height: 50px;
     transform: translate(-50%, 0);
