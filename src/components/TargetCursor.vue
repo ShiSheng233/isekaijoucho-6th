@@ -241,7 +241,7 @@ onMounted(() => {
       document.body.style.cursor = 'none';
       // 强制隐藏所有元素的光标
       cursorStyleElement = document.createElement('style');
-      cursorStyleElement.innerHTML = '* { cursor: none !important; }';
+      // cursorStyleElement.innerHTML = '* { cursor: none !important; }';
       document.head.appendChild(cursorStyleElement);
     }
 
