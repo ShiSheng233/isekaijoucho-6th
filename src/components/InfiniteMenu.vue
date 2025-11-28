@@ -2,7 +2,11 @@
   <div class="infinite-menu-container">
     <div class="center-line-vertical" style="left: 5vw; right: auto"></div>
     <div class="center-line-vertical" style="left: auto; right: 5vw"></div>
-    <div class="center-line-vertical" :style="verticalLineStyle" :class="{ 'mobile-fixed': isMobile }">
+    <div
+      class="center-line-vertical"
+      :style="verticalLineStyle"
+      :class="{ 'mobile-fixed': isMobile }"
+    >
       <div class="center-line-vertical-days">
         <span>DAY {{ activeItem?.days }}</span>
       </div>
@@ -31,8 +35,11 @@
       </p>
 
       <!-- 导航按钮 -->
-      <button :class="['navigate-button', isMoving ? 'inactive' : 'active']" @click="handleNavigateClick"
-        aria-label="Navigate to images">
+      <button
+        :class="['navigate-button', isMoving ? 'inactive' : 'active']"
+        @click="handleNavigateClick"
+        aria-label="Navigate to images"
+      >
         <span class="navigate-icon">↓</span>
       </button>
       <div class="fixed-title" v-if="showLogo">
@@ -41,7 +48,11 @@
             <img src="../assets/font-6.svg" alt="" />
           </div>
           <div class="l1-right">
-            <img class="l1-right-1" src="../assets/font-ISEKAIJOUCHO.svg" alt="" />
+            <img
+              class="l1-right-1"
+              src="../assets/font-ISEKAIJOUCHO.svg"
+              alt=""
+            />
             <img class="l1-right-2" src="../assets/font-TH.svg" alt="" />
           </div>
         </div>
@@ -49,7 +60,14 @@
           <img src="../assets/font-COUNTDOWN.svg" alt="" />
         </div>
       </div>
-      <div class="x-button" @click="linkOpen('https://x.com/hashtag/%E3%83%B0%E4%B8%96%E7%95%8C%E6%83%85%E7%B7%926thCountdown')">
+      <div
+        class="x-button"
+        @click="
+          linkOpen(
+            'https://x.com/hashtag/%E3%83%B0%E4%B8%96%E7%95%8C%E6%83%85%E7%B7%926thCountdown'
+          )
+        "
+      >
         <span class="x-icon">#ヰ世界情緒6thCountdown</span>
       </div>
     </template>
@@ -800,8 +818,8 @@ class InfiniteGridMenu {
   ) {
     this.canvas = canvas;
     this.items = items || [];
-    this.onActiveItemChange = onActiveItemChange || (() => { });
-    this.onMovementChange = onMovementChange || (() => { });
+    this.onActiveItemChange = onActiveItemChange || (() => {});
+    this.onMovementChange = onMovementChange || (() => {});
     this.init(onInit);
   }
 
@@ -975,13 +993,14 @@ class InfiniteGridMenu {
           maxSize = Math.max(maxSize, img.width, img.height);
         }
       });
-      
+
       const isIPhone = /iPhone/i.test(navigator.userAgent);
-      const isMobileDevice = window.innerWidth <= 768 || 
+      const isMobileDevice =
+        window.innerWidth <= 768 ||
         /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
-      const maxCellSize = isIPhone ? 384 : (isMobileDevice ? 512 : 2048);
+      const maxCellSize = isIPhone ? 384 : isMobileDevice ? 512 : 2048;
       const cellSize = Math.min(maxSize, maxCellSize);
-      
+
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       canvas.width = this.atlasSize * cellSize;
@@ -1445,6 +1464,7 @@ watch(
   width: 100%;
   height: 100%;
   background: linear-gradient(100deg, #5a5a5a 0%, #8a8a8a 100%);
+  cursor: none;
 
   .center-line-vertical {
     height: 100vh;
@@ -1457,6 +1477,7 @@ watch(
 
     &.mobile-fixed {
       left: 50vw !important; // 移动端强制固定在中心
+      z-index: 1;
     }
 
     .center-line-vertical-days {
@@ -1483,6 +1504,7 @@ watch(
 
     &.mobile-fixed {
       top: 50vh !important; // 移动端强制固定在中心
+      z-index: 1;
     }
 
     .center-line-horizontal-days {
@@ -1546,8 +1568,8 @@ watch(
   // transform: translate(0, -50%);
   left: 50%;
   right: auto;
-  top: calc(75% + 140px);
-  transform: translate(-50%, -50%);
+  bottom: 5vh;
+  transform: translate(-50%, 0);
   text-align: center;
   color: white;
   margin: 0;
@@ -1620,8 +1642,8 @@ watch(
   user-select: none;
   position: absolute;
   left: 50%;
-  top: 75%;
-  transform: translate(-50%, 100%);
+  bottom: calc(5vh + 2rem);
+  transform: translate(-50%, 0);
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -1639,11 +1661,11 @@ watch(
 .navigate-button:hover {
   background: rgba(255, 255, 255, 0.3);
   border-color: rgba(255, 255, 255, 0.8);
-  transform: translate(-50%, 100%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .navigate-button:active {
-  transform: translate(-50%, 100%) scale(0.95);
+  transform: translate(-50%, -50%) scale(0.95);
 }
 
 .navigate-button.active {
@@ -1756,8 +1778,8 @@ watch(
   .face-description {
     left: 50%;
     right: auto;
-    top: calc(85% + 70px);
-    transform: translate(-50%, -50%);
+    bottom: 5vh;
+    transform: translate(-50%, 0);
     text-align: center;
   }
 
@@ -1766,22 +1788,22 @@ watch(
   }
 
   .face-description.inactive {
-    transform: translate(-50%, -30%);
+    transform: translate(-50%, -50%);
   }
 
   .navigate-button {
-    top: 85%;
+    bottom: calc(5vh + 3rem);
     width: 50px;
     height: 50px;
     transform: translate(-50%, 0);
   }
 
   .navigate-button:hover {
-    transform: translate(-50%, 0) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .navigate-button:active {
-    transform: translate(-50%, 0) scale(0.95);
+    transform: translate(-50%, -50%) scale(0.95);
   }
 
   .navigate-icon {
@@ -1792,7 +1814,7 @@ watch(
 // 移动设备专用样式
 @media (max-width: 768px) {
   .face-description {
-    top: calc(65% + 100px); // 移动设备上的 top 值，可以根据需要调整
+    bottom: 7vh; // 移动设备上的 top 值，可以根据需要调整
   }
 
   .face-description.active {
@@ -1800,15 +1822,16 @@ watch(
   }
 
   .navigate-button {
-    top: 68%; // 移动设备上的 top 值，可以根据需要调整
+    bottom: calc(7vh + 3rem); // 移动设备上的 top 值，可以根据需要调整
+    transform: translate(-50%, 0) scale(1);
   }
 
   .navigate-button:hover {
-    transform: translate(-50%, 0) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .navigate-button:active {
-    transform: translate(-50%, 0) scale(0.95);
+    transform: translate(-50%, -50%) scale(0.95);
   }
 }
 
