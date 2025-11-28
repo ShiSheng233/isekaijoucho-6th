@@ -4,7 +4,7 @@ export const IMAGES = [
     time: "2025.11.9",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/30.%E5%8D%97%E6%BD%AE%E9%B8%A3.webp", // 图片URL
         offset: { x: 0.2, y: -0.8 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "WALluka", // 作者姓名
         name_X: "WALluka", // 推特名称
@@ -26,7 +26,7 @@ export const IMAGES = [
     time: "2025.11.10",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/29.%E9%9B%B6%E7%82%B9.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/29.%E9%9B%B6%E7%82%B9.webp", // 图片URL
         offset: { x: 0.5, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "零点", // 作者姓名
         name_X: "零点", // 推特名称
@@ -48,7 +48,7 @@ export const IMAGES = [
     time: "2025.11.11",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/28.ansu.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/28.ansu.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "Ansu", // 作者姓名
         name_X: "Ansu", // 推特名称
@@ -70,7 +70,7 @@ export const IMAGES = [
     time: "2025.11.12",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/27.%E8%A1%BF%E9%9D%9E.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/27.%E8%A1%BF%E9%9D%9E.webp", // 图片URL
         offset: { x: 0, y: 0.2 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "衿非", // 作者姓名
         name_X: "衿非", // 推特名称
@@ -92,7 +92,7 @@ export const IMAGES = [
     time: "2025.11.13",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/26.%E5%AD%9D%E5%A6%8D.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/26.%E5%AD%9D%E5%A6%8D.webp", // 图片URL
         offset: { x: -0.8, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "孝妍", // 作者姓名
         name_X: "孝妍🐈🎄", // 推特名称
@@ -114,7 +114,7 @@ export const IMAGES = [
     time: "2025.11.14",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/25.%E8%B7%B3%E8%92%9C%E7%B1%B3.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "跳蒜米", // 作者姓名
         name_X: "树雀植物园", // 推特名称
@@ -136,7 +136,7 @@ export const IMAGES = [
     time: "2025.11.15",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/24.%E7%85%8E%E9%A5%BCnoa.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/24.%E7%85%8E%E9%A5%BCnoa.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "煎饼", // 作者姓名
         name_X: "🥞", // 推特名称
@@ -158,7 +158,7 @@ export const IMAGES = [
     time: "2025.11.16",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/23.%E7%93%B7%E5%B0%8F%E9%B1%BC.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "瓷小鱼", // 作者姓名
         name_X: "瓷小鱼", // 推特名称
@@ -181,7 +181,7 @@ export const IMAGES = [
     time: "2025.11.17",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/22.%E7%9C%A0%E8%88%9F.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/22.%E7%9C%A0%E8%88%9F.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "眠舟", // 作者姓名
         name_X: "眠舟就这样咕咕咕咕咕", // 推特名称
@@ -203,7 +203,7 @@ export const IMAGES = [
     time: "2025.11.18",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/21.%E9%BB%84%E6%B2%B9.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/21.%E9%BB%84%E6%B2%B9.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "黄油", // 作者姓名
         name_X: "butter_fly", // 推特名称
@@ -225,7 +225,7 @@ export const IMAGES = [
     time: "2025.11.19",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/20.AIRCeeco.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/20.AIRCeeco.webp", // 图片URL
         offset: { x: -1, y: 1 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "AIRCeeco", // 作者姓名
         name_X: "", // 推特名称
@@ -247,7 +247,7 @@ export const IMAGES = [
     time: "2025.11.20",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/19.%E5%9F%8B%E9%B1%BC%E4%BA%95.webp", // 图片URL
         offset: { x: 0, y: -0.5 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "埋鱼井", // 作者姓名
         name_X: "🥝", // 推特名称
@@ -269,7 +269,7 @@ export const IMAGES = [
     time: "2025.11.21",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/18.%E5%88%83.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/18.%E5%88%83.webp", // 图片URL
         offset: { x: 0, y: -0.8 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "刃", // 作者姓名
         name_X: "", // 推特名称
@@ -291,7 +291,7 @@ export const IMAGES = [
     time: "2025.11.22",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/17.%E7%BE%BD%E8%80%BD.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/17.%E7%BE%BD%E8%80%BD.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "Plume_羽耽", // 作者姓名
         name_X: "Plume_羽耽", // 推特名称
@@ -313,7 +313,7 @@ export const IMAGES = [
     time: "2025.11.23",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/16.%E6%9A%AE%E8%89%B2%E6%9E%97.webp", // 图片URL
         offset: { x: 0.5, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "-Muserin-_暮色林.", // 作者姓名
         name_X: "夕暮れ林_-Mulserin-.", // 推特名称
@@ -335,7 +335,7 @@ export const IMAGES = [
     time: "2025.11.24",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/15.xixiii.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/15.xixiii.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "xixiii", // 作者姓名
         name_X: "xixiiii", // 推特名称
@@ -357,7 +357,7 @@ export const IMAGES = [
     time: "2025.11.25",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/14.%E9%95%BF%E9%A2%88%E9%B9%BF%E5%BF%8D%E4%BA%BA.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "长颈鹿忍人", // 作者姓名
         name_X: "长颈鹿忍人🦒", // 推特名称
@@ -379,7 +379,7 @@ export const IMAGES = [
     time: "2025.11.26",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "谛云roly", // 作者姓名
         name_X: "谛云roly", // 推特名称
@@ -395,7 +395,7 @@ export const IMAGES = [
         link_lof: "", // Lofter链接
       },
       // {
-      //   url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
+      //   url: "https://6th-assets.isekaijoucho.moe/13.%E8%B0%9B%E4%BA%91roly.webp", // 图片URL
       //   name: "谛云roly", // 作者姓名
       //   name_X: "谛云roly", // 推特名称
       //   account_X: "diyunroly0418", // 推特账号
@@ -416,7 +416,7 @@ export const IMAGES = [
     time: "2025.11.27",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/12.morishika.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "森鹿", // 作者姓名
         name_X: "deer.🦌🦌🦌", // 推特名称
@@ -438,7 +438,7 @@ export const IMAGES = [
     time: "2025.11.28",
     children: [
       {
-        url: "https://cdn.jsdelivr.net/gh/ShiSheng233/isekaijoucho-6th@refs/heads/assets/11.moyugan.webp", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 图片URL
         offset: { x: 0.8, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "moyugan", // 作者姓名
         name_X: "moonyuck", // 推特名称
