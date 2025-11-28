@@ -51,7 +51,7 @@
           :key="item.days + i_index"
         >
           <div class="left-content">
-            <div class="left-content_boxs">
+            <div class="left-content_boxs cursor-target">
               <div class="left-content_days">
                 <span
                   :style="{
@@ -98,10 +98,10 @@
                 <!-- 隐藏的img用于实际加载图片 -->
                 <img
                   v-if="image.url && shouldLoadImage(image, item.days, i_index)"
-                  class="right-content_item-image"
+                  class="right-content_item-image cursor-target"
                   :class="{ 'image-hidden': !isImageReady(image.url) }"
                   alt="图像"
-                  draggable="true"
+                  draggable="false"
                   :src="image.url"
                   @click="showImages(item.days, i_index)"
                   @load="handleImageLoad"
@@ -146,7 +146,7 @@
                   <div class="overlay-text">{{ item.time }}</div>
                 </div>
                 <div class="image-container-info">
-                  <div class="image-container-info_left">
+                  <div class="image-container-info_left cursor-target">
                     <div class="image-container-info_left-name">
                       {{ image.name }}
                     </div>
@@ -264,6 +264,14 @@
         </div>
       </footer>
 
+      <TargetCursor 
+        :spinDuration="5"
+        :hoverDuration="0.5"
+        :hideDefaultCursor="true"
+        :parallaxOn="true"
+        targetSelector=".cursor-target"
+      />
+
       <!-- 图片预览组件 -->
       <ImagesPreview
         v-model:visible="visible"
@@ -280,6 +288,7 @@
 import { ref, onMounted, onUnmounted, watch, computed, nextTick } from "vue";
 import { IMAGES } from "../utils/default";
 import ImagesPreview from "../components/imagesPreview.vue";
+import TargetCursor from "../components/TargetCursor.vue";
 import {
   preloadImages,
   isImageLoaded,

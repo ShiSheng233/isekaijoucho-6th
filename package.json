@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "gl-matrix": "^3.4.4",
+    "gsap": "^3.13.0",
     "less": "^4.4.2",
     "vue": "^3.5.24",
     "vue-router": "4",

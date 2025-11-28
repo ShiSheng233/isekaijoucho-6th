@@ -5,6 +5,7 @@
       <div class="loading-spinner">
         <div class="spinner-ring"></div>
       </div>
+      <div class="loading-progress">{{ Math.round(progress) }}%</div>
     </div>
   </div>
 </template>
@@ -36,7 +37,7 @@ const startLoading = async () => {
 
   if (imageUrls.length === 0) {
     progress.value = 100;
-    setTimeout(() => emit("loaded"), 300);
+    setTimeout(() => emit("loaded"), 500);
     return;
   }
 
@@ -45,12 +46,16 @@ const startLoading = async () => {
       progress.value = percentage;
     });
 
-    // 加载完成后延迟300ms自动切换
-    setTimeout(() => emit("loaded"), 300);
+    // 确保进度条显示100%
+    progress.value = 100;
+    
+    // 加载完成后延迟500ms自动切换，给用户反应时间
+    setTimeout(() => emit("loaded"), 500);
   } catch (error) {
     console.error("图片加载失败:", error);
+    progress.value = 100;
     // 即使加载失败也自动切换
-    setTimeout(() => emit("loaded"), 300);
+    setTimeout(() => emit("loaded"), 500);
   }
 };
 
@@ -82,7 +87,14 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
+}
+
+.loading-progress {
+  font-family: "DIN Alternate", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  opacity: 0.8;
 }
 
 .loading-spinner {
