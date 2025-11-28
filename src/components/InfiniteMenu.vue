@@ -2,22 +2,14 @@
   <div class="infinite-menu-container">
     <div class="center-line-vertical" style="left: 5vw; right: auto"></div>
     <div class="center-line-vertical" style="left: auto; right: 5vw"></div>
-    <div
-      class="center-line-vertical"
-      :style="verticalLineStyle"
-      :class="{ 'mobile-fixed': isMobile }"
-    >
+    <div class="center-line-vertical" :style="verticalLineStyle" :class="{ 'mobile-fixed': isMobile }">
       <div class="center-line-vertical-days">
         <span>DAY {{ activeItem?.days }}</span>
       </div>
     </div>
     <div class="center-line-horizontal" style="top: 5vw; bottom: auto"></div>
     <div class="center-line-horizontal" style="top: auto; bottom: 5vw"></div>
-    <div
-      class="center-line-horizontal"
-      :style="horizontalLineStyle"
-      :class="{ 'mobile-fixed': isMobile }"
-    >
+    <div class="center-line-horizontal" :style="horizontalLineStyle" :class="{ 'mobile-fixed': isMobile }">
       <div class="center-line-horizontal-days">
         <span>{{ activeItem?.name }}</span>
       </div>
@@ -35,11 +27,8 @@
       </p>
 
       <!-- 导航按钮 -->
-      <button
-        :class="['navigate-button', isMoving ? 'inactive' : 'active']"
-        @click="handleNavigateClick"
-        aria-label="Navigate to images"
-      >
+      <button :class="['navigate-button', isMoving ? 'inactive' : 'active']" @click="handleNavigateClick"
+        aria-label="Navigate to images">
         <span class="navigate-icon">↓</span>
       </button>
       <div class="fixed-title" v-if="showLogo">
@@ -48,11 +37,7 @@
             <img src="../assets/font-6.svg" alt="" />
           </div>
           <div class="l1-right">
-            <img
-              class="l1-right-1"
-              src="../assets/font-ISEKAIJOUCHO.svg"
-              alt=""
-            />
+            <img class="l1-right-1" src="../assets/font-ISEKAIJOUCHO.svg" alt="" />
             <img class="l1-right-2" src="../assets/font-TH.svg" alt="" />
           </div>
         </div>
@@ -797,8 +782,8 @@ class InfiniteGridMenu {
   ) {
     this.canvas = canvas;
     this.items = items || [];
-    this.onActiveItemChange = onActiveItemChange || (() => {});
-    this.onMovementChange = onMovementChange || (() => {});
+    this.onActiveItemChange = onActiveItemChange || (() => { });
+    this.onMovementChange = onMovementChange || (() => { });
     this.init(onInit);
   }
 
@@ -1424,9 +1409,11 @@ watch(
     left: 50vw;
     border: 1px solid #505050;
     border-width: 0 1px 0 0;
+
     &.mobile-fixed {
       left: 50vw !important; // 移动端强制固定在中心
     }
+
     .center-line-vertical-days {
       position: absolute;
       right: 0;
@@ -1439,6 +1426,7 @@ watch(
       text-align: right;
     }
   }
+
   .center-line-horizontal {
     height: 1px;
     position: fixed;
@@ -1447,9 +1435,11 @@ watch(
     border-width: 1px 0 0 0;
     pointer-events: none; // 确保不影响鼠标事件
     width: 100vw;
+
     &.mobile-fixed {
       top: 50vh !important; // 移动端强制固定在中心
     }
+
     .center-line-horizontal-days {
       position: absolute;
       top: 0;
@@ -1594,49 +1584,59 @@ watch(
   text-align: left;
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
   pointer-events: none;
+
   img {
     max-width: 100%;
     max-height: 100%;
     opacity: 0;
     animation: flickerIn 1s ease-out forwards;
   }
+
   .l1 {
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     margin-bottom: 1vw;
+
     .l1-left {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       height: auto;
       width: 11vw;
+
       img {
         animation: flickerIn 1.2s ease-out forwards;
       }
     }
+
     .l1-right {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       margin-left: 1vw;
+
       .l1-right-1 {
         height: auto;
         width: 22vw;
         margin-bottom: 1vw;
+
         img {
           animation: flickerIn 0.8s ease-out forwards;
         }
       }
+
       .l1-right-2 {
         height: 6vw;
         width: auto;
       }
     }
   }
+
   .l2 {
     height: auto;
     width: 22.6vw;
+
     img {
       animation: flickerIn 0.9s ease-out forwards;
     }
@@ -1649,6 +1649,7 @@ watch(
       right: 0vw;
     }
   }
+
   .face-title {
     left: 50%;
     top: 15%;
@@ -1700,33 +1701,43 @@ watch(
   0% {
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   20% {
     opacity: 0;
   }
+
   30% {
     opacity: 1;
   }
+
   40% {
     opacity: 0;
   }
+
   50% {
     opacity: 0.3;
   }
+
   60% {
     opacity: 1;
   }
+
   70% {
     opacity: 0;
   }
+
   80% {
     opacity: 1;
   }
+
   90% {
     opacity: 0.2;
   }
+
   100% {
     opacity: 1;
   }

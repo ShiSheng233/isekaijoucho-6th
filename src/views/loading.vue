@@ -48,7 +48,7 @@ const startLoading = async () => {
 
     // 确保进度条显示100%
     progress.value = 100;
-    
+
     // 加载完成后延迟500ms自动切换，给用户反应时间
     setTimeout(() => emit("loaded"), 500);
   } catch (error) {
@@ -120,6 +120,7 @@ onMounted(() => {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);
   }
+
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
   }

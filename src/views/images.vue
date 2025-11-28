@@ -1,36 +1,18 @@
 <template>
-  <div
-    class="scroll-page page-images"
-    @wheel="handleWheel"
-    @scroll="handleScroll"
-    @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove"
-    @contextmenu.prevent
-    ref="scrollContainer"
-  >
+  <div class="scroll-page page-images" @wheel="handleWheel" @scroll="handleScroll" @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove" @contextmenu.prevent ref="scrollContainer">
     <div class="content">
       <div class="center-line-vertical"></div>
       <div class="center-line-vertical2"></div>
-      <div
-        class="center-line-image"
-        :style="{
-          transform: `translate(50%, -50%) rotate(${imageRotation}deg)`,
-        }"
-      >
-        <img
-          src="../assets/round_1.svg"
-          alt=""
-          :style="{
-            filter: getImageFilter(imageRotation),
-            opacity: getImageOpacity(imageRotation),
-          }"
-        />
+      <div class="center-line-image" :style="{
+        transform: `translate(50%, -50%) rotate(${imageRotation}deg)`,
+      }">
+        <img src="../assets/round_1.svg" alt="" :style="{
+          filter: getImageFilter(imageRotation),
+          opacity: getImageOpacity(imageRotation),
+        }" />
       </div>
-      <div
-        class="center-line-horizontal"
-        :style="horizontalLineStyle"
-        :class="{ 'mobile-fixed': isMobile }"
-      >
+      <div class="center-line-horizontal" :style="horizontalLineStyle" :class="{ 'mobile-fixed': isMobile }">
         <div class="center-line-horizontal-content"></div>
         <div class="center-line-horizontal-content2"></div>
         <div class="center-line-horizontal-days">
@@ -46,103 +28,70 @@
         </div>
       </div>
       <section v-for="(item, index) in image_list" :key="index">
-        <div
-          class="content-images"
-          v-for="(image, i_index) in item.children"
-          :key="item.days + i_index"
-        >
+        <div class="content-images" v-for="(image, i_index) in item.children" :key="item.days + i_index">
           <div class="left-content">
             <div class="left-content_boxs cursor-target">
               <div class="left-content_days">
-                <span
-                  :style="{
-                    color: isImageActive(item.days, i_index)
-                      ? '#aaa'
-                      : '#141414',
-                  }"
-                  >DAYS {{ item.days }}</span
-                >
+                <span :style="{
+                  color: isImageActive(item.days, i_index)
+                    ? '#aaa'
+                    : '#141414',
+                }">DAYS {{ item.days }}</span>
               </div>
-              <div
-                class="left-content_time"
-                :style="{
-                  color: isImageActive(item.days, i_index) ? '#aaa' : '#141414',
-                }"
-              >
+              <div class="left-content_time" :style="{
+                color: isImageActive(item.days, i_index) ? '#aaa' : '#141414',
+              }">
                 {{ item.time }}
               </div>
             </div>
           </div>
           <div class="right-content">
             <div class="right-content_item">
-              <div
-                class="image-container"
-                :style="
-                  image.loadError || !image.url || image.isLoading
-                    ? { width: '100%' }
-                    : {}
-                "
-              >
+              <div class="image-container" :style="image.loadError || !image.url || image.isLoading
+                  ? { width: '100%' }
+                  : {}
+                ">
                 <!-- 加载中状态 - 图片还不应该加载或正在加载中时显示 -->
-                <div
-                  v-if="
-                    image.url &&
-                    !image.loadError &&
-                    (!shouldLoadImage(image, item.days, i_index) ||
-                      !isImageReady(image.url))
-                  "
-                  class="image-loading-placeholder"
-                >
+                <div v-if="
+                  image.url &&
+                  !image.loadError &&
+                  (!shouldLoadImage(image, item.days, i_index) ||
+                    !isImageReady(image.url))
+                " class="image-loading-placeholder">
                   <div class="loading-spinner"></div>
                   <span class="loading-text">LOADING</span>
                 </div>
                 <!-- 隐藏的img用于实际加载图片 -->
-                <img
-                  v-if="image.url && shouldLoadImage(image, item.days, i_index)"
-                  class="right-content_item-image cursor-target"
-                  :class="{ 'image-hidden': !isImageReady(image.url) }"
-                  alt="图像"
-                  draggable="false"
-                  :src="image.url"
-                  @click="showImages(item.days, i_index)"
-                  @load="handleImageLoad"
-                  @error="handleImageError"
-                />
+                <img v-if="image.url && shouldLoadImage(image, item.days, i_index)"
+                  class="right-content_item-image cursor-target" :class="{ 'image-hidden': !isImageReady(image.url) }"
+                  alt="图像" draggable="false" :src="image.url" @click="showImages(item.days, i_index)"
+                  @load="handleImageLoad" @error="handleImageError" />
                 <!-- 加载失败状态 -->
-                <div
-                  v-if="image.url && image.loadError"
-                  class="image-error-placeholder"
-                >
+                <div v-if="image.url && image.loadError" class="image-error-placeholder">
                   <span class="error-text">ERROR</span>
                 </div>
                 <!-- 无URL状态 -->
                 <div v-if="!image.url" class="image-error-placeholder">
                   <span class="none-text">?</span>
                 </div>
-                <div
-                  class="image-covered"
-                  :class="{
-                    active: isImageActive(item.days, i_index),
-                    inactive:
-                      !isImageActive(item.days, i_index) &&
-                      wasImageActive(item.days, i_index),
-                  }"
-                >
+                <div class="image-covered" :class="{
+                  active: isImageActive(item.days, i_index),
+                  inactive:
+                    !isImageActive(item.days, i_index) &&
+                    wasImageActive(item.days, i_index),
+                }">
                   <div class="covered-gradient"></div>
                   <div class="covered-gradient covered-gradient-2"></div>
                   <div class="covered-circle"></div>
                   <div class="covered-line"></div>
                   <div class="covered-line covered-line-2"></div>
                 </div>
-                <div
-                  class="image-overlay"
-                  :class="{
-                    active: isImageActive(item.days, i_index),
-                    inactive:
-                      !isImageActive(item.days, i_index) &&
-                      wasImageActive(item.days, i_index),
-                  }"
-                >
+                <div class="image-overlay" :class="{
+                  active: isImageActive(item.days, i_index),
+                  inactive:
+                    !isImageActive(item.days, i_index) &&
+                    wasImageActive(item.days, i_index),
+                }">
                   <div class="overlay-gradient"></div>
                   <div class="overlay-text">{{ item.time }}</div>
                 </div>
@@ -155,48 +104,29 @@
                       {{ image.account_X ? "@" + image.account_X : "" }}
                     </div>
                   </div>
-                  <div
-                    class="image-container-info_right"
-                    :class="{
-                      active: isImageActive(item.days, i_index),
-                      inactive:
-                        !isImageActive(item.days, i_index) &&
-                        wasImageActive(item.days, i_index),
-                    }"
-                  >
-                    <div
-                      v-if="image.link_X && image.link_X.trim()"
-                      class="link link_X"
-                      @click="linkOpen(image.link_X)"
-                    >
+                  <div class="image-container-info_right" :class="{
+                    active: isImageActive(item.days, i_index),
+                    inactive:
+                      !isImageActive(item.days, i_index) &&
+                      wasImageActive(item.days, i_index),
+                  }">
+                    <div v-if="image.link_X && image.link_X.trim()" class="link link_X" @click="linkOpen(image.link_X)">
                       <img src="../assets/X.svg" alt="" />
                     </div>
-                    <div
-                      v-if="image.link_bili && image.link_bili.trim()"
-                      class="link link_bili"
-                      @click="linkOpen(image.link_bili)"
-                    >
+                    <div v-if="image.link_bili && image.link_bili.trim()" class="link link_bili"
+                      @click="linkOpen(image.link_bili)">
                       <img src="../assets/Bilibili.svg" alt="" />
                     </div>
-                    <div
-                      v-if="image.link_weibo && image.link_weibo.trim()"
-                      class="link link_weibo"
-                      @click="linkOpen(image.link_weibo)"
-                    >
+                    <div v-if="image.link_weibo && image.link_weibo.trim()" class="link link_weibo"
+                      @click="linkOpen(image.link_weibo)">
                       <img src="../assets/Weibo.svg" alt="" />
                     </div>
-                    <div
-                      v-if="image.link_red && image.link_red.trim()"
-                      class="link link_red"
-                      @click="linkOpen(image.link_red)"
-                    >
+                    <div v-if="image.link_red && image.link_red.trim()" class="link link_red"
+                      @click="linkOpen(image.link_red)">
                       <img src="../assets/Rednote.svg" alt="" />
                     </div>
-                    <div
-                      v-if="image.link_lof && image.link_lof.trim()"
-                      class="link link_lof"
-                      @click="linkOpen(image.link_lof)"
-                    >
+                    <div v-if="image.link_lof && image.link_lof.trim()" class="link link_lof"
+                      @click="linkOpen(image.link_lof)">
                       <img src="../assets/Lofter.svg" alt="" />
                     </div>
                   </div>
@@ -211,16 +141,10 @@
         <div class="footer-item">
           <div class="footer-item_title">ORGANIZER</div>
           <div class="footer-item_names">
-            <div
-              class="footer-item_name"
-              @click="linkOpen('https://x.com/shadowyuzu1')"
-            >
+            <div class="footer-item_name" @click="linkOpen('https://x.com/shadowyuzu1')">
               天弓弦 @shadowyuzu1
             </div>
-            <div
-              class="footer-item_name"
-              @click="linkOpen('https://x.com/AbyssiTanuki')"
-            >
+            <div class="footer-item_name" @click="linkOpen('https://x.com/AbyssiTanuki')">
               深海狸 @AbyssiTanuki
             </div>
           </div>
@@ -228,16 +152,10 @@
         <div class="footer-item">
           <div class="footer-item_title">DESIGNER / DEVELOPER</div>
           <div class="footer-item_names">
-            <div
-              class="footer-item_name"
-              @click="linkOpen('https://x.com/hua_ji_mc')"
-            >
+            <div class="footer-item_name" @click="linkOpen('https://x.com/hua_ji_mc')">
               芦花鸡 @hua_ji_mc
             </div>
-            <div
-              class="footer-item_name"
-              @click="linkOpen('https://x.com/shisheng00')"
-            >
+            <div class="footer-item_name" @click="linkOpen('https://x.com/shisheng00')">
               ShiSheng / 10L @shisheng00
             </div>
           </div>
@@ -245,19 +163,13 @@
         <div class="footer-item">
           <div class="footer-item_title">ILLUSTRATOR</div>
           <div class="footer-item_names">
-            <div
-              v-for="(image, index) in nameList"
-              :key="'ill' + index"
-              class="footer-item_name"
-              :class="{
-                noclick: !image.account_X,
-              }"
-              @click="
+            <div v-for="(image, index) in nameList" :key="'ill' + index" class="footer-item_name" :class="{
+              noclick: !image.account_X,
+            }" @click="
                 linkOpen(
                   image.account_X ? `https://x.com/${image.account_X}` : ''
                 )
-              "
-            >
+                ">
               {{ image.name }}
               {{ image.account_X ? `@${image.account_X}` : "" }}
             </div>
@@ -265,22 +177,12 @@
         </div>
       </footer>
 
-      <TargetCursor 
-        :spinDuration="5"
-        :hoverDuration="0.5"
-        :hideDefaultCursor="true"
-        :parallaxOn="true"
-        targetSelector=".cursor-target"
-      />
+      <TargetCursor :spinDuration="5" :hoverDuration="0.5" :hideDefaultCursor="true" :parallaxOn="true"
+        targetSelector=".cursor-target" />
 
       <!-- 图片预览组件 -->
-      <ImagesPreview
-        v-model:visible="visible"
-        :images="allImages"
-        :initial-index="currentImageIndex"
-        @change="handlePreviewChange"
-        @close="handlePreviewClose"
-      />
+      <ImagesPreview v-model:visible="visible" :images="allImages" :initial-index="currentImageIndex"
+        @change="handlePreviewChange" @close="handlePreviewClose" />
     </div>
   </div>
 </template>
@@ -540,8 +442,7 @@ const showImages = (days, index) => {
   currentDays.value = days;
   visible.value = true;
   console.log(
-    `打开预览：第 ${days} 天，第 ${index + 1} 张图片，全局索引 ${
-      currentImageIndex.value
+    `打开预览：第 ${days} 天，第 ${index + 1} 张图片，全局索引 ${currentImageIndex.value
     }`
   );
 
@@ -559,8 +460,7 @@ const handlePreviewChange = (current, prev) => {
   const currentImage = allImages.value[current];
   if (currentImage) {
     console.log(
-      `切换到：第 ${currentImage.days} 天，第 ${
-        currentImage.localIndex + 1
+      `切换到：第 ${currentImage.days} 天，第 ${currentImage.localIndex + 1
       } 张图片，全局索引 ${current}`
     );
     currentImageIndex.value = current;
@@ -847,7 +747,8 @@ onUnmounted(() => {
 .scroll-page {
   height: 100vh;
   width: 100vw;
-  overflow-y: auto; /* 确保可以滚动 */
+  overflow-y: auto;
+  /* 确保可以滚动 */
   overflow-x: hidden;
   position: absolute;
   top: 0;
@@ -877,14 +778,17 @@ onUnmounted(() => {
   position: relative;
   display: flex;
   flex-direction: column;
+
   .content-images {
     display: flex;
     position: relative;
     padding: min(2vw, 10px) 4vw;
+
     .left-content {
       width: 14vw;
       text-align: right;
       position: relative;
+
       .left-content_boxs {
         display: flex;
         flex-direction: row;
@@ -893,6 +797,7 @@ onUnmounted(() => {
         transform-origin: top left;
         transform: rotate(90deg) translateY(-13vw);
         top: 0;
+
         .left-content_days {
           flex: 1;
           font-size: min(3vw, 15px);
@@ -900,10 +805,12 @@ onUnmounted(() => {
           font-weight: bold;
           position: relative;
           white-space: nowrap;
+
           span {
             transition: 0.3s;
           }
         }
+
         .left-content_time {
           margin-left: 20px;
           flex: 1;
@@ -915,16 +822,20 @@ onUnmounted(() => {
         }
       }
     }
+
     .center-content {
       width: 4vw;
     }
+
     .right-content {
       flex: 1;
+
       .right-content_item {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         margin-bottom: min(8vw, 40px);
+
         .image-container {
           position: relative;
           display: inline-block;
@@ -963,6 +874,7 @@ onUnmounted(() => {
               font-weight: bold;
               opacity: 0.7;
             }
+
             .none-text {
               color: #ffffff;
               font-size: min(20vw, 100px);
@@ -1005,6 +917,7 @@ onUnmounted(() => {
             0% {
               transform: rotate(0deg);
             }
+
             100% {
               transform: rotate(360deg);
             }
@@ -1035,6 +948,7 @@ onUnmounted(() => {
               transform: rotate(0deg);
               transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             }
+
             .covered-circle {
               position: absolute;
               top: 0;
@@ -1048,6 +962,7 @@ onUnmounted(() => {
               transform: translate(0);
               transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             }
+
             .covered-line {
               position: absolute;
               bottom: 50%;
@@ -1070,15 +985,19 @@ onUnmounted(() => {
               .covered-gradient {
                 transform: rotate(4deg);
               }
+
               .covered-gradient-2 {
                 transform: rotate(8deg);
               }
+
               .covered-circle {
                 transform: translate(30%, -20%);
               }
+
               .covered-line {
                 transform: translate(-20%, 0) rotate(40deg);
               }
+
               .covered-line-2 {
                 transform: translate(-20%, 0) rotate(-60deg);
               }
@@ -1092,16 +1011,19 @@ onUnmounted(() => {
                 transform: rotate(8deg);
                 transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
               }
+
               .covered-circle {
                 transform: translate(0);
                 transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
               }
+
               .covered-line {
                 transform: translate(-20%, 0) rotate(0deg);
                 transition: all 0.8s cubic-bezier(0, 0, 1, 1);
               }
             }
           }
+
           .image-overlay {
             position: absolute;
             top: 0;
@@ -1119,12 +1041,10 @@ onUnmounted(() => {
               left: 0;
               right: 0;
               bottom: 0;
-              background: linear-gradient(
-                to top,
-                rgba(86, 86, 86, 0.7) 0%,
-                rgba(73, 73, 73, 0.3) 20%,
-                transparent 100%
-              );
+              background: linear-gradient(to top,
+                  rgba(86, 86, 86, 0.7) 0%,
+                  rgba(73, 73, 73, 0.3) 20%,
+                  transparent 100%);
             }
 
             .overlay-text {
@@ -1161,9 +1081,11 @@ onUnmounted(() => {
             }
           }
         }
-        & + .right-content_item {
+
+        &+.right-content_item {
           margin-top: min(4vw, 20px);
         }
+
         .image-container-info {
           position: absolute;
           bottom: max(-9.5vw, -50px);
@@ -1172,13 +1094,16 @@ onUnmounted(() => {
           display: flex;
           flex-direction: row;
           z-index: 2;
+
           .image-container-info_left {
             text-align: left;
+
             .image-container-info_left-name {
               font-size: min(4vw, 20px);
               line-height: min(4vw, 20px);
               font-weight: bold;
             }
+
             .image-container-info_left-x_name {
               margin-top: min(1vw, 5px);
               font-size: min(3vw, 15px);
@@ -1187,6 +1112,7 @@ onUnmounted(() => {
               font-weight: 500;
             }
           }
+
           .image-container-info_right {
             flex: 1;
             display: flex;
@@ -1198,16 +1124,19 @@ onUnmounted(() => {
             opacity: 0;
             transform: translateY(-2vw);
             transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
             &.active {
               opacity: 1;
               transform: translateY(0);
             }
+
             &.inactive {
               opacity: 0;
               transition-duration: 0.2s;
               transform: translateY(-2vw);
               transition: all 0.2s cubic-bezier(0, 0, 1, 1);
             }
+
             .link {
               width: min(5vw, 25px);
               height: min(5vw, 25px);
@@ -1215,13 +1144,16 @@ onUnmounted(() => {
               align-items: center;
               justify-content: center;
               cursor: pointer;
-              & + .link {
+
+              &+.link {
                 margin-left: min(1vw, 5px);
               }
+
               img {
                 max-width: min(4vw, 20px);
                 max-height: min(4vw, 20px);
               }
+
               &:hover {
                 content: "";
                 background: #fff;
@@ -1234,6 +1166,7 @@ onUnmounted(() => {
       }
     }
   }
+
   .center-line-vertical {
     height: 100vh;
     width: 1px;
@@ -1243,6 +1176,7 @@ onUnmounted(() => {
     border: 1px solid #505050;
     border-width: 0 1px 0 0;
   }
+
   .center-line-vertical2 {
     height: 100vh;
     width: 1px;
@@ -1252,6 +1186,7 @@ onUnmounted(() => {
     border: 1px solid #505050;
     border-width: 0 1px 0 0;
   }
+
   .center-line-image {
     height: 80vh;
     width: 80vh;
@@ -1266,6 +1201,7 @@ onUnmounted(() => {
       transition: filter 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
+
   .center-line-horizontal {
     height: 1px;
     position: fixed;
@@ -1324,6 +1260,7 @@ onUnmounted(() => {
       transform: rotate(90deg) translate(5px, 0);
       display: flex;
       flex-direction: column;
+
       .center-line-horizontal-info-name {
         margin-top: 2px;
       }
@@ -1353,19 +1290,23 @@ onUnmounted(() => {
   padding: 40px min(6vw, 200px) 100px;
   opacity: 0.9;
   color: #fff;
+
   .footer-item {
     margin-bottom: min(4vw, 20px);
+
     .footer-item_title {
       text-align: left;
       font-size: min(3vw, 15px);
       line-height: min(10vw, 50px);
       font-weight: bold;
     }
+
     .footer-item_names {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
+
       .footer-item_name {
         width: 100%;
         min-width: max(30vw, 300px);
@@ -1390,8 +1331,10 @@ onUnmounted(() => {
         &:hover::after {
           width: 50%;
         }
+
         &.noclick {
           cursor: default;
+
           &:hover::after {
             width: 0;
           }
@@ -1407,11 +1350,13 @@ onUnmounted(() => {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.7;
     transform: translateX(-50%) translateY(0);
   }
+
   50% {
     opacity: 1;
     transform: translateX(-50%) translateY(-5px);
@@ -1419,6 +1364,7 @@ onUnmounted(() => {
 }
 
 @keyframes bounce {
+
   0%,
   20%,
   50%,
@@ -1426,9 +1372,11 @@ onUnmounted(() => {
   100% {
     transform: translateY(0);
   }
+
   40% {
     transform: translateY(-10px);
   }
+
   60% {
     transform: translateY(-5px);
   }

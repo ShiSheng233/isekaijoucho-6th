@@ -1,22 +1,11 @@
 <template>
-  <div
-    class="scroll-container"
-    @wheel="handleWheel"
-    @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove"
-    @touchend="handleTouchEnd"
-  >
+  <div class="scroll-container" @wheel="handleWheel" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
+    @touchend="handleTouchEnd">
     <router-view v-slot="{ Component, route }">
       <transition :name="transitionName">
         <keep-alive :include="cachedViews">
-          <component
-            :is="Component"
-            :key="route.path"
-            :state="childScrollState"
-            :loading-complete="loadingComplete"
-            @scroll-state="handleChildScrollState"
-            @preview-state="handlePreviewState"
-          />
+          <component :is="Component" :key="route.path" :state="childScrollState" :loading-complete="loadingComplete"
+            @scroll-state="handleChildScrollState" @preview-state="handlePreviewState" />
         </keep-alive>
       </transition>
     </router-view>
@@ -277,7 +266,7 @@ const handleTouchEnd = (event) => {
 // 监听路由变化
 router.afterEach((to, from) => {
   currentPage = to.path;
-  
+
   // 设置页面切换动画
   if (from.path === "/" && to.path === "/images") {
     transitionName.value = "slide-up";
@@ -297,10 +286,13 @@ router.afterEach((to, from) => {
   width: 100vw;
   overflow: hidden;
   position: relative;
-  touch-action: none; /* 禁用所有默认触摸行为，完全自定义 */
+  touch-action: none;
+  /* 禁用所有默认触摸行为，完全自定义 */
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: none; /* 防止滚动链和下拉刷新 */
-  -webkit-overscroll-behavior: none; /* Safari 兼容 */
+  overscroll-behavior: none;
+  /* 防止滚动链和下拉刷新 */
+  -webkit-overscroll-behavior: none;
+  /* Safari 兼容 */
 }
 
 .slide-up-enter-active,
@@ -313,6 +305,7 @@ router.afterEach((to, from) => {
 .slide-up-enter-from {
   transform: translateY(100vh);
 }
+
 .slide-up-leave-to {
   transform: translateY(-100vh);
 }
@@ -320,6 +313,7 @@ router.afterEach((to, from) => {
 .slide-down-enter-from {
   transform: translateY(-100vh);
 }
+
 .slide-down-leave-to {
   transform: translateY(100vh);
 }
@@ -343,9 +337,12 @@ body {
   overflow: hidden;
   height: 100%;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: none; /* 全局禁止下拉刷新 */
-  -webkit-overscroll-behavior: none; /* Safari 兼容 */
-  position: fixed; /* 防止 iOS 弹跳 */
+  overscroll-behavior: none;
+  /* 全局禁止下拉刷新 */
+  -webkit-overscroll-behavior: none;
+  /* Safari 兼容 */
+  position: fixed;
+  /* 防止 iOS 弹跳 */
   width: 100%;
   height: 100%;
 }

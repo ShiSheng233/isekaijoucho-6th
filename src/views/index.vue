@@ -1,13 +1,7 @@
 <template>
-  <div class="landing-page" 
-    @contextmenu.prevent>
-    <InfiniteMenu
-      :items="menuItems"
-      :show-logo="showLogo"
-      @item-change="handleItemChange"
-      @movement-change="handleMovementChange"
-      @navigate="handleNavigate"
-    />
+  <div class="landing-page" @contextmenu.prevent>
+    <InfiniteMenu :items="menuItems" :show-logo="showLogo" @item-change="handleItemChange"
+      @movement-change="handleMovementChange" @navigate="handleNavigate" />
   </div>
 </template>
 

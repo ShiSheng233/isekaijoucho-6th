@@ -45,7 +45,7 @@ export const loadImage = (url: string): Promise<void> => {
 // 批量预加载图片
 export const preloadImages = async (urls: string[]): Promise<void> => {
   const validUrls = urls.filter((url) => url && !loadedImages.has(url));
-  await Promise.all(validUrls.map((url) => loadImage(url).catch(() => {})));
+  await Promise.all(validUrls.map((url) => loadImage(url).catch(() => { })));
 };
 
 // 批量预加载图片（带进度回调）
