@@ -178,7 +178,7 @@
       </footer>
 
       <TargetCursor :spinDuration="5" :hoverDuration="0.5" :hideDefaultCursor="true" :parallaxOn="true"
-        targetSelector=".cursor-target" />
+        targetSelector=".cursor-target" :disabled="visible" />
 
       <!-- 图片预览组件 -->
       <ImagesPreview v-model:visible="visible" :images="allImages" :initial-index="currentImageIndex"
@@ -198,6 +198,25 @@ import {
   markImageAsLoaded,
   getLoadedImages,
 } from "../utils/imageLoader";
+
+// 节流函数
+const throttle = (fn, delay) => {
+  let lastTime = 0;
+  let timer = null;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastTime >= delay) {
+      lastTime = now;
+      fn.apply(this, args);
+    } else if (!timer) {
+      timer = setTimeout(() => {
+        lastTime = Date.now();
+        timer = null;
+        fn.apply(this, args);
+      }, delay - (now - lastTime));
+    }
+  };
+};
 
 const scrollContainer = ref(null);
 const isAtTop = ref(true);
@@ -299,10 +318,6 @@ watch(
       // 通过 DOM 查询来收集所有 content-images 元素
       const elements = document.querySelectorAll(".content-images");
       sectionElements.value = Array.from(elements);
-      console.log(
-        "通过查询收集到的 content-images 元素数量:",
-        sectionElements.value.length
-      );
     });
   },
   { immediate: true }
@@ -378,7 +393,6 @@ const initializeImages = () => {
 
   allImages.value = images;
   imageMap.value = map;
-  console.log("allImages", allImages.value);
 };
 
 const emit = defineEmits(["scroll-state", "preview-state"]);
@@ -406,7 +420,7 @@ const handleTouchMove = (event) => {
   event.stopPropagation();
 };
 
-const handleScroll = () => {
+const handleScrollRaw = () => {
   if (!scrollContainer.value) return;
 
   const { scrollTop, scrollHeight, clientHeight } = scrollContainer.value;
@@ -436,22 +450,19 @@ const handleScroll = () => {
   }
 };
 
+const handleScroll = throttle(handleScrollRaw, 16); // 约60fps
+
 const showImages = (days, index) => {
   const key = `${days}-${index}`;
   currentImageIndex.value = imageMap.value.get(key);
   currentDays.value = days;
   visible.value = true;
-  console.log(
-    `打开预览：第 ${days} 天，第 ${index + 1} 张图片，全局索引 ${currentImageIndex.value
-    }`
-  );
 
   // 通知父组件预览状态变化
   emit("preview-state", { isPreviewOpen: true });
 };
 
 const handlePreviewClose = () => {
-  console.log("关闭预览");
   // 通知父组件预览状态变化
   emit("preview-state", { isPreviewOpen: false });
 };
@@ -459,10 +470,6 @@ const handlePreviewClose = () => {
 const handlePreviewChange = (current, prev) => {
   const currentImage = allImages.value[current];
   if (currentImage) {
-    console.log(
-      `切换到：第 ${currentImage.days} 天，第 ${currentImage.localIndex + 1
-      } 张图片，全局索引 ${current}`
-    );
     currentImageIndex.value = current;
   }
 };
@@ -476,8 +483,8 @@ const checkIsMobile = () => {
     );
 };
 
-// 处理鼠标移动事件
-const handleMouseMove = (event) => {
+// 处理鼠标移动事件（使用节流优化）
+const handleMouseMoveRaw = (event) => {
   if (isMobile.value) return;
 
   const mouseY = event.clientY;
@@ -488,6 +495,8 @@ const handleMouseMove = (event) => {
   // 检测线段位于哪个content-images后面
   updateBehindSection(mouseY);
 };
+
+const handleMouseMove = throttle(handleMouseMoveRaw, 16); // 约60fps
 
 // 更新线段所在的section
 const updateBehindSection = (mouseY) => {
@@ -627,23 +636,22 @@ const preloadNearbyImages = async () => {
 
 // 监听currentBehindContent变化，更新动画状态
 watch(
-  () => currentBehindContent.value,
-  (newContent, oldContent) => {
+  () => currentBehindContent.value?.globalIndex,
+  (newIndex, oldIndex) => {
+    const newContent = currentBehindContent.value;
     const newKey =
       newContent && newContent.days
         ? `${newContent.days}-${newContent.localIndex}`
         : null;
-    const oldKey =
-      oldContent && oldContent.days
-        ? `${oldContent.days}-${oldContent.localIndex}`
-        : null;
 
     // 更新上一个激活的图片
-    previousActiveImage.value = oldKey;
+    if (previousActiveImage.value !== newKey) {
+      previousActiveImage.value = newKey;
+    }
 
     // 处理图片旋转
-    const newCountIndex = newContent?.globalIndex ?? null;
-    const oldCountIndex = previousCountIndex.value;
+    const newCountIndex = newIndex ?? null;
+    const oldCountIndex = oldIndex ?? null;
 
     if (
       newCountIndex !== null &&
@@ -655,20 +663,23 @@ watch(
 
       if (indexDiff > 0) {
         // countIndex增加，逆时针旋转
-        imageRotation.value -= rotationDeg.value; // 每次旋转30度
+        imageRotation.value -= rotationDeg.value;
       } else if (indexDiff < 0) {
         // countIndex减少，顺时针旋转
-        imageRotation.value += rotationDeg.value; // 每次旋转30度
+        imageRotation.value += rotationDeg.value;
       }
     }
 
     // 更新上一次的countIndex
     previousCountIndex.value = newCountIndex;
 
-    // 预加载附近的图片
-    preloadNearbyImages();
-  },
-  { deep: true }
+    // 预加载附近的图片（使用 requestIdleCallback 避免阻塞）
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => preloadNearbyImages());
+    } else {
+      setTimeout(preloadNearbyImages, 0);
+    }
+  }
 );
 
 // 计算水平线的样式
@@ -710,12 +721,6 @@ onMounted(() => {
 
   // 延迟检查元素是否正确收集
   nextTick(() => {
-    console.log(
-      "sectionElements 收集到的元素数量:",
-      sectionElements.value.length
-    );
-    console.log("sectionElements:", sectionElements.value);
-
     // 初始化时更新位置
     currentBehindSection.value = 0;
     currentBehindContent.value = allImages.value[0];
@@ -756,7 +761,6 @@ onUnmounted(() => {
 
   /* 改进滚动体验 */
   -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
 
   /* 隐藏滚动条 */
   scrollbar-width: none;

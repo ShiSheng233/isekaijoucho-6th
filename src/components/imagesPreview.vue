@@ -1,75 +1,24 @@
 <template>
-  <div v-if="visible" class="image-preview-overlay" @click="handleOverlayClick">
-    <div class="preview-container">
-      <!-- 关闭按钮 -->
-      <button class="close-btn" @click="close">×</button>
-
-      <!-- 左右切换按钮 -->
-      <button v-if="canGoPrev" class="nav-btn prev-btn" @click.stop="goPrev">
-        ‹
-      </button>
-      <button v-if="canGoNext" class="nav-btn next-btn" @click.stop="goNext">
-        ›
-      </button>
-
-      <!-- 旋转按钮 -->
-      <button class="rotate-btn" @click.stop="handleRotate" title="旋转图片">
-        ↻
-      </button>
-
-      <!-- 图片显示区域 -->
-      <div
-        class="image-container"
-        @wheel.stop="handleWheel"
-        @touchstart="handleTouchStart"
-        @touchmove="handleTouchMove"
-        @touchend="handleTouchEnd"
-      >
-        <img
-          ref="imageRef"
-          :src="currentImage?.url"
-          :alt="`${currentImage?.time} DAYS ${currentImage?.days} PAGE ${
-            currentImage?.localIndex + 1
-          } `"
-          class="preview-image"
-          @load="handleImageLoad"
-          @error="handleImageError"
-          :style="imageStyle"
-          draggable="false"
-        />
-      </div>
-
-      <!-- 图片信息 -->
-      <div class="image-info">
-        <span v-if="currentImage">
-          {{ currentImage.time }} DAYS {{ currentImage.days }} PAGE
-          {{ currentImage.localIndex + 1 }}
-        </span>
-      </div>
-
-      <!-- 缩略图导航 -->
-      <div
-        v-if="showThumbnails && totalImages > 1"
-        class="thumbnails-container"
-        @wheel.stop="handleThumbnailWheel"
-      >
-        <div
-          v-for="(image, index) in filterImage"
-          :key="index"
-          class="thumbnail"
-          :class="{ active: index === currentIndex }"
-          @click.stop="goToImage(index)"
-        >
-          <img :src="image.url" :alt="`DAYS ${image.days}`" />
-        </div>
-      </div>
-    </div>
+  <!-- 隐藏的图片画廊，用于 PhotoSwipe -->
+  <div ref="galleryRef" class="pswp-gallery" style="display: none;">
+    <a
+      v-for="(image, index) in filterImage"
+      :key="index"
+      :href="image.url"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img :src="image.url" :alt="`DAYS ${image.days}`" />
+    </a>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
-import { loadImage, isImageLoaded, markImageAsLoaded } from "../utils/imageLoader";
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from "vue";
+import PhotoSwipeLightbox from "photoswipe/lightbox";
+import PhotoSwipe from "photoswipe";
+import "photoswipe/style.css";
+import { getCachedImage, loadImage, isImageLoaded } from "../utils/imageLoader";
 
 const props = defineProps({
   visible: {
@@ -92,32 +41,196 @@ const props = defineProps({
 
 const emit = defineEmits(["update:visible", "change", "close"]);
 
+const galleryRef = ref(null);
+let lightbox = null;
+let pswpInstance = null;
 const currentIndex = ref(props.initialIndex);
-const imageRef = ref(null);
-const scale = ref(1);
-const translateX = ref(0);
-const translateY = ref(0);
-const rotation = ref(0);
-const isDragging = ref(false);
-const dragStartX = ref(0);
-const dragStartY = ref(0);
-const lastTranslateX = ref(0);
-const lastTranslateY = ref(0);
 
+// 过滤有效图片
 const filterImage = computed(() => props.images.filter((o) => !!o.url));
-console.log("filterImage", filterImage.value);
-const currentImage = computed(() => filterImage.value[currentIndex.value]);
-const totalImages = computed(() => filterImage.value.length);
-const canGoPrev = computed(() => currentIndex.value > 0);
-const canGoNext = computed(
-  () => currentIndex.value < filterImage.value.length - 1
-);
 
-const imageStyle = computed(() => ({
-  transform: `rotate(${rotation.value}deg) scale(${scale.value}) translate(${translateX.value}px, ${translateY.value}px)`,
-  transition: isDragging.value ? "none" : "transform 0.3s ease",
-  cursor: scale.value > 1 ? "move" : "default",
-}));
+// 初始化 PhotoSwipe Lightbox
+const initLightbox = () => {
+  if (lightbox) {
+    lightbox.destroy();
+    lightbox = null;
+  }
+
+  if (!galleryRef.value || filterImage.value.length === 0) return;
+
+  lightbox = new PhotoSwipeLightbox({
+    gallery: galleryRef.value,
+    children: "a",
+    pswpModule: PhotoSwipe,
+
+    // 基本配置
+    showHideAnimationType: "zoom",
+    bgOpacity: 0.9,
+    spacing: 0.1,
+    allowPanToNext: true,
+    loop: false,
+    pinchToClose: true,
+    closeOnVerticalDrag: true,
+
+    // 缩放配置
+    initialZoomLevel: "fit",
+    secondaryZoomLevel: 2,
+    maxZoomLevel: 4,
+
+    // 图片尺寸配置
+    imageClickAction: "zoom",
+    tapAction: "zoom",
+    doubleTapAction: "zoom",
+
+    // 预加载配置
+    preload: [1, 2],
+    preloaderDelay: 0,
+
+    // 自定义 padding
+    paddingFn: () => {
+      return { top: 30, bottom: 30, left: 0, right: 0 };
+    },
+  });
+
+  // 自定义图片加载，使用缓存并获取真实尺寸
+  lightbox.addFilter("itemData", (itemData, index) => {
+    const image = filterImage.value[index];
+    if (!image) return itemData;
+
+    // 检查是否有缓存的图片
+    const cachedImg = getCachedImage(image.url);
+
+    // 动态获取图片尺寸 - 使用真实尺寸保持比例
+    if (cachedImg && cachedImg.naturalWidth && cachedImg.naturalHeight) {
+      itemData.src = image.url;
+      itemData.width = cachedImg.naturalWidth;
+      itemData.height = cachedImg.naturalHeight;
+      itemData.msrc = image.url; // 缩略图使用相同URL，利用缓存
+    } else {
+      // 没有缓存或缓存没有尺寸信息，设置初始占位尺寸
+      itemData.src = image.url;
+      // 不设置固定尺寸，让 PhotoSwipe 自动适应
+      itemData.width = 0;
+      itemData.height = 0;
+      itemData.msrc = image.url;
+    }
+
+    // 添加自定义数据
+    itemData.alt = `${image.time} - DAYS ${image.days}`;
+
+    return itemData;
+  });
+
+  // 图片加载完成后更新尺寸，保持正确比例
+  lightbox.on("contentLoad", (e) => {
+    const { content } = e;
+    if (content.type === "image") {
+      const img = content.element;
+      if (img) {
+        // 图片加载完成后获取真实尺寸
+        const onLoad = () => {
+          const naturalWidth = img.naturalWidth;
+          const naturalHeight = img.naturalHeight;
+          
+          if (naturalWidth && naturalHeight) {
+            // 更新 slide 数据
+            content.data.width = naturalWidth;
+            content.data.height = naturalHeight;
+            
+            // 缓存图片
+            loadImage(content.data.src).catch(() => {});
+            
+            // 触发尺寸更新
+            if (pswpInstance) {
+              content.onLoaded();
+            }
+          }
+          img.removeEventListener("load", onLoad);
+        };
+        
+        if (img.complete && img.naturalWidth) {
+          onLoad();
+        } else {
+          img.addEventListener("load", onLoad);
+        }
+      }
+    }
+  });
+
+  // 自定义 DOM 内容（图片信息）
+  lightbox.on("uiRegister", function () {
+    // 添加自定义计数器
+    lightbox.pswp.ui.registerElement({
+      name: "custom-caption",
+      order: 9,
+      isButton: false,
+      appendTo: "root",
+      html: "",
+      onInit: (el, pswp) => {
+        pswpInstance = pswp;
+
+        // 更新标题
+        const updateCaption = () => {
+          const currSlideIndex = pswp.currIndex;
+          const image = filterImage.value[currSlideIndex];
+          if (image) {
+            el.innerHTML = `<div class="pswp-custom-caption">${image.time} - DAYS ${image.days}</div>`;
+          }
+        };
+
+        pswp.on("change", updateCaption);
+        updateCaption();
+      },
+    });
+  });
+
+  // 监听索引变化
+  lightbox.on("change", () => {
+    if (pswpInstance) {
+      const newIndex = pswpInstance.currIndex;
+      if (newIndex !== currentIndex.value) {
+        const oldIndex = currentIndex.value;
+        currentIndex.value = newIndex;
+        emit("change", newIndex, oldIndex);
+      }
+    }
+  });
+
+  // 监听关闭事件
+  lightbox.on("close", () => {
+    emit("update:visible", false);
+    emit("close");
+    pswpInstance = null;
+  });
+
+  lightbox.init();
+};
+
+// 打开 lightbox 到指定索引
+const openLightbox = (index) => {
+  if (!lightbox) {
+    initLightbox();
+  }
+
+  nextTick(() => {
+    if (lightbox && galleryRef.value) {
+      const links = galleryRef.value.querySelectorAll("a");
+      if (links[index]) {
+        // 使用 PhotoSwipe 的方法打开到指定索引
+        lightbox.loadAndOpen(index, {
+          gallery: galleryRef.value,
+        });
+      }
+    }
+  });
+};
+
+// 关闭 lightbox
+const closeLightbox = () => {
+  if (pswpInstance) {
+    pswpInstance.close();
+  }
+};
 
 // 监听 visible 变化
 watch(
@@ -125,438 +238,64 @@ watch(
   (newVal) => {
     if (newVal) {
       currentIndex.value = props.initialIndex;
-      resetTransform();
-      document.body.style.overflow = "hidden";
-      // 打开预览时预加载相邻图片
       nextTick(() => {
-        preloadAdjacentImages();
+        openLightbox(props.initialIndex);
       });
     } else {
-      document.body.style.overflow = "";
+      closeLightbox();
     }
   }
 );
 
-// 监听索引变化
-watch(currentIndex, (newIndex, oldIndex) => {
-  if (newIndex !== oldIndex) {
-    emit("change", newIndex, oldIndex);
-    resetTransform();
-    // 预加载相邻图片
-    preloadAdjacentImages();
-  }
-});
+// 监听 images 变化，重新初始化
+watch(
+  () => props.images,
+  () => {
+    if (lightbox) {
+      lightbox.destroy();
+      lightbox = null;
+    }
+    nextTick(() => {
+      initLightbox();
+    });
+  },
+  { deep: true }
+);
 
-const resetTransform = () => {
-  scale.value = 1;
-  translateX.value = 0;
-  translateY.value = 0;
-  rotation.value = 0;
-  lastTranslateX.value = 0;
-  lastTranslateY.value = 0;
-};
-
-const close = () => {
-  emit("update:visible", false);
-  emit("close");
-};
-
-const handleOverlayClick = (event) => {
-  if (event.target === event.currentTarget) {
-    close();
-  }
-};
-
-const goPrev = () => {
-  if (canGoPrev.value) {
-    currentIndex.value--;
-  }
-};
-
-const goNext = () => {
-  if (canGoNext.value) {
-    currentIndex.value++;
-  }
-};
-
-const goToImage = (index) => {
-  currentIndex.value = index;
-};
-
-const handleRotate = () => {
-  rotation.value = (rotation.value + 90) % 360;
-};
-
-const handleWheel = (event) => {
-  event.preventDefault();
-  const delta = event.deltaY > 0 ? 0.9 : 1.1;
-  const newScale = Math.min(Math.max(scale.value * delta, 0.5), 3);
-
-  if (newScale !== scale.value) {
-    scale.value = newScale;
-
-    // 如果缩放到1，重置位置
-    if (scale.value === 1) {
-      translateX.value = 0;
-      translateY.value = 0;
+// 监听 initialIndex 变化
+watch(
+  () => props.initialIndex,
+  (newIndex) => {
+    if (props.visible && pswpInstance) {
+      pswpInstance.goTo(newIndex);
     }
   }
-};
-
-const handleImageLoad = () => {
-  console.log(`图片加载成功: ${currentImage.value?.url}`);
-  // 标记图片为已加载，加入缓存
-  if (currentImage.value?.url) {
-    markImageAsLoaded(currentImage.value.url);
-  }
-};
-
-const handleImageError = () => {
-  console.error(`图片加载失败: ${currentImage.value?.url}`);
-};
-
-// 预加载相邻图片
-const preloadAdjacentImages = async () => {
-  const urls = [];
-  
-  // 预加载前一张
-  if (currentIndex.value > 0) {
-    const prevUrl = filterImage.value[currentIndex.value - 1]?.url;
-    if (prevUrl && !isImageLoaded(prevUrl)) {
-      urls.push(prevUrl);
-    }
-  }
-  
-  // 预加载后一张
-  if (currentIndex.value < filterImage.value.length - 1) {
-    const nextUrl = filterImage.value[currentIndex.value + 1]?.url;
-    if (nextUrl && !isImageLoaded(nextUrl)) {
-      urls.push(nextUrl);
-    }
-  }
-  
-  // 后台预加载
-  urls.forEach(url => loadImage(url).catch(() => {}));
-};
-
-// 处理缩略图容器的滚轮事件
-const handleThumbnailWheel = (event) => {
-  event.preventDefault();
-  event.stopPropagation();
-
-  const container = event.currentTarget;
-  const scrollAmount = event.deltaY > 0 ? 100 : -100;
-
-  container.scrollLeft += scrollAmount;
-};
-
-// 鼠标拖拽功能
-const handleMouseDown = (event) => {
-  if (scale.value <= 1) return;
-
-  isDragging.value = true;
-  dragStartX.value = event.clientX;
-  dragStartY.value = event.clientY;
-  lastTranslateX.value = translateX.value;
-  lastTranslateY.value = translateY.value;
-};
-
-const handleMouseMove = (event) => {
-  if (!isDragging.value || scale.value <= 1) return;
-
-  const deltaX = event.clientX - dragStartX.value;
-  const deltaY = event.clientY - dragStartY.value;
-
-  translateX.value = lastTranslateX.value + deltaX;
-  translateY.value = lastTranslateY.value + deltaY;
-};
-
-const handleMouseUp = () => {
-  isDragging.value = false;
-};
-
-// 键盘事件
-const handleKeydown = (event) => {
-  if (!props.visible) return;
-
-  switch (event.key) {
-    case "Escape":
-      close();
-      break;
-    case "ArrowLeft":
-      goPrev();
-      break;
-    case "ArrowRight":
-      goNext();
-      break;
-  }
-};
-
-// 触摸事件处理
-let touchStartDistance = 0;
-let touchStartScale = 1;
-let initialPinchDistance = 0;
-
-const handleTouchStart = (event) => {
-  if (event.touches.length === 2) {
-    // 双指缩放开始
-    isDragging.value = false;
-    const dx = event.touches[0].clientX - event.touches[1].clientX;
-    const dy = event.touches[0].clientY - event.touches[1].clientY;
-    initialPinchDistance = Math.sqrt(dx * dx + dy * dy);
-    touchStartScale = scale.value;
-  } else if (event.touches.length === 1) {
-    // 单指拖拽开始
-    if (scale.value > 1) {
-      isDragging.value = true;
-      dragStartX.value = event.touches[0].clientX;
-      dragStartY.value = event.touches[0].clientY;
-      lastTranslateX.value = translateX.value;
-      lastTranslateY.value = translateY.value;
-    }
-  }
-};
-
-const handleTouchMove = (event) => {
-  if (event.touches.length === 2) {
-    // 双指缩放
-    event.preventDefault();
-    const dx = event.touches[0].clientX - event.touches[1].clientX;
-    const dy = event.touches[0].clientY - event.touches[1].clientY;
-    const currentDistance = Math.sqrt(dx * dx + dy * dy);
-
-    if (initialPinchDistance > 0) {
-      const scaleRatio = currentDistance / initialPinchDistance;
-      const newScale = Math.min(Math.max(touchStartScale * scaleRatio, 0.5), 3);
-      scale.value = newScale;
-    }
-  } else if (event.touches.length === 1 && isDragging.value) {
-    // 单指拖拽
-    event.preventDefault();
-    const deltaX = event.touches[0].clientX - dragStartX.value;
-    const deltaY = event.touches[0].clientY - dragStartY.value;
-    translateX.value = lastTranslateX.value + deltaX;
-    translateY.value = lastTranslateY.value + deltaY;
-  }
-};
-
-const handleTouchEnd = () => {
-  isDragging.value = false;
-  initialPinchDistance = 0;
-};
+);
 
 onMounted(() => {
-  document.addEventListener("keydown", handleKeydown);
-  document.addEventListener("mousemove", handleMouseMove);
-  document.addEventListener("mouseup", handleMouseUp);
-
-  // 为图片添加鼠标事件监听
-  if (imageRef.value) {
-    imageRef.value.addEventListener("mousedown", handleMouseDown);
-  }
+  nextTick(() => {
+    initLightbox();
+  });
 });
 
 onUnmounted(() => {
-  document.removeEventListener("keydown", handleKeydown);
-  document.removeEventListener("mousemove", handleMouseMove);
-  document.removeEventListener("mouseup", handleMouseUp);
-  document.body.style.overflow = "";
+  if (lightbox) {
+    lightbox.destroy();
+    lightbox = null;
+  }
+  pswpInstance = null;
 });
 </script>
 
-<style scoped>
-/* 按钮重置样式 */
-button {
-  outline: none;
-  border: none;
-  background: transparent;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  box-shadow: none;
-  -webkit-focus-ring-color: transparent;
-  -webkit-tap-highlight-color: transparent;
+<style>
+/* PhotoSwipe 自定义样式 */
+.pswp-gallery {
+  display: none;
 }
 
-button:focus {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-focus-ring-color: transparent;
-}
-
-button:active {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-focus-ring-color: transparent;
-}
-
-button:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border: none;
-}
-
-.image-preview-overlay {
+/* 自定义标题样式 */
+.pswp-custom-caption {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-}
-
-.preview-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  color: white;
-  font-size: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: transparent;
-  border: 0;
-  z-index: 10;
-  transform: rotate(0deg);
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.close-btn:hover {
-  transform: rotate(90deg);
-  transition: 0.4s;
-}
-
-.close-btn:focus,
-.close-btn:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-focus-ring-color: transparent;
-}
-
-.nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  border: none;
-  background: transparent;
-  border: 0;
-  color: #0048ff;
-  font-size: min(10vw, 50px);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.nav-btn:hover {
-}
-
-.nav-btn:focus,
-.nav-btn:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-focus-ring-color: transparent;
-}
-
-.prev-btn {
-  left: 20px;
-}
-
-.next-btn {
-  right: 20px;
-}
-
-.rotate-btn {
-  position: absolute;
-  top: 20px;
-  right: 70px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  background: transparent;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 0;
-  z-index: 10;
-  transform: rotate(0deg);
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-.rotate-btn:hover {
-  transform: rotate(90deg);
-  transition: 0.4s;
-}
-
-.rotate-btn:focus,
-.rotate-btn:focus-visible {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-focus-ring-color: transparent;
-}
-
-.image-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  touch-action: none; /* 禁用默认触摸行为，确保自定义手势生效 */
-}
-
-.preview-image {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-  transform-origin: center;
-}
-
-.image-info {
-  position: absolute;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
@@ -566,124 +305,49 @@ button:focus-visible {
   border-radius: 20px;
   font-size: 14px;
   z-index: 10;
+  white-space: nowrap;
 }
 
-.thumbnails-container {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
+/* 导航按钮颜色 */
+.pswp__button--arrow {
+  color: #0048ff;
+}
+
+.pswp__button--arrow:hover {
+  color: #0048ff;
+  opacity: 0.8;
+}
+
+/* 修改 PhotoSwipe 背景 */
+.pswp {
+  --pswp-bg: rgba(0, 0, 0, 0.9);
+}
+
+/* 修改预加载指示器 */
+.pswp__preloader {
   display: flex;
-  gap: 10px;
-  max-width: 80%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  z-index: 10;
-  scroll-behavior: smooth;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  justify-content: center;
+  align-items: center;
 }
 
-.thumbnail {
-  width: 50px;
-  height: 50px;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  cursor: pointer;
-  overflow: hidden;
-  flex-shrink: 0;
-  transition: border-color 0.3s;
+/* 图片保持比例，不拉伸 */
+.pswp__img {
+  object-fit: contain !important;
 }
 
-.thumbnail.active {
-  border-color: #1890ff;
-}
-
-.thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 隐藏所有浏览器的滚动条 */
-.thumbnails-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-/* PC端优化 */
-@media (min-width: 769px) {
-  .thumbnails-container {
-    max-width: 90%;
-    padding: 12px;
-    gap: 12px;
-    cursor: grab;
-  }
-
-  .thumbnails-container:active {
-    cursor: grabbing;
-  }
-
-  .thumbnail {
-    width: 60px;
-    height: 60px;
-  }
-
-  .thumbnail:hover {
-    transform: scale(1.1);
-    transition: transform 0.2s ease;
-  }
+/* 确保图片容器也正确 */
+.pswp__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .close-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
-    top: 10px;
-    right: 10px;
-  }
-
-  .nav-btn {
-    width: 40px;
-    height: 40px;
-    font-size: min(10vw, 50px);
-  }
-
-  .prev-btn {
-    left: 10px;
-  }
-
-  .next-btn {
-    right: 10px;
-  }
-
-  .rotate-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 16px;
-    top: 10px;
-    right: 50px;
-  }
-
-  .image-info {
+  .pswp-custom-caption {
     font-size: 12px;
     padding: 8px 16px;
     bottom: 10px;
-  }
-
-  .thumbnails-container {
-    bottom: 60px;
-    gap: 8px;
-    padding: 8px;
-  }
-
-  .thumbnail {
-    width: 40px;
-    height: 40px;
   }
 }
 </style>

@@ -18,12 +18,14 @@ const props = withDefaults(defineProps<{
   hideDefaultCursor?: boolean;
   hoverDuration?: number;
   parallaxOn?: boolean;
+  disabled?: boolean;
 }>(), {
   targetSelector: '.cursor-target',
   spinDuration: 2,
   hideDefaultCursor: true,
   hoverDuration: 0.2,
-  parallaxOn: true
+  parallaxOn: true,
+  disabled: false
 });
 
 const cursorRef = ref<HTMLDivElement | null>(null);
@@ -341,6 +343,30 @@ watch(() => props.spinDuration, () => {
   // Restart spin timeline with new duration
   if (spinTl.value && spinTl.value.isActive()) {
     createSpinTimeline();
+  }
+});
+
+// 监听 disabled 变化
+watch(() => props.disabled, (newVal) => {
+  if (isMobile.value) return;
+  
+  if (newVal) {
+    // 禁用时：隐藏自定义光标，显示原生光标
+    if (cursorRef.value) {
+      gsap.to(cursorRef.value, { opacity: 0, duration: 0.2 });
+    }
+    document.body.style.cursor = originalCursor || 'auto';
+    if (cursorStyleElement) {
+      cursorStyleElement.innerHTML = '';
+    }
+  } else {
+    // 启用时：显示自定义光标，隐藏原生光标
+    if (cursorRef.value) {
+      gsap.to(cursorRef.value, { opacity: 1, duration: 0.2 });
+    }
+    if (props.hideDefaultCursor) {
+      document.body.style.cursor = 'none';
+    }
   }
 });
 </script>
