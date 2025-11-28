@@ -976,8 +976,11 @@ class InfiniteGridMenu {
         }
       });
       
-      // 限制最大cellSize以避免内存问题，同时保持高质量
-      const cellSize = Math.min(maxSize, 2048);
+      const isIPhone = /iPhone/i.test(navigator.userAgent);
+      const isMobileDevice = window.innerWidth <= 768 || 
+        /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
+      const maxCellSize = isIPhone ? 384 : (isMobileDevice ? 512 : 2048);
+      const cellSize = Math.min(maxSize, maxCellSize);
       
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -1783,6 +1786,29 @@ watch(
 
   .navigate-icon {
     font-size: 1.5rem;
+  }
+}
+
+// 移动设备专用样式
+@media (max-width: 768px) {
+  .face-description {
+    top: calc(65% + 100px); // 移动设备上的 top 值，可以根据需要调整
+  }
+
+  .face-description.active {
+    transform: translate(-50%, -50%);
+  }
+
+  .navigate-button {
+    top: 68%; // 移动设备上的 top 值，可以根据需要调整
+  }
+
+  .navigate-button:hover {
+    transform: translate(-50%, 0) scale(1.1);
+  }
+
+  .navigate-button:active {
+    transform: translate(-50%, 0) scale(0.95);
   }
 }
 
