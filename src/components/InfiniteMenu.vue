@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="center-line-horizontal" style="top: 5vh; bottom: auto"></div>
-    <div class="center-line-horizontal" style="top: auto; bottom: 5vh"></div>
+    <div class="center-line-horizontal" style="top: auto; bottom: 10vh"></div>
     <div
       class="center-line-horizontal"
       :style="horizontalLineStyle"
@@ -1477,7 +1477,6 @@ watch(
 
     &.mobile-fixed {
       left: 50vw !important; // 移动端强制固定在中心
-      z-index: 1;
     }
 
     .center-line-vertical-days {
@@ -1504,7 +1503,6 @@ watch(
 
     &.mobile-fixed {
       top: 50vh !important; // 移动端强制固定在中心
-      z-index: 1;
     }
 
     .center-line-horizontal-days {
@@ -1568,7 +1566,7 @@ watch(
   // transform: translate(0, -50%);
   left: 50%;
   right: auto;
-  bottom: 5vh;
+  bottom: 10vh;
   transform: translate(-50%, 0);
   text-align: center;
   color: white;
@@ -1595,19 +1593,19 @@ watch(
 
 .x-button {
   position: fixed;
-  left: 5vw;
-  bottom: 5vh;
-  user-select: none;
+  left: calc(5vw + 0.3vw);
+  bottom: calc(10vh + 0.3vw);
+  // user-select: none;
   transform: translate(0, 0);
   width: auto;
   line-height: 1.5vh;
   background: transparent;
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  // transition: all 0.3s ease;
   z-index: 10;
   font-size: 1.5vh;
   color: #fff;
@@ -1642,7 +1640,7 @@ watch(
   user-select: none;
   position: absolute;
   left: 50%;
-  bottom: calc(5vh + 2rem);
+  bottom: calc(10vh + 3rem);
   transform: translate(-50%, 0);
   width: 60px;
   height: 60px;
@@ -1778,7 +1776,7 @@ watch(
   .face-description {
     left: 50%;
     right: auto;
-    bottom: 5vh;
+    bottom: 10vh;
     transform: translate(-50%, 0);
     text-align: center;
   }
@@ -1792,7 +1790,7 @@ watch(
   }
 
   .navigate-button {
-    bottom: calc(5vh + 3rem);
+    bottom: calc(10vh + 3rem);
     width: 50px;
     height: 50px;
     transform: translate(-50%, 0);
@@ -1809,12 +1807,15 @@ watch(
   .navigate-icon {
     font-size: 1.5rem;
   }
+  .center-line-horizontal-days {
+    max-width: 10vw;
+  }
 }
 
 // 移动设备专用样式
 @media (max-width: 768px) {
   .face-description {
-    bottom: 7vh; // 移动设备上的 top 值，可以根据需要调整
+    bottom: 12vh; // 移动设备上的 top 值，可以根据需要调整
   }
 
   .face-description.active {
@@ -1822,7 +1823,7 @@ watch(
   }
 
   .navigate-button {
-    bottom: calc(7vh + 3rem); // 移动设备上的 top 值，可以根据需要调整
+    bottom: calc(12vh + 3rem); // 移动设备上的 top 值，可以根据需要调整
     transform: translate(-50%, 0) scale(1);
   }
 

@@ -1,11 +1,22 @@
 <template>
-  <div class="scroll-container" @wheel="handleWheel" @touchstart="handleTouchStart" @touchmove="handleTouchMove"
-    @touchend="handleTouchEnd">
+  <div
+    class="scroll-container"
+    @wheel="handleWheel"
+    @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove"
+    @touchend="handleTouchEnd"
+  >
     <router-view v-slot="{ Component, route }">
       <transition :name="transitionName">
         <keep-alive :include="cachedViews">
-          <component :is="Component" :key="route.path" :state="childScrollState" :loading-complete="loadingComplete"
-            @scroll-state="handleChildScrollState" @preview-state="handlePreviewState" />
+          <component
+            :is="Component"
+            :key="route.path"
+            :state="childScrollState"
+            :loading-complete="loadingComplete"
+            @scroll-state="handleChildScrollState"
+            @preview-state="handlePreviewState"
+          />
         </keep-alive>
       </transition>
     </router-view>
