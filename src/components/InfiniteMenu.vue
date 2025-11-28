@@ -1594,7 +1594,7 @@ watch(
 .x-button {
   position: fixed;
   left: calc(5vw + 0.3vw);
-  bottom: calc(5vh + 0.3vw);
+  bottom: calc(20vh + 0.3vw);
   // user-select: none;
   transform: translate(0, 0);
   width: auto;
