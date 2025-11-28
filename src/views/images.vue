@@ -1,18 +1,37 @@
 <template>
-  <div class="scroll-page page-images" @wheel="handleWheel" @scroll="handleScroll" @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove" @touchend="handleTouchEnd" @contextmenu.prevent ref="scrollContainer">
+  <div
+    class="scroll-page page-images"
+    @wheel="handleWheel"
+    @scroll="handleScroll"
+    @touchstart="handleTouchStart"
+    @touchmove="handleTouchMove"
+    @touchend="handleTouchEnd"
+    @contextmenu.prevent
+    ref="scrollContainer"
+  >
     <div class="content">
       <div class="center-line-vertical"></div>
       <div class="center-line-vertical2"></div>
-      <div class="center-line-image" :style="{
-        transform: `translate(50%, -50%) rotate(${imageRotation}deg)`,
-      }">
-        <img src="../assets/round_1.svg" alt="" :style="{
-          filter: getImageFilter(imageRotation),
-          opacity: getImageOpacity(imageRotation),
-        }" />
+      <div
+        class="center-line-image"
+        :style="{
+          transform: `translate(50%, -50%) rotate(${imageRotation}deg)`,
+        }"
+      >
+        <img
+          src="../assets/round_1.svg"
+          alt=""
+          :style="{
+            filter: getImageFilter(imageRotation),
+            opacity: getImageOpacity(imageRotation),
+          }"
+        />
       </div>
-      <div class="center-line-horizontal" :style="horizontalLineStyle" :class="{ 'mobile-fixed': isMobile }">
+      <div
+        class="center-line-horizontal"
+        :style="horizontalLineStyle"
+        :class="{ 'mobile-fixed': isMobile }"
+      >
         <div class="center-line-horizontal-content"></div>
         <div class="center-line-horizontal-content2"></div>
         <div class="center-line-horizontal-days">
@@ -28,70 +47,103 @@
         </div>
       </div>
       <section v-for="(item, index) in image_list" :key="index">
-        <div class="content-images" v-for="(image, i_index) in item.children" :key="item.days + i_index">
+        <div
+          class="content-images"
+          v-for="(image, i_index) in item.children"
+          :key="item.days + i_index"
+        >
           <div class="left-content">
             <div class="left-content_boxs cursor-target">
               <div class="left-content_days">
-                <span :style="{
-                  color: isImageActive(item.days, i_index)
-                    ? '#aaa'
-                    : '#141414',
-                }">DAYS {{ item.days }}</span>
+                <span
+                  :style="{
+                    color: isImageActive(item.days, i_index)
+                      ? '#aaa'
+                      : '#141414',
+                  }"
+                  >DAYS {{ item.days }}</span
+                >
               </div>
-              <div class="left-content_time" :style="{
-                color: isImageActive(item.days, i_index) ? '#aaa' : '#141414',
-              }">
+              <div
+                class="left-content_time"
+                :style="{
+                  color: isImageActive(item.days, i_index) ? '#aaa' : '#141414',
+                }"
+              >
                 {{ item.time }}
               </div>
             </div>
           </div>
           <div class="right-content">
             <div class="right-content_item">
-              <div class="image-container" :style="image.loadError || !image.url || image.isLoading
-                  ? { width: '100%' }
-                  : {}
-                ">
+              <div
+                class="image-container"
+                :style="
+                  image.loadError || !image.url || image.isLoading
+                    ? { width: '100%' }
+                    : {}
+                "
+              >
                 <!-- 加载中状态 - 图片还不应该加载或正在加载中时显示 -->
-                <div v-if="
-                  image.url &&
-                  !image.loadError &&
-                  (!shouldLoadImage(image, item.days, i_index) ||
-                    !isImageReady(image.url))
-                " class="image-loading-placeholder">
+                <div
+                  v-if="
+                    image.url &&
+                    !image.loadError &&
+                    (!shouldLoadImage(image, item.days, i_index) ||
+                      !isImageReady(image.url))
+                  "
+                  class="image-loading-placeholder"
+                >
                   <div class="loading-spinner"></div>
                   <span class="loading-text">LOADING</span>
                 </div>
                 <!-- 隐藏的img用于实际加载图片 -->
-                <img v-if="image.url && shouldLoadImage(image, item.days, i_index)"
-                  class="right-content_item-image cursor-target" :class="{ 'image-hidden': !isImageReady(image.url) }"
-                  alt="图像" draggable="false" :src="image.url" @click="showImages(item.days, i_index)"
-                  @load="handleImageLoad" @error="handleImageError" />
+                <img
+                  v-if="image.url && shouldLoadImage(image, item.days, i_index)"
+                  class="right-content_item-image cursor-target"
+                  :class="{ 'image-hidden': !isImageReady(image.url) }"
+                  alt="图像"
+                  draggable="false"
+                  :src="image.url"
+                  @click="showImages(item.days, i_index)"
+                  @load="handleImageLoad"
+                  @error="handleImageError"
+                />
                 <!-- 加载失败状态 -->
-                <div v-if="image.url && image.loadError" class="image-error-placeholder">
+                <div
+                  v-if="image.url && image.loadError"
+                  class="image-error-placeholder"
+                >
                   <span class="error-text">ERROR</span>
                 </div>
                 <!-- 无URL状态 -->
                 <div v-if="!image.url" class="image-error-placeholder">
                   <span class="none-text">?</span>
                 </div>
-                <div class="image-covered" :class="{
-                  active: isImageActive(item.days, i_index),
-                  inactive:
-                    !isImageActive(item.days, i_index) &&
-                    wasImageActive(item.days, i_index),
-                }">
+                <div
+                  class="image-covered"
+                  :class="{
+                    active: isImageActive(item.days, i_index),
+                    inactive:
+                      !isImageActive(item.days, i_index) &&
+                      wasImageActive(item.days, i_index),
+                  }"
+                >
                   <div class="covered-gradient"></div>
                   <div class="covered-gradient covered-gradient-2"></div>
                   <div class="covered-circle"></div>
                   <div class="covered-line"></div>
                   <div class="covered-line covered-line-2"></div>
                 </div>
-                <div class="image-overlay" :class="{
-                  active: isImageActive(item.days, i_index),
-                  inactive:
-                    !isImageActive(item.days, i_index) &&
-                    wasImageActive(item.days, i_index),
-                }">
+                <div
+                  class="image-overlay"
+                  :class="{
+                    active: isImageActive(item.days, i_index),
+                    inactive:
+                      !isImageActive(item.days, i_index) &&
+                      wasImageActive(item.days, i_index),
+                  }"
+                >
                   <div class="overlay-gradient"></div>
                   <div class="overlay-text">{{ item.time }}</div>
                 </div>
@@ -104,29 +156,48 @@
                       {{ image.account_X ? "@" + image.account_X : "" }}
                     </div>
                   </div>
-                  <div class="image-container-info_right" :class="{
-                    active: isImageActive(item.days, i_index),
-                    inactive:
-                      !isImageActive(item.days, i_index) &&
-                      wasImageActive(item.days, i_index),
-                  }">
-                    <div v-if="image.link_X && image.link_X.trim()" class="link link_X" @click="linkOpen(image.link_X)">
+                  <div
+                    class="image-container-info_right"
+                    :class="{
+                      active: isImageActive(item.days, i_index),
+                      inactive:
+                        !isImageActive(item.days, i_index) &&
+                        wasImageActive(item.days, i_index),
+                    }"
+                  >
+                    <div
+                      v-if="image.link_X && image.link_X.trim()"
+                      class="link link_X"
+                      @click="linkOpen(image.link_X)"
+                    >
                       <img src="../assets/X.svg" alt="" />
                     </div>
-                    <div v-if="image.link_bili && image.link_bili.trim()" class="link link_bili"
-                      @click="linkOpen(image.link_bili)">
+                    <div
+                      v-if="image.link_bili && image.link_bili.trim()"
+                      class="link link_bili"
+                      @click="linkOpen(image.link_bili)"
+                    >
                       <img src="../assets/Bilibili.svg" alt="" />
                     </div>
-                    <div v-if="image.link_weibo && image.link_weibo.trim()" class="link link_weibo"
-                      @click="linkOpen(image.link_weibo)">
+                    <div
+                      v-if="image.link_weibo && image.link_weibo.trim()"
+                      class="link link_weibo"
+                      @click="linkOpen(image.link_weibo)"
+                    >
                       <img src="../assets/Weibo.svg" alt="" />
                     </div>
-                    <div v-if="image.link_red && image.link_red.trim()" class="link link_red"
-                      @click="linkOpen(image.link_red)">
+                    <div
+                      v-if="image.link_red && image.link_red.trim()"
+                      class="link link_red"
+                      @click="linkOpen(image.link_red)"
+                    >
                       <img src="../assets/Rednote.svg" alt="" />
                     </div>
-                    <div v-if="image.link_lof && image.link_lof.trim()" class="link link_lof"
-                      @click="linkOpen(image.link_lof)">
+                    <div
+                      v-if="image.link_lof && image.link_lof.trim()"
+                      class="link link_lof"
+                      @click="linkOpen(image.link_lof)"
+                    >
                       <img src="../assets/Lofter.svg" alt="" />
                     </div>
                   </div>
@@ -141,10 +212,16 @@
         <div class="footer-item">
           <div class="footer-item_title">ORGANIZER</div>
           <div class="footer-item_names">
-            <div class="footer-item_name" @click="linkOpen('https://x.com/shadowyuzu1')">
+            <div
+              class="footer-item_name"
+              @click="linkOpen('https://x.com/shadowyuzu1')"
+            >
               天弓弦 @shadowyuzu1
             </div>
-            <div class="footer-item_name" @click="linkOpen('https://x.com/AbyssiTanuki')">
+            <div
+              class="footer-item_name"
+              @click="linkOpen('https://x.com/AbyssiTanuki')"
+            >
               深海狸 @AbyssiTanuki
             </div>
           </div>
@@ -152,10 +229,16 @@
         <div class="footer-item">
           <div class="footer-item_title">DESIGNER / DEVELOPER</div>
           <div class="footer-item_names">
-            <div class="footer-item_name" @click="linkOpen('https://x.com/hua_ji_mc')">
+            <div
+              class="footer-item_name"
+              @click="linkOpen('https://x.com/hua_ji_mc')"
+            >
               芦花鸡 @hua_ji_mc
             </div>
-            <div class="footer-item_name" @click="linkOpen('https://x.com/shisheng00')">
+            <div
+              class="footer-item_name"
+              @click="linkOpen('https://x.com/shisheng00')"
+            >
               ShiSheng / 10L @shisheng00
             </div>
           </div>
@@ -163,26 +246,54 @@
         <div class="footer-item">
           <div class="footer-item_title">ILLUSTRATOR</div>
           <div class="footer-item_names">
-            <div v-for="(image, index) in nameList" :key="'ill' + index" class="footer-item_name" :class="{
-              noclick: !image.account_X,
-            }" @click="
+            <div
+              v-for="(image, index) in nameList"
+              :key="'ill' + index"
+              class="footer-item_name"
+              :class="{
+                noclick: !image.account_X && !image.account_bilibili,
+              }"
+              @click="
                 linkOpen(
-                  image.account_X ? `https://x.com/${image.account_X}` : ''
+                  image.account_X
+                    ? `https://x.com/${image.account_X}`
+                    : image.account_bilibili || ''
                 )
-                ">
-              {{ image.name }}
-              {{ image.account_X ? `@${image.account_X}` : "" }}
+              "
+            >
+              <span v-if="image.account_X">
+                {{ image.name }}
+                {{ image.account_X ? `@${image.account_X}` : "" }}
+              </span>
+              <span v-else-if="image.account_bilibili">
+                {{ image.name }}
+                <img src="../assets/Bilibili.svg" alt="" />
+              </span>
+              <span v-else>
+                {{ image.name }}
+              </span>
             </div>
           </div>
         </div>
       </footer>
 
-      <TargetCursor :spinDuration="5" :hoverDuration="0.5" :hideDefaultCursor="true" :parallaxOn="true"
-        targetSelector=".cursor-target" :disabled="visible" />
+      <TargetCursor
+        :spinDuration="5"
+        :hoverDuration="0.5"
+        :hideDefaultCursor="true"
+        :parallaxOn="true"
+        targetSelector=".cursor-target"
+        :disabled="visible"
+      />
 
       <!-- 图片预览组件 -->
-      <ImagesPreview v-model:visible="visible" :images="allImages" :initial-index="currentImageIndex"
-        @change="handlePreviewChange" @close="handlePreviewClose" />
+      <ImagesPreview
+        v-model:visible="visible"
+        :images="allImages"
+        :initial-index="currentImageIndex"
+        @change="handlePreviewChange"
+        @close="handlePreviewClose"
+      />
     </div>
   </div>
 </template>
@@ -265,7 +376,7 @@ const getImageFilter = (rotation) => {
     // #505050
     // return 'invert(32%) sepia(4%) saturate(15%) hue-rotate(20deg) brightness(91%) contrast(91%)';
     // 01000F
-    return "invert(3%) sepia(65%) saturate(2013%) hue-rotate(234deg) brightness(85%) contrast(110%);";
+    return "invert(3%) sepia(65%) saturate(2013%) hue-rotate(234deg) brightness(85%) contrast(110%)";
   } else if (progress === 1) {
     // #002FA7 - 使用蓝色滤镜
     return "invert(11%) sepia(92%) saturate(4161%) hue-rotate(224deg) brightness(96%) contrast(104%)";
@@ -444,7 +555,7 @@ const handleTouchEnd = (event) => {
   // 如果在顶部且向上滑动距离足够，切换到首页
   if (isAtTop.value && diffY < -50 && isSwiping) {
     // 使用 router 导航到首页
-    router.push('/');
+    router.push("/");
   }
 
   isSwiping = false;
@@ -705,7 +816,7 @@ watch(
     previousCountIndex.value = newCountIndex;
 
     // 预加载附近的图片（使用 requestIdleCallback 避免阻塞）
-    if (typeof requestIdleCallback !== 'undefined') {
+    if (typeof requestIdleCallback !== "undefined") {
       requestIdleCallback(() => preloadNearbyImages());
     } else {
       setTimeout(preloadNearbyImages, 0);
@@ -1076,10 +1187,12 @@ onUnmounted(() => {
               left: 0;
               right: 0;
               bottom: 0;
-              background: linear-gradient(to top,
-                  rgba(86, 86, 86, 0.7) 0%,
-                  rgba(73, 73, 73, 0.3) 20%,
-                  transparent 100%);
+              background: linear-gradient(
+                to top,
+                rgba(86, 86, 86, 0.7) 0%,
+                rgba(73, 73, 73, 0.3) 20%,
+                transparent 100%
+              );
             }
 
             .overlay-text {
@@ -1117,7 +1230,7 @@ onUnmounted(() => {
           }
         }
 
-        &+.right-content_item {
+        & + .right-content_item {
           margin-top: min(4vw, 20px);
         }
 
@@ -1180,7 +1293,7 @@ onUnmounted(() => {
               justify-content: center;
               cursor: pointer;
 
-              &+.link {
+              & + .link {
                 margin-left: min(1vw, 5px);
               }
 
@@ -1352,6 +1465,15 @@ onUnmounted(() => {
         position: relative;
         cursor: pointer;
 
+        img {
+          width: 20px;
+          height: 18px;
+          margin-top: 2px;
+          position: relative;
+          top: 3px;
+          filter: invert(100%) sepia(0%) saturate(7465%) hue-rotate(269deg) brightness(105%) contrast(98%);
+        }
+
         &::after {
           content: "";
           position: absolute;
@@ -1385,7 +1507,6 @@ onUnmounted(() => {
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     opacity: 0.7;
@@ -1399,7 +1520,6 @@ onUnmounted(() => {
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   50%,

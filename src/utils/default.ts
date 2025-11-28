@@ -239,6 +239,7 @@ export const IMAGES = [
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
         link_lof: "", // Lofter链接
+        account_bilibili: "https://space.bilibili.com/35218728", // 作者链接
       },
     ],
   },
@@ -283,6 +284,7 @@ export const IMAGES = [
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
         link_lof: "", // Lofter链接
+        account_bilibili: "https://space.bilibili.com/198949765", // 作者链接
       },
     ],
   },
