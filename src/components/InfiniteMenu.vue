@@ -1455,16 +1455,12 @@ watch(
 }
 
 .infinite-menu-canvas {
-  cursor: grab;
+  cursor: none;
   width: 100%;
   height: 100%;
   overflow: hidden;
   position: relative;
   outline: none;
-}
-
-.infinite-menu-canvas:active {
-  cursor: grabbing;
 }
 
 .face-title {
