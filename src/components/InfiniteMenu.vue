@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="center-line-horizontal" style="top: 5vh; bottom: auto"></div>
-    <div class="center-line-horizontal" style="top: auto; bottom: 10vh"></div>
+    <div class="center-line-horizontal" style="top: auto; bottom: 5vh"></div>
     <div
       class="center-line-horizontal"
       :style="horizontalLineStyle"
@@ -1566,7 +1566,7 @@ watch(
   // transform: translate(0, -50%);
   left: 50%;
   right: auto;
-  bottom: 10vh;
+  bottom: 5vh;
   transform: translate(-50%, 0);
   text-align: center;
   color: white;
@@ -1594,7 +1594,7 @@ watch(
 .x-button {
   position: fixed;
   left: calc(5vw + 0.3vw);
-  bottom: calc(10vh + 0.3vw);
+  bottom: calc(5vh + 0.3vw);
   // user-select: none;
   transform: translate(0, 0);
   width: auto;
@@ -1640,7 +1640,7 @@ watch(
   user-select: none;
   position: absolute;
   left: 50%;
-  bottom: calc(10vh + 3rem);
+  bottom: calc(5vh + 3rem);
   transform: translate(-50%, 0);
   width: 60px;
   height: 60px;
@@ -1776,7 +1776,7 @@ watch(
   .face-description {
     left: 50%;
     right: auto;
-    bottom: 10vh;
+    bottom: 5vh;
     transform: translate(-50%, 0);
     text-align: center;
   }
@@ -1790,7 +1790,7 @@ watch(
   }
 
   .navigate-button {
-    bottom: calc(10vh + 3rem);
+    bottom: calc(5vh + 3rem);
     width: 50px;
     height: 50px;
     transform: translate(-50%, 0);
@@ -1815,7 +1815,7 @@ watch(
 // 移动设备专用样式
 @media (max-width: 768px) {
   .face-description {
-    bottom: 12vh; // 移动设备上的 top 值，可以根据需要调整
+    bottom: 8vh; // 移动设备上的 top 值，可以根据需要调整
   }
 
   .face-description.active {
@@ -1823,7 +1823,7 @@ watch(
   }
 
   .navigate-button {
-    bottom: calc(12vh + 3rem); // 移动设备上的 top 值，可以根据需要调整
+    bottom: calc(8vh + 3rem); // 移动设备上的 top 值，可以根据需要调整
     transform: translate(-50%, 0) scale(1);
   }
 
