@@ -69,7 +69,12 @@ const createSpinTimeline = () => {
 
   spinTl.value = gsap
     .timeline({ repeat: -1 })
-    .to(cursorRef.value, { rotation: '+=360', duration: props.spinDuration, ease: 'none' });
+    .to(cursorRef.value, { 
+      rotation: '+=360', 
+      duration: props.spinDuration, 
+      ease: 'none',
+      transformOrigin: '50% 50%'
+    });
 };
 
 const moveHandler = (e: MouseEvent) => moveCursor(e.clientX, e.clientY);
@@ -198,7 +203,12 @@ const enterHandler = (e: Event) => {
         spinTl.value.kill();
         spinTl.value = gsap
           .timeline({ repeat: -1 })
-          .to(cursorRef.value, { rotation: '+=360', duration: props.spinDuration, ease: 'none' });
+          .to(cursorRef.value, { 
+            rotation: '+=360', 
+            duration: props.spinDuration, 
+            ease: 'none',
+            transformOrigin: '50% 50%'
+          });
 
         gsap.to(cursorRef.value, {
           rotation: normalizedRotation + 360,
