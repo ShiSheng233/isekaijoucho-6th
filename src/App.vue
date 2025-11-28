@@ -11,20 +11,29 @@
         <component
           :is="Component"
           :state="childScrollState"
+          :loading-complete="loadingComplete"
           @scroll-state="handleChildScrollState"
           @preview-state="handlePreviewState"
         />
       </transition>
     </router-view>
+
+    <!-- Loading Overlay -->
+    <transition name="fade">
+      <Loading v-if="showLoading" @loaded="handleLoadingComplete" />
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import Loading from "./views/loading.vue";
 
 const router = useRouter();
 const transitionName = ref("slide-down");
+const showLoading = ref(true);
+const loadingComplete = ref(false);
 
 // 子组件的滚动状态
 const childScrollState = ref({
@@ -54,8 +63,24 @@ const handlePreviewState = (state) => {
   previewState.value = state;
 };
 
+// 处理加载完成
+const handleLoadingComplete = () => {
+  // 先设置完成状态
+  loadingComplete.value = true;
+  // 延迟500ms后隐藏loading，确保淡出动画完成
+  setTimeout(() => {
+    showLoading.value = false;
+  }, 500);
+};
+
 // 处理滚动事件
 const handleWheel = (event) => {
+  // 如果loading显示中，不处理滚动
+  if (showLoading.value) {
+    event.preventDefault();
+    return;
+  }
+
   currentPage = router.currentRoute.value.path;
 
   // 如果图片预览打开，阻止所有跳转
@@ -99,6 +124,11 @@ const handleWheel = (event) => {
 };
 
 const handleTouchStart = (event) => {
+  // 如果loading显示中，不处理触摸
+  if (showLoading.value) {
+    return;
+  }
+
   touchStartY = event.touches[0].clientY;
   touchStartX = event.touches[0].clientX;
   isSwiping = false;
@@ -116,10 +146,17 @@ const handleTouchStart = (event) => {
 };
 
 const handleTouchMove = (event) => {
+  // 如果loading显示中，不处理触摸
+  if (showLoading.value) {
+    return;
+  }
+
   const touchCurrentY = event.touches[0].clientY;
   const touchCurrentX = event.touches[0].clientX;
   const diffY = touchStartY - touchCurrentY;
   const diffX = touchStartX - touchCurrentX;
+
+  currentPage = router.currentRoute.value.path;
 
   // 如果图片预览打开，阻止所有跳转
   if (previewState.value.isPreviewOpen) {
@@ -178,10 +215,17 @@ const handleTouchMove = (event) => {
 };
 
 const handleTouchEnd = (event) => {
+  // 如果loading显示中，不处理触摸
+  if (showLoading.value) {
+    return;
+  }
+
   const touchEndY = event.changedTouches[0].clientY;
   const touchEndX = event.changedTouches[0].clientX;
   const diffY = touchStartY - touchEndY;
   const diffX = touchStartX - touchEndX;
+
+  currentPage = router.currentRoute.value.path;
 
   // 如果图片预览打开，阻止所有跳转
   if (previewState.value.isPreviewOpen) {
@@ -261,6 +305,16 @@ router.afterEach((to) => {
 }
 .slide-down-leave-to {
   transform: translateY(100vh);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 

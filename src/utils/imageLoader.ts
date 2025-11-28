@@ -48,6 +48,36 @@ export const preloadImages = async (urls: string[]): Promise<void> => {
   await Promise.all(validUrls.map((url) => loadImage(url).catch(() => {})));
 };
 
+// 批量预加载图片（带进度回调）
+export const preloadImagesWithProgress = async (
+  urls: string[],
+  onProgress?: (loaded: number, total: number, percentage: number) => void
+): Promise<void> => {
+  const validUrls = urls.filter((url) => url && !loadedImages.has(url));
+  const total = validUrls.length;
+  let loaded = 0;
+
+  if (total === 0) {
+    onProgress?.(0, 0, 100);
+    return;
+  }
+
+  // 使用Promise.allSettled来确保即使某些图片加载失败也能继续
+  const promises = validUrls.map(async (url) => {
+    try {
+      await loadImage(url);
+    } catch (error) {
+      console.warn(`Failed to load image: ${url}`, error);
+    } finally {
+      loaded++;
+      const percentage = (loaded / total) * 100;
+      onProgress?.(loaded, total, percentage);
+    }
+  });
+
+  await Promise.allSettled(promises);
+};
+
 // 检查图片是否已加载
 export const isImageLoaded = (url: string): boolean => {
   return loadedImages.has(url);
@@ -73,6 +103,7 @@ export const markImageAsLoaded = (url: string) => {
 export default {
   loadImage,
   preloadImages,
+  preloadImagesWithProgress,
   isImageLoaded,
   isImageLoading,
   getLoadedImages,

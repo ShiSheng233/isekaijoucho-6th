@@ -7,11 +7,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "index",
     component: () => import("../views/index.vue"),
+    meta: {
+      title: "ヰ世界情緒 6th Countdown",
+    },
   },
   {
     path: "/images",
     name: "images",
     component: () => import("../views/images.vue"),
+    meta: {
+      title: "Gallery - ヰ世界情緒 6th Countdown",
+    },
   },
 ];
 

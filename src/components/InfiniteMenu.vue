@@ -27,7 +27,7 @@
 
       <p :class="['face-description', isMoving ? 'inactive' : 'active']">
         <!-- Artwork by <span class="artist-name">{{ activeItem.name }}</span> -->
-        MORE IMAGES
+        SHOW TIMELINE
       </p>
 
       <!-- 导航按钮 -->
@@ -38,7 +38,7 @@
       >
         <span class="navigate-icon">↓</span>
       </button>
-      <div class="fixed-title">
+      <div class="fixed-title" v-if="showLogo">
         <div class="l1">
           <div class="l1-left">
             <img src="../assets/font-6.svg" alt="" />
@@ -68,6 +68,10 @@ const props = defineProps({
   items: {
     type: Array,
     default: () => [],
+  },
+  showLogo: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -1493,6 +1497,7 @@ watch(
   user-select: none;
   position: absolute;
   max-width: 20ch;
+  font-weight: bolder;
   // top: 50%;
   font-size: 1.2rem;
   font-weight: normal;

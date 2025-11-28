@@ -2,6 +2,7 @@
   <div class="landing-page">
     <InfiniteMenu
       :items="menuItems"
+      :show-logo="showLogo"
       @item-change="handleItemChange"
       @movement-change="handleMovementChange"
       @navigate="handleNavigate"
@@ -10,10 +11,19 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import InfiniteMenu from "../components/InfiniteMenu.vue";
 import { IMAGES } from "../utils/default";
+
+const props = defineProps({
+  loadingComplete: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const showLogo = ref(false);
 
 const router = useRouter();
 
@@ -56,6 +66,25 @@ const handleMovementChange = (isMoving) => {
 const handleNavigate = (path) => {
   router.push(path);
 };
+
+// 在loading完成后延迟显示logo
+onMounted(() => {
+  if (props.loadingComplete) {
+    setTimeout(() => {
+      showLogo.value = true;
+    }, 100);
+  } else {
+    // 监听loadingComplete变化
+    const timer = setInterval(() => {
+      if (props.loadingComplete) {
+        setTimeout(() => {
+          showLogo.value = true;
+        }, 100);
+        clearInterval(timer);
+      }
+    }, 100);
+  }
+});
 </script>
 
 <style scoped lang="less">
