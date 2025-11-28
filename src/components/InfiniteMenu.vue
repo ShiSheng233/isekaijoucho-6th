@@ -108,7 +108,7 @@ const checkIsMobile = () => {
 
 // 处理鼠标移动事件
 const handleMouseMove = (event) => {
-  console.log("handleMouseMove", isMobile.value);
+  //("handleMouseMove", isMobile.value);
   if (isMobile.value) return;
 
   const mouseX = event.clientX;
@@ -155,7 +155,7 @@ const linkOpen = (url) => {
   if (url && url.trim() !== "") {
     window.open(url, "_blank");
   } else {
-    console.log("链接为空，无法打开");
+    // ("链接为空，无法打开");
     // 可选：显示用户友好的提示
     // alert("该链接暂未提供");
   }

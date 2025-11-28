@@ -565,7 +565,7 @@ const linkOpen = (url) => {
   if (url && url.trim() !== "") {
     window.open(url, "_blank");
   } else {
-    console.log("链接为空，无法打开");
+    //console.log("链接为空，无法打开");
     // 可选：显示用户友好的提示
     // alert("该链接暂未提供");
   }
