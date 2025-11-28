@@ -1,5 +1,6 @@
 <template>
-  <div class="landing-page">
+  <div class="landing-page" 
+    @contextmenu.prevent>
     <InfiniteMenu
       :items="menuItems"
       :show-logo="showLogo"

@@ -5,6 +5,7 @@
     @scroll="handleScroll"
     @touchstart="handleTouchStart"
     @touchmove="handleTouchMove"
+    @contextmenu.prevent
     ref="scrollContainer"
   >
     <div class="content">
