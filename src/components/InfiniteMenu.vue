@@ -59,6 +59,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch, computed } from "vue";
 import { mat4, quat, vec2, vec3 } from "gl-matrix";
+import { loadImagesWithObjects, markImageAsLoaded } from "../utils/imageLoader";
 
 const props = defineProps({
   items: {
@@ -955,19 +956,9 @@ class InfiniteGridMenu {
     const itemCount = Math.max(1, this.items.length);
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
 
-    // 先加载所有图片以获取最大尺寸
-    Promise.all(
-      this.items.map(
-        (item) =>
-          new Promise((resolve) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.onload = () => resolve(img);
-            img.onerror = () => resolve(null);
-            img.src = item.image;
-          })
-      )
-    ).then((images) => {
+    // 使用共享的图片缓存加载所有图片
+    const imageUrls = this.items.map(item => item.image);
+    loadImagesWithObjects(imageUrls).then((images) => {
       // 计算所有图片中的最大尺寸，使用该尺寸作为cellSize
       let maxSize = 512; // 最小值
       images.forEach((img) => {

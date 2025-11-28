@@ -7,11 +7,20 @@ const loadedImages = reactive(new Set<string>());
 // 正在加载中的图片URL集合
 const loadingImages = reactive(new Set<string>());
 
+// 已加载的Image对象缓存（用于WebGL等需要Image对象的场景）
+const imageObjectCache = new Map<string, HTMLImageElement>();
+
 // 加载单张图片
-export const loadImage = (url: string): Promise<void> => {
+export const loadImage = (url: string): Promise<HTMLImageElement | null> => {
   return new Promise((resolve, reject) => {
-    if (!url || loadedImages.has(url)) {
-      resolve();
+    if (!url) {
+      resolve(null);
+      return;
+    }
+    
+    // 如果已经有缓存的Image对象，直接返回
+    if (imageObjectCache.has(url)) {
+      resolve(imageObjectCache.get(url)!);
       return;
     }
 
@@ -20,7 +29,7 @@ export const loadImage = (url: string): Promise<void> => {
       const checkLoaded = setInterval(() => {
         if (loadedImages.has(url)) {
           clearInterval(checkLoaded);
-          resolve();
+          resolve(imageObjectCache.get(url) || null);
         }
       }, 100);
       return;
@@ -29,10 +38,12 @@ export const loadImage = (url: string): Promise<void> => {
     loadingImages.add(url);
 
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       loadedImages.add(url);
       loadingImages.delete(url);
-      resolve();
+      imageObjectCache.set(url, img);
+      resolve(img);
     };
     img.onerror = () => {
       loadingImages.delete(url);
@@ -92,11 +103,24 @@ export const isImageLoading = (url: string): boolean => {
 export const getLoadedImages = () => loadedImages;
 
 // 标记图片为已加载（用于已经在DOM中加载完成的图片）
-export const markImageAsLoaded = (url: string) => {
+export const markImageAsLoaded = (url: string, img?: HTMLImageElement) => {
   if (url) {
     loadedImages.add(url);
     loadingImages.delete(url);
+    if (img) {
+      imageObjectCache.set(url, img);
+    }
   }
+};
+
+// 获取缓存的Image对象
+export const getCachedImage = (url: string): HTMLImageElement | null => {
+  return imageObjectCache.get(url) || null;
+};
+
+// 批量加载图片并返回Image对象数组
+export const loadImagesWithObjects = async (urls: string[]): Promise<(HTMLImageElement | null)[]> => {
+  return Promise.all(urls.map(url => loadImage(url).catch(() => null)));
 };
 
 // 导出默认实例
@@ -108,4 +132,6 @@ export default {
   isImageLoading,
   getLoadedImages,
   markImageAsLoaded,
+  getCachedImage,
+  loadImagesWithObjects,
 };

@@ -69,6 +69,7 @@
 
 <script setup>
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
+import { loadImage, isImageLoaded, markImageAsLoaded } from "../utils/imageLoader";
 
 const props = defineProps({
   visible: {
@@ -126,6 +127,10 @@ watch(
       currentIndex.value = props.initialIndex;
       resetTransform();
       document.body.style.overflow = "hidden";
+      // 打开预览时预加载相邻图片
+      nextTick(() => {
+        preloadAdjacentImages();
+      });
     } else {
       document.body.style.overflow = "";
     }
@@ -137,6 +142,8 @@ watch(currentIndex, (newIndex, oldIndex) => {
   if (newIndex !== oldIndex) {
     emit("change", newIndex, oldIndex);
     resetTransform();
+    // 预加载相邻图片
+    preloadAdjacentImages();
   }
 });
 
@@ -198,10 +205,38 @@ const handleWheel = (event) => {
 
 const handleImageLoad = () => {
   console.log(`图片加载成功: ${currentImage.value?.url}`);
+  // 标记图片为已加载，加入缓存
+  if (currentImage.value?.url) {
+    markImageAsLoaded(currentImage.value.url);
+  }
 };
 
 const handleImageError = () => {
   console.error(`图片加载失败: ${currentImage.value?.url}`);
+};
+
+// 预加载相邻图片
+const preloadAdjacentImages = async () => {
+  const urls = [];
+  
+  // 预加载前一张
+  if (currentIndex.value > 0) {
+    const prevUrl = filterImage.value[currentIndex.value - 1]?.url;
+    if (prevUrl && !isImageLoaded(prevUrl)) {
+      urls.push(prevUrl);
+    }
+  }
+  
+  // 预加载后一张
+  if (currentIndex.value < filterImage.value.length - 1) {
+    const nextUrl = filterImage.value[currentIndex.value + 1]?.url;
+    if (nextUrl && !isImageLoaded(nextUrl)) {
+      urls.push(nextUrl);
+    }
+  }
+  
+  // 后台预加载
+  urls.forEach(url => loadImage(url).catch(() => {}));
 };
 
 // 处理缩略图容器的滚轮事件
