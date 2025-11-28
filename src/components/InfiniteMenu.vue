@@ -1519,7 +1519,7 @@ watch(
   // transform: translate(0, -50%);
   left: 50%;
   right: auto;
-  top: calc(80% + 140px);
+  top: calc(75% + 140px);
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
@@ -1593,7 +1593,7 @@ watch(
   user-select: none;
   position: absolute;
   left: 50%;
-  top: 80%;
+  top: 75%;
   transform: translate(-50%, 100%);
   width: 60px;
   height: 60px;
