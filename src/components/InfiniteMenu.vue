@@ -1497,7 +1497,6 @@ watch(
   font-weight: bolder;
   // top: 50%;
   font-size: 1.2rem;
-  font-weight: normal;
   // right: 5%;
   // transform: translate(0, -50%);
   left: 50%;
