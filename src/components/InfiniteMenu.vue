@@ -7,9 +7,13 @@
         <span>DAY {{ activeItem?.days }}</span>
       </div>
     </div>
-    <div class="center-line-horizontal" style="top: 5vw; bottom: auto"></div>
-    <div class="center-line-horizontal" style="top: auto; bottom: 5vw"></div>
-    <div class="center-line-horizontal" :style="horizontalLineStyle" :class="{ 'mobile-fixed': isMobile }">
+    <div class="center-line-horizontal" style="top: 5vh; bottom: auto"></div>
+    <div class="center-line-horizontal" style="top: auto; bottom: 5vh"></div>
+    <div
+      class="center-line-horizontal"
+      :style="horizontalLineStyle"
+      :class="{ 'mobile-fixed': isMobile }"
+    >
       <div class="center-line-horizontal-days">
         <span>{{ activeItem?.name }}</span>
       </div>
@@ -44,6 +48,9 @@
         <div class="l2">
           <img src="../assets/font-COUNTDOWN.svg" alt="" />
         </div>
+      </div>
+      <div class="x-button" @click="linkOpen('https://x.com/hashtag/%E3%83%B0%E4%B8%96%E7%95%8C%E6%83%85%E7%B7%926thCountdown')">
+        <span class="x-icon">#ヰ世界情緒6thCountdown</span>
       </div>
     </template>
   </div>
@@ -123,6 +130,17 @@ const horizontalLineStyle = computed(() => {
     };
   }
 });
+
+const linkOpen = (url) => {
+  // 检查URL是否存在且不为空
+  if (url && url.trim() !== "") {
+    window.open(url, "_blank");
+  } else {
+    console.log("链接为空，无法打开");
+    // 可选：显示用户友好的提示
+    // alert("该链接暂未提供");
+  }
+};
 
 // canvas操作
 
@@ -1417,9 +1435,9 @@ watch(
     .center-line-vertical-days {
       position: absolute;
       right: 0;
-      top: 10vh;
+      top: 5vh;
       padding-right: 0.3vw;
-      transform: translate(0, -50%);
+      transform: translate(0, 0);
       font-size: min(3vw, 15px);
       font-weight: bold;
       color: #fff;
@@ -1526,6 +1544,51 @@ watch(
   font-weight: bolder;
 }
 
+.x-button {
+  position: fixed;
+  left: 5vw;
+  bottom: 5vh;
+  user-select: none;
+  transform: translate(0, 0);
+  width: auto;
+  line-height: 1.5vh;
+  background: transparent;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  font-size: 1.5vh;
+  color: #fff;
+  font-weight: bold;
+  opacity: 1;
+
+  &:hover {
+    background: transparent;
+    color: #fff;
+    opacity: 0.7;
+  }
+
+  &:active {
+    opacity: 0.8;
+    color: #3e41ff;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+    transition: 0.5s ease;
+  }
+
+  &.inactive {
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.1s ease;
+  }
+}
+
 .navigate-button {
   user-select: none;
   position: absolute;
@@ -1584,7 +1647,9 @@ watch(
   text-align: left;
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
   pointer-events: none;
-
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   img {
     max-width: 100%;
     max-height: 100%;

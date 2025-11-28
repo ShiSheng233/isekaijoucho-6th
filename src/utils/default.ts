@@ -399,14 +399,14 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/12.morishika.webp", // 图片URL
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        name: "森鹿", // 作者姓名
+        name_X: "deer.🦌🦌🦌", // 推特名称
+        account_X: "morishika_0722", // 推特账号
+        link_X: "https://x.com/morishika_0722/status/1993970111024402449", // 推特链接
+        name_bili: "sen鹿鹿鹿", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1139867578609434649", // B站链接
+        name_weibo: "sen鹿鹿鹿鹿", // 微博名称
+        link_weibo: "https://weibo.com/6737897187/QfNdSB41d", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
@@ -420,14 +420,14 @@ export const IMAGES = [
     children: [
       {
         url: "https://6th-assets.isekaijoucho.moe/11.moyugan.webp", // 图片URL
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        name: "moyugan", // 作者姓名
+        name_X: "moonyuck", // 推特名称
+        account_X: "moonyuck1734", // 推特账号
+        link_X: "https://x.com/moonyuck1734/status/1994330582860403017", // 推特链接
+        name_bili: "moyugan", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1140238444722651171", // B站链接
+        name_weibo: "muadiyugan", // 微博名称
+        link_weibo: "https://weibo.com/6559771674/QfWFxlXob", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
