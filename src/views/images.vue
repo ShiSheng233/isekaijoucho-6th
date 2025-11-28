@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-page page-images" @wheel="handleWheel" @scroll="handleScroll" @touchstart="handleTouchStart"
-    @touchmove="handleTouchMove" @contextmenu.prevent ref="scrollContainer">
+    @touchmove="handleTouchMove" @touchend="handleTouchEnd" @contextmenu.prevent ref="scrollContainer">
     <div class="content">
       <div class="center-line-vertical"></div>
       <div class="center-line-vertical2"></div>
@@ -189,6 +189,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, watch, computed, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { IMAGES } from "../utils/default";
 import ImagesPreview from "../components/imagesPreview.vue";
 import TargetCursor from "../components/TargetCursor.vue";
@@ -395,6 +396,7 @@ const initializeImages = () => {
   imageMap.value = map;
 };
 
+const router = useRouter();
 const emit = defineEmits(["scroll-state", "preview-state"]);
 const props = defineProps(["state"]);
 
@@ -410,13 +412,42 @@ const handleWheel = (event) => {
 };
 
 // B 页面自己的触摸事件处理
+let touchStartY = 0;
+let isSwiping = false;
+
 const handleTouchStart = (event) => {
+  touchStartY = event.touches[0].clientY;
+  isSwiping = false;
   // 允许事件继续传播，但标记正在触摸
   event.stopPropagation();
 };
 
 const handleTouchMove = (event) => {
-  // 允许触摸滚动，不阻止事件
+  const touchCurrentY = event.touches[0].clientY;
+  const diffY = touchStartY - touchCurrentY;
+
+  // 如果在顶部且向上滑动，阻止默认行为准备切换
+  if (isAtTop.value && diffY < -20 && Math.abs(diffY) > 20) {
+    event.preventDefault();
+    event.stopPropagation();
+    isSwiping = true;
+  } else {
+    // 允许触摸滚动，不阻止事件
+    event.stopPropagation();
+  }
+};
+
+const handleTouchEnd = (event) => {
+  const touchEndY = event.changedTouches[0].clientY;
+  const diffY = touchStartY - touchEndY;
+
+  // 如果在顶部且向上滑动距离足够，切换到首页
+  if (isAtTop.value && diffY < -50 && isSwiping) {
+    // 使用 router 导航到首页
+    router.push('/');
+  }
+
+  isSwiping = false;
   event.stopPropagation();
 };
 

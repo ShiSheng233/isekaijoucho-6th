@@ -143,7 +143,7 @@ export const IMAGES = [
         account_X: "pancakenoa", // 推特账号
         link_X: "https://x.com/pancakenoa/status/1989620302297666024", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1135412529300766738", // B站链接
         name_weibo: "煎饼_noa", // 微博名称
         link_weibo: "https://weibo.com/6113386089/QdY2PETpP", // 微博链接
         name_red: "", // 小红书名称
@@ -320,7 +320,7 @@ export const IMAGES = [
         account_X: "Muserin_", // 推特账号
         link_X: "https://x.com/Muserin_/status/1992518509843410974", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1138381468381216807", // B站链接
         name_weibo: "晚林snow", // 微博名称
         link_weibo: "https://weibo.com/2713923953/QfbxYdn5o", // 微博链接
         name_red: "", // 小红书名称
@@ -342,7 +342,7 @@ export const IMAGES = [
         account_X: "bx6318", // 推特账号
         link_X: "https://x.com/bx6318/status/1992880882164617642", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1138752489158344724", // B站链接
         name_weibo: "最好的幼驯染", // 微博名称
         link_weibo: "https://weibo.com/5164837444/Qfl01n020", // 微博链接
         name_red: "", // 小红书名称

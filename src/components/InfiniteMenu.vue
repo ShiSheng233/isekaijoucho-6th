@@ -8,7 +8,7 @@
       :class="{ 'mobile-fixed': isMobile }"
     >
       <div class="center-line-vertical-days">
-        <span>DAY {{ activeItem?.days }}</span>
+        <span>DAY</span><span>{{ activeItem?.days }}</span>
       </div>
     </div>
     <div class="center-line-horizontal" style="top: 5vh; bottom: auto"></div>
@@ -975,7 +975,7 @@ class InfiniteGridMenu {
     this.atlasSize = Math.ceil(Math.sqrt(itemCount));
 
     // 使用共享的图片缓存加载所有图片
-    const imageUrls = this.items.map(item => item.image);
+    const imageUrls = this.items.map((item) => item.image);
     loadImagesWithObjects(imageUrls).then((images) => {
       // 计算所有图片中的最大尺寸，使用该尺寸作为cellSize
       let maxSize = 512; // 最小值
@@ -1476,10 +1476,23 @@ watch(
       top: 5vh;
       padding-right: 0.3vw;
       transform: translate(0, 0);
+      line-height: min(3vw, 15px);
       font-size: min(3vw, 15px);
       font-weight: bold;
       color: #fff;
       text-align: right;
+      display: flex;
+      flex-direction: column;
+      transition: 0.2s;
+      span:nth-child(1) {
+        margin-bottom: 0.2rem;
+      }
+      span:nth-child(2) {
+        font-size: min(5vw, 25px);
+        line-height: min(5vw, 25px);
+        transform: translate(0, 0);
+        transition: 0.2s;
+      }
     }
   }
 
@@ -1506,6 +1519,7 @@ watch(
       color: #fff;
       text-align: right;
       padding-right: 0.3vw;
+      transition: 0.2s;
     }
   }
 }
@@ -1747,12 +1761,6 @@ watch(
 }
 
 @media (max-width: 1500px) {
-  .center-line-horizontal {
-    .center-line-horizontal-days {
-      right: 0vw;
-    }
-  }
-
   .face-title {
     left: 50%;
     top: 15%;
@@ -1798,11 +1806,29 @@ watch(
   .navigate-icon {
     font-size: 1.5rem;
   }
-  .center-line-horizontal-days {
-    max-width: 10vw;
-  }
 }
 
+// 移动设备专用样式
+@media (max-width: 1200px) {
+  .center-line-horizontal-days {
+    // max-width: 10vw;
+    transform-origin: top right;
+    top: 0.3rem !important;
+    transform: rotate(90deg) translate(100%, 0) !important;
+    transition: 0.2s;
+    font-size: min(4vw, 20px) !important;
+  }
+  .center-line-vertical {
+    .center-line-vertical-days {
+      span:nth-child(2) {
+        font-size: min(9vw, 45px) !important;
+        line-height: min(9vw, 45px) !important;
+        // transform: translate(50%, 0) !important;
+        transition: 0.2s;
+      }
+    }
+  }
+}
 // 移动设备专用样式
 @media (max-width: 768px) {
   .face-description {

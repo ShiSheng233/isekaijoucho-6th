@@ -152,6 +152,7 @@ const handleTouchStart = (event) => {
 };
 
 const handleTouchMove = (event) => {
+  console.log('showLoading', showLoading.value)
   // 如果loading显示中，不处理触摸
   if (showLoading.value) {
     return;
