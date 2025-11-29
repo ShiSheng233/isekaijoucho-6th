@@ -462,16 +462,16 @@ export const IMAGES = [
     time: "2025.11.29",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        url: "https://6th-assets.isekaijoucho.moe/10.%E5%96%B5%E6%96%AF%E5%9F%BA.webp", // 图片URL
+        offset: { x: 0, y: -0.5 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "致死量Nyansky_M", // 作者姓名
         name_X: "致死量Nyansky_M", // 推特名称
         account_X: "Nyansky_M", // 推特账号
-        link_X: "", // 推特链接
+        link_X: "https://x.com/Nyansky_M/status/1994692816325525610", // 推特链接
         name_bili: "致死量Nyansky_M", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://t.bilibili.com/1140609950833180680", // B站链接
         name_weibo: "腰腿肩颈保护斜会会长", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/5590302787/5238364149385869", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
