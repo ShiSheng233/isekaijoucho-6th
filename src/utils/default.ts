@@ -464,13 +464,13 @@ export const IMAGES = [
       {
         url: "", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
+        name: "致死量Nyansky_M", // 作者姓名
+        name_X: "致死量Nyansky_M", // 推特名称
+        account_X: "Nyansky_M", // 推特账号
         link_X: "", // 推特链接
-        name_bili: "", // B站名称
+        name_bili: "致死量Nyansky_M", // B站名称
         link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
+        name_weibo: "腰腿肩颈保护斜会会长", // 微博名称
         link_weibo: "", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
