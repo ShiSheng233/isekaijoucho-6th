@@ -1,6 +1,9 @@
 <template>
   <div class="loading-page">
     <div class="loading-container">
+      <!-- 加载标题 -->
+      <div class="loading-title" v-if="!loadError">Loading</div>
+      
       <!-- 简化的加载动画 -->
       <div class="loading-spinner" v-if="!loadError">
         <div class="spinner-ring"></div>
@@ -102,6 +105,15 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   gap: 20px;
+}
+
+.loading-title {
+  font-family: "DIN Alternate", sans-serif;
+  font-size: 32px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  opacity: 0.9;
+  text-transform: uppercase;
 }
 
 .loading-progress {
