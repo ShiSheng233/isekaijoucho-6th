@@ -1853,6 +1853,21 @@ watch(
   }
 }
 
+// iOS Safari 专用样式
+@supports (-webkit-touch-callout: none) {
+  .face-description {
+    bottom: 12vh !important;
+  }
+
+  .navigate-button {
+    bottom: calc(12vh + 3rem) !important;
+  }
+
+  .x-button {
+    bottom: calc(18vh) !important;
+  }
+}
+
 @keyframes flickerIn {
   0% {
     opacity: 0;
