@@ -484,16 +484,16 @@ export const IMAGES = [
     time: "2025.11.30",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        url: "https://6th-assets.isekaijoucho.moe/9.misa.webp", // 图片URL
+        offset: { x: 0.6, y: -0.6 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "misassss", // 作者姓名
+        name_X: "misassss", // 推特名称
+        account_X: "misassssi", // 推特账号
+        link_X: "https://x.com/misassssi/status/1995054977283469577", // 推特链接
+        name_bili: "misassss", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1140980224228327443", // B站链接
         name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/3488400682/5238729046494459", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
