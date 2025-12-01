@@ -506,7 +506,7 @@ export const IMAGES = [
     time: "2025.12.01",
     children: [
       {
-        url: "", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/8.teru.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
         name: "Terurru", // 作者姓名
         name_X: "Terurru", // 推特名称
