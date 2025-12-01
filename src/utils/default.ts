@@ -508,14 +508,14 @@ export const IMAGES = [
       {
         url: "", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        name: "Terurru", // 作者姓名
+        name_X: "Terurru", // 推特名称
+        account_X: "Terurru", // 推特账号
+        link_X: "https://x.com/Terurru/status/1995417583437459721", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1141350347327930393", // B站链接
         name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/3488400682/QgoSGcliQ", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
