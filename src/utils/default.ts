@@ -528,16 +528,16 @@ export const IMAGES = [
     time: "2025.12.02",
     children: [
       {
-        url: "", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/7.%E7%99%BD%E7%9F%B3.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        name: "白石鹿野", // 作者姓名
+        name_X: "白石鹿野", // 推特名称
+        account_X: "ShiraishiKanoya", // 推特账号
+        link_X: "https://x.com/ShiraishiKanoya/status/1995779991825789385", // 推特链接
+        name_bili: "白石鹿野", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1141722265779437592", // B站链接
+        name_weibo: "白石鹿野", // 微博名称
+        link_weibo: "https://weibo.com/5960109404/QgylFgZPD", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
