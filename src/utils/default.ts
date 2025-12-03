@@ -550,15 +550,15 @@ export const IMAGES = [
     time: "2025.12.03",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
+        url: "https://6th-assets.isekaijoucho.moe/6.%E9%92%9F%E6%9C%A8.webp", // 图片URL
+        offset: { x: 0, y: -0.8 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "钟木", // 作者姓名
+        name_X: "钟木", // 推特名称
+        account_X: "semi_Clock", // 推特账号
+        link_X: "https://x.com/semi_Clock/status/1996142369096282234", // 推特链接
+        name_bili: "半成木制品", // B站名称
         link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
+        name_weibo: "半成木制品", // 微博名称
         link_weibo: "", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
