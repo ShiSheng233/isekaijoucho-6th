@@ -557,7 +557,7 @@ export const IMAGES = [
         account_X: "semi_Clock", // 推特账号
         link_X: "https://x.com/semi_Clock/status/1996142369096282234", // 推特链接
         name_bili: "半成木制品", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1142109379718283289", // B站链接
         name_weibo: "半成木制品", // 微博名称
         link_weibo: "", // 微博链接
         name_red: "", // 小红书名称
