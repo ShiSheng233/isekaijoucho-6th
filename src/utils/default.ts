@@ -572,16 +572,32 @@ export const IMAGES = [
     time: "2025.12.04",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        url: "https://6th-assets.isekaijoucho.moe/5.1.BleiFieder.webp", // 图片URL
+        offset: { x: -0.2, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "BleiFieder", // 作者姓名
+        name_X: "Pb Fieder", // 推特名称
+        account_X: "BleiFieder", // 推特账号
+        link_X: "https://x.com/BleiFieder/status/1996504662707736717", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_bili: "https://www.bilibili.com/opus/1142467923618562049", // B站链接
+        name_weibo: "BleiFieder_铅羽", // 微博名称
+        link_weibo: "https://weibo.com/7826699648/QgRhC8Rt9", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/5.2.%E6%A5%BD%E6%97%A0%E8%BE%B9%E7%95%8C.webp", // 图片URL
+        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "楽无边界", // 作者姓名
+        name_X: "楽无边界", // 推特名称
+        account_X: "SeaslugGLL", // 推特账号
+        link_X: "https://x.com/SeaslugGLL/status/1996505370441953596", // 推特链接
+        name_bili: "楽无边界", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1142463448240619537", // B站链接
+        name_weibo: "周嬷解梦", // 微博名称
+        link_weibo: "https://weibo.com/7117195682/QgRayvgjI", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
