@@ -610,15 +610,31 @@ export const IMAGES = [
     time: "2025.12.05",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        url: "https://6th-assets.isekaijoucho.moe/4.1.%E6%BA%AF.webp", // 图片URL
+        offset: { x: 0, y: -0.5 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "溯", // 作者姓名
+        name_X: "加賀ミサク", // 推特名称
+        account_X: "misaku_nekosuki", // 推特账号
+        link_X: "https://x.com/misaku_nekosuki/status/1996867167023935850", // 推特链接
+        name_bili: "小溯-全职薯条大王", // B站名称
+        link_bili: "https://t.bilibili.com/1142834211302932535", // B站链接
+        name_weibo: "异世界宝石谭厨", // 微博名称
+        link_weibo: "https://weibo.com/5891112632/Qh0AGtjU1", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/4.2.%E5%B8%B7%E7%85%99.webp", // 图片URL
+        offset: { x: 0, y: -0.7 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "帷煙", // 作者姓名
+        name_X: "善良的嬤嬤", // 推特名称
+        account_X: "iytkm_", // 推特账号
+        link_X: "https://x.com/iytkm_/status/1996867154617225369", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
+        link_bili: "https://www.bilibili.com/opus/1142834133964161104", // B站链接
+        name_weibo: "重生之我成為了嬤嬤", // 微博名称
         link_weibo: "", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
