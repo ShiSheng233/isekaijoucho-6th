@@ -635,7 +635,7 @@ export const IMAGES = [
         name_bili: "", // B站名称
         link_bili: "https://www.bilibili.com/opus/1142834133964161104", // B站链接
         name_weibo: "重生之我成為了嬤嬤", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/7916233717/Qh7Kpv7na", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
@@ -648,16 +648,32 @@ export const IMAGES = [
     time: "2025.12.06",
     children: [
       {
-        url: "", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/3.1.yan.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        name: "yan", // 作者姓名
+        name_X: "yan", // 推特名称
+        account_X: "yan460106241165", // 推特账号
+        link_X: "https://x.com/yan460106241165/status/1997230016271093925", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1143206486215753768", // B站链接
+        name_weibo: "盐烟盐", // 微博名称
+        link_weibo: "https://weibo.com/7961757351/Qha18kQnN", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/3.2.%E6%B0%BF%E6%9C%A8.webp", // 图片URL
+        offset: { x: 0, y: -0.5 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "氿木", // 作者姓名
+        name_X: "氿木", // 推特名称
+        account_X: "syndrome1002", // 推特账号
+        link_X: "https://x.com/syndrome1002/status/1997229547159470547", // 推特链接
+        name_bili: "-氿木-", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1143205191267385345", // B站链接
         name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/3488400682/Qha1U5o13", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
