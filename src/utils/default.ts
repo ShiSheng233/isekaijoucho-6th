@@ -686,16 +686,32 @@ export const IMAGES = [
     time: "2025.12.07",
     children: [
       {
-        url: "", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/2.1.08z.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
+        name: "08z", // 作者姓名
         name_X: "", // 推特名称
         account_X: "", // 推特账号
-        link_X: "", // 推特链接
-        name_bili: "", // B站名称
-        link_bili: "", // B站链接
-        name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_X: "https://x.com/shadowyuzu1/status/1997591971368714474", // 推特链接
+        name_bili: "零巴子不做人", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1143588467707478038", // B站链接
+        name_weibo: "08z一号机", // 微博名称
+        link_weibo: "https://weibo.com/7408254279/QhjK8fFJc", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/2.2%E7%BB%9D%E5%AF%B9%E9%9B%B6%E5%85%94.webp", // 图片URL
+        offset: { x: 0, y: 0.4 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "绝对零兔", // 作者姓名
+        name_X: "絕對零兔", // 推特名称
+        account_X: "zettairento", // 推特账号
+        link_X: "https://x.com/zettairento/status/1997591940695732660", // 推特链接
+        name_bili: "绝对零兔", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1143576308620460036", // B站链接
+        name_weibo: "绝对零兔", // 微博名称
+        link_weibo: "https://weibo.com/5782268548/QhjrR48lJ", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
