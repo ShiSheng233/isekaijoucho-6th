@@ -8,7 +8,7 @@
       target="_blank"
       rel="noreferrer"
     >
-      <img :src="image.url" :alt="`DAYS ${image.days}`" />
+      <img :src="image.url" :alt="`DAY ${image.days}`" />
     </a>
   </div>
 </template>
@@ -116,7 +116,7 @@ const initLightbox = () => {
     }
 
     // 添加自定义数据
-    itemData.alt = `${image.time} - DAYS ${image.days}`;
+    itemData.alt = `${image.time} - DAY ${image.days}`;
 
     return itemData;
   });
@@ -174,7 +174,7 @@ const initLightbox = () => {
           const currSlideIndex = pswp.currIndex;
           const image = filterImage.value[currSlideIndex];
           if (image) {
-            el.innerHTML = `<div class="pswp-custom-caption">${image.time} - DAYS ${image.days}</div>`;
+            el.innerHTML = `<div class="pswp-custom-caption">${image.time} - DAY ${image.days}</div>`;
           }
         };
 

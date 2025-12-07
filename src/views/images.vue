@@ -61,7 +61,7 @@
                       ? '#aaa'
                       : '#141414',
                   }"
-                  >DAYS {{ item.days }}</span
+                  >DAY {{ item.days }}</span
                 >
               </div>
               <div
