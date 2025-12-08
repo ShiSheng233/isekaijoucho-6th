@@ -700,6 +700,7 @@ export const IMAGES = [
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
         link_lof: "", // Lofter链接
+        account_bilibili: "https://space.bilibili.com/628015377", // 作者链接
       },
       {
         url: "https://6th-assets.isekaijoucho.moe/2.2%E7%BB%9D%E5%AF%B9%E9%9B%B6%E5%85%94.webp", // 图片URL
