@@ -1038,7 +1038,7 @@ class InfiniteGridMenu {
       // iOS设备使用更保守的纹理大小
       let maxCellSize;
       if (isIPhone) {
-        maxCellSize = 512; // iPhone使用最小尺寸以保证性能
+        maxCellSize = 256; // iPhone使用最小尺寸以保证性能
       } else if (isIPad) {
         maxCellSize = 512; // iPad使用中等尺寸
       } else if (isMobileDevice) {
