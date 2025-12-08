@@ -763,12 +763,28 @@ export const IMAGES = [
     time: "2025.12.09",
     children: [
       {
-        url: "", // 图片URL
+        url: "https://6th-assets.isekaijoucho.moe/0.1.%E9%93%83%E9%B9%BF.webp", // 图片URL
         offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        name: "suzukasuraimu", // 作者姓名
+        name_X: "suzukasuraimu", // 推特名称
+        account_X: "suzukasuraimu", // 推特账号
+        link_X: "https://x.com/suzukasuraimu/status/1998044911783055678", // 推特链接
+        name_bili: "鈴鹿スライム", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1144040208085286915", // B站链接
+        name_weibo: "suzukasuraimu", // 微博名称
+        link_weibo: "https://weibo.com/7406074859/QhvehtEbD", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/0.2.%E9%81%A5.webp", // 图片URL
+        offset: { x: 0, y: -0.6 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "生海生", // 作者姓名
+        name_X: "生海生", // 推特名称
+        account_X: "RemoteGHarukos", // 推特账号
+        link_X: "https://x.com/RemoteGHarukos/status/1998044917059538963", // 推特链接
         name_bili: "", // B站名称
         link_bili: "", // B站链接
         name_weibo: "", // 微博名称
