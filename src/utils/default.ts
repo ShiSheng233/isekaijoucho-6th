@@ -724,16 +724,32 @@ export const IMAGES = [
     time: "2025.12.08",
     children: [
       {
-        url: "", // 图片URL
-        offset: { x: 0, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
-        name: "???", // 作者姓名
-        name_X: "", // 推特名称
-        account_X: "", // 推特账号
-        link_X: "", // 推特链接
+        url: "https://6th-assets.isekaijoucho.moe/1.1.IRple.webp", // 图片URL
+        offset: { x: 1, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "IRple2", // 作者姓名
+        name_X: "IRple", // 推特名称
+        account_X: "irple2", // 推特账号
+        link_X: "https://x.com/irple2/status/1997784272510603423", // 推特链接
         name_bili: "", // B站名称
-        link_bili: "", // B站链接
+        link_bili: "https://www.bilibili.com/opus/1143964620954796035", // B站链接
+        name_weibo: "IRple2", // 微博名称
+        link_weibo: "https://weibo.com/3699165737/QhoFPbIC4#repost", // 微博链接
+        name_red: "", // 小红书名称
+        link_red: "", // 小红书链接
+        name_lof: "", // Lofter名称
+        link_lof: "", // Lofter链接
+      },
+      {
+        url: "https://6th-assets.isekaijoucho.moe/1.2.%E6%B7%B1%E6%B5%B7%E7%8B%B8.webp", // 图片URL
+        offset: { x: 0.2, y: 0 }, // 图片锚点偏移 (x: 左右, y: 上下), 范围 -1 到 1
+        name: "深海狸", // 作者姓名
+        name_X: "深海狸", // 推特名称
+        account_X: "AbyssiTanuki", // 推特账号
+        link_X: "https://x.com/AbyssiTanuki/status/1997965819373043956", // 推特链接
+        name_bili: "深海狸TAKKI", // B站名称
+        link_bili: "https://www.bilibili.com/opus/1143957611511545876", // B站链接
         name_weibo: "", // 微博名称
-        link_weibo: "", // 微博链接
+        link_weibo: "https://weibo.com/3488400682/QhsSctMRA", // 微博链接
         name_red: "", // 小红书名称
         link_red: "", // 小红书链接
         name_lof: "", // Lofter名称
