@@ -177,8 +177,8 @@ export const getCachedImage = (url: string): HTMLImageElement | null => {
 // 批量加载图片并返回Image对象数组
 export const loadImagesWithObjects = async (urls: string[]): Promise<(HTMLImageElement | null)[]> => {
   // 统计从缓存加载和需要新加载的数量
-  const fromCache = urls.filter(url => imageObjectCache.has(url)).length;
-  const needLoad = urls.length - fromCache;
+  //const fromCache = urls.filter(url => imageObjectCache.has(url)).length;
+  //const needLoad = urls.length - fromCache;
   
   // if (needLoad > 0) {
   //   console.log(`[ImageLoader] Loading ${urls.length} images: ${fromCache} from cache, ${needLoad} need to load`);
