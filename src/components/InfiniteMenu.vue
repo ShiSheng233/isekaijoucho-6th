@@ -579,7 +579,17 @@ function makeVertexArray(gl, bufLocNumElmPairs, indices) {
 }
 
 function resizeCanvasToDisplaySize(canvas) {
-  const dpr = Math.min(2, window.devicePixelRatio);
+  // iOS设备使用更低的DPR以减少GPU负载
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  let dpr;
+  
+  if (isIOS) {
+    // iOS设备限制为1.5倍以提高性能
+    dpr = Math.min(1.5, window.devicePixelRatio);
+  } else {
+    dpr = Math.min(2, window.devicePixelRatio);
+  }
+  
   const displayWidth = Math.round(canvas.clientWidth * dpr);
   const displayHeight = Math.round(canvas.clientHeight * dpr);
   const needResize =
@@ -651,7 +661,21 @@ class ArcballControl {
       e.preventDefault();
     });
 
+    // iOS Safari需要更精细的触摸控制
     canvas.style.touchAction = "none";
+    canvas.style.webkitUserSelect = "none";
+    canvas.style.userSelect = "none";
+    canvas.style.webkitTouchCallout = "none";
+    
+    // 防止iOS双击缩放
+    let lastTouchEnd = 0;
+    canvas.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
   }
 
   update(deltaTime, targetFrameDuration = 16) {
@@ -864,13 +888,28 @@ class InfiniteGridMenu {
   }
 
   init(onInit) {
+    // iOS Safari对WebGL 2支持有限，尝试获取webgl2，失败则降级到webgl
     this.gl = this.canvas.getContext("webgl2", {
       antialias: true,
       alpha: true,
+      powerPreference: "high-performance", // 请求高性能GPU
+      preserveDrawingBuffer: false, // 提高性能
+      failIfMajorPerformanceCaveat: false, // 即使性能较差也尝试渲染
     });
+    
     const gl = this.gl;
     if (!gl) {
-      throw new Error("No WebGL 2 context!");
+      console.error("No WebGL 2 context! Trying WebGL 1...");
+      // 尝试WebGL 1降级
+      this.gl = this.canvas.getContext("webgl", {
+        antialias: false,
+        alpha: true,
+        powerPreference: "high-performance",
+        preserveDrawingBuffer: false,
+      });
+      if (!this.gl) {
+        throw new Error("WebGL is not supported on this device!");
+      }
     }
 
     this.viewportSize = vec2.fromValues(
@@ -976,6 +1015,7 @@ class InfiniteGridMenu {
 
     // 使用共享的图片缓存加载所有图片
     const imageUrls = this.items.map((item) => item.image);
+    
     loadImagesWithObjects(imageUrls).then((images) => {
       // 计算所有图片中的最大尺寸，使用该尺寸作为cellSize
       let maxSize = 512; // 最小值
@@ -985,12 +1025,29 @@ class InfiniteGridMenu {
         }
       });
 
+      // iOS设备对纹理大小有严格限制
       const isIPhone = /iPhone/i.test(navigator.userAgent);
+      const isIPad = /iPad/i.test(navigator.userAgent);
       const isMobileDevice =
         window.innerWidth <= 768 ||
         /Android|webOS|iPhone|iPad/i.test(navigator.userAgent);
-      const maxCellSize = isIPhone ? 384 : isMobileDevice ? 512 : 2048;
-      const cellSize = Math.min(maxSize, maxCellSize);
+      
+      // 获取WebGL最大纹理尺寸
+      const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+      
+      // iOS设备使用更保守的纹理大小
+      let maxCellSize;
+      if (isIPhone) {
+        maxCellSize = 512; // iPhone使用最小尺寸以保证性能
+      } else if (isIPad) {
+        maxCellSize = 512; // iPad使用中等尺寸
+      } else if (isMobileDevice) {
+        maxCellSize = 512; // 其他移动设备
+      } else {
+        maxCellSize = 2048; // 桌面设备，降低默认值以提高兼容性
+      }
+      
+      const cellSize = Math.min(maxSize, maxCellSize, maxTextureSize / this.atlasSize);
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -1042,16 +1099,45 @@ class InfiniteGridMenu {
         }
       });
 
-      gl.bindTexture(gl.TEXTURE_2D, this.tex);
-      gl.texImage2D(
-        gl.TEXTURE_2D,
-        0,
-        gl.RGBA,
-        gl.RGBA,
-        gl.UNSIGNED_BYTE,
-        canvas
-      );
-      gl.generateMipmap(gl.TEXTURE_2D);
+      try {
+        gl.bindTexture(gl.TEXTURE_2D, this.tex);
+        
+        // 检查canvas尺寸是否超出限制
+        if (canvas.width > maxTextureSize || canvas.height > maxTextureSize) {
+          console.warn(`Atlas size ${canvas.width}x${canvas.height} exceeds max texture size ${maxTextureSize}`);
+          // 如果超出限制，缩小canvas
+          const scale = maxTextureSize / Math.max(canvas.width, canvas.height);
+          const tempCanvas = document.createElement('canvas');
+          const tempCtx = tempCanvas.getContext('2d');
+          tempCanvas.width = Math.floor(canvas.width * scale);
+          tempCanvas.height = Math.floor(canvas.height * scale);
+          tempCtx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+          
+          gl.texImage2D(
+            gl.TEXTURE_2D,
+            0,
+            gl.RGBA,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            tempCanvas
+          );
+        } else {
+          gl.texImage2D(
+            gl.TEXTURE_2D,
+            0,
+            gl.RGBA,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            canvas
+          );
+        }
+        
+        gl.generateMipmap(gl.TEXTURE_2D);
+      } catch (error) {
+        console.error('Failed to upload texture to GPU:', error);
+        // iOS内存不足时的降级处理
+        throw new Error('GPU memory insufficient. Please close other apps and try again.');
+      }
     });
   }
 
@@ -1376,14 +1462,21 @@ const handleResize = () => {
 onMounted(() => {
   const canvas = canvasRef.value;
   if (canvas) {
-    const items = props.items.length ? props.items : defaultItems;
-    sketch = new InfiniteGridMenu(
-      canvas,
-      items,
-      handleActiveItem,
-      handleMovementChange,
-      (sk) => sk.start()
-    );
+    try {
+      const items = props.items.length ? props.items : defaultItems;
+      sketch = new InfiniteGridMenu(
+        canvas,
+        items,
+        handleActiveItem,
+        handleMovementChange,
+        (sk) => {
+          // 延迟启动以确保所有资源加载完成
+          setTimeout(() => sk.start(), 100);
+        }
+      );
+    } catch (error) {
+      console.error('Failed to initialize InfiniteGridMenu:', error);
+    }
   }
 
   // 检测移动端
@@ -1396,6 +1489,25 @@ onMounted(() => {
     const randomDelay = Math.random() * 2; // 0-2秒的随机延迟
     img.style.animationDelay = `${randomDelay}s`;
   });
+
+  // iOS Safari特定优化
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isIOS) {
+    // 防止iOS下拉刷新
+    document.body.style.overscrollBehavior = 'none';
+    
+    // 监听内存警告
+    if ('onwebkitmemorywarning' in window) {
+      window.addEventListener('webkitmemorywarning', () => {
+        console.warn('Memory warning received, cleaning up...');
+        if (sketch) {
+          sketch.stop();
+          // 清理纹理和缓存
+          setTimeout(() => sketch.start(), 1000);
+        }
+      });
+    }
+  }
 
   // 手机端禁用滑动跳转，只保留按钮跳转
   // 因为操作球体时很容易误触发页面切换
@@ -1456,6 +1568,16 @@ watch(
   height: 100%;
   background: linear-gradient(100deg, #5a5a5a 0%, #8a8a8a 100%);
   cursor: none;
+  /* iOS性能优化 */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  /* 防止iOS下拉刷新 */
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 
   .center-line-vertical {
     height: 100vh;
@@ -1531,6 +1653,12 @@ watch(
   overflow: hidden;
   position: relative;
   outline: none;
+  /* iOS性能优化 */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .face-title {

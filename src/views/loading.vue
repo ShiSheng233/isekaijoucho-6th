@@ -63,6 +63,11 @@ const startLoading = async () => {
     // 确保进度条显示100%
     progress.value = 100;
 
+    // 输出缓存统计信息
+    // const stats = getCacheStats();
+    // console.log('[Loading] Image cache stats:', stats);
+    // console.log(`[Loading] Successfully cached ${stats.cachedImagesCount} images`);
+
     // 加载完成后延迟500ms自动切换，给用户反应时间
     setTimeout(() => emit("loaded"), 500);
   } catch (error) {
